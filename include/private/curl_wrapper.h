@@ -52,7 +52,7 @@ class CurlWrapper {
     /**
      * \brief Libcurl callback.
      */
-    static size_t CurlCallback(void *contents, size_t size, size_t nmemb, void *userp);
+    static std::size_t CurlCallback(void *contents, size_t size, size_t nmemb, void *userp);
 
     /**
      * \brief Convert a json string into a map.

@@ -11,7 +11,7 @@ namespace test {
 class AccessListenerMock : public AccessListener {
    public:
     MOCK_CONST_METHOD1(OnAccessGuaranteed, void(const std::string &));
-    MOCK_CONST_METHOD1(OnAccessDeny, void(const std::string &));
+    MOCK_CONST_METHOD1(OnAccessDenied, void(const std::string &));
 };
 
 }  // namespace test

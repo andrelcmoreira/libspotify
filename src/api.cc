@@ -24,7 +24,7 @@ void Api::RequestAccess(AccessListener &listener, const std::string &client_id,
 
         listener.OnAccessGuaranteed(token);
     } catch(const std::exception &e) {
-        listener.OnAccessDeny(e.what());
+        listener.OnAccessDenied(e.what());
     }
 }
 

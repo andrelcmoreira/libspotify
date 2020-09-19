@@ -92,7 +92,7 @@ CURLcode CurlWrapper::FetchUri(const std::string &uri, struct CurlFetch *fetch) 
     return curl_easy_perform(curl_handle_);
 }
 
-size_t CurlWrapper::CurlCallback(void *contents, size_t size, size_t nmemb, void *userp)
+std::size_t CurlWrapper::CurlCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
     size_t realsize = size * nmemb;
     struct CurlFetch *p = (struct CurlFetch *)userp;

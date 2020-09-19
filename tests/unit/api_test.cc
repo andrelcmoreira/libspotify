@@ -61,7 +61,7 @@ TEST_F(EspotifaiApiTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
         .WillByDefault(testing::Return(kExpectedReturn));
 
     EXPECT_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData)).Times(1);
-    EXPECT_CALL(*listener, OnAccessDeny(testing::_)).Times(0);
+    EXPECT_CALL(*listener, OnAccessDenied(testing::_)).Times(0);
     EXPECT_CALL(*listener, OnAccessGuaranteed(kExpectedReturn.at("access_token")))
         .Times(1);
 
@@ -79,6 +79,45 @@ TEST_F(EspotifaiApiTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
     const std::string kLoginUri{"https://accounts.spotify.com/api/token"};
     const std::string kClientId{"bad_id"};
     const std::string kClientSecret{"bad_secret"};
+    const std::string kExpectedMsg{
+        "fail to authenticate the user with the provided credentials!"
+    };
+    const std::vector<std::string> kReqHeaders{
+        "Authorization: Basic " +
+        espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)
+    };
+    const std::vector<std::string> kReqData{
+        "grant_type=client_credentials"
+    };
+    const std::map<std::string, std::string> kExpectedReturn{
+        { "error", "invalid_client" },
+        { "error_description", "Invalid client secret" }
+    };
+
+    auto listener = std::make_shared<espotifai_api::test::AccessListenerMock>();
+
+    /* set default behavior for Post method */
+    ON_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData))
+        .WillByDefault(testing::Return(kExpectedReturn));
+
+    EXPECT_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData)).Times(1);
+    EXPECT_CALL(*listener, OnAccessDenied(kExpectedMsg)).Times(1);
+    EXPECT_CALL(*listener, OnAccessGuaranteed(testing::_)).Times(0);
+
+    api_.RequestAccess(*listener, kClientId, kClientSecret);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try to log into the spotify API
+ * offline. When this occurs, the espotifai_api must return the the suitable error message
+ * through the listener.
+ */
+TEST_F(EspotifaiApiTest, W_UserRequestAuthOffline_S_ReturnFailure)
+{
+    /* test constants */
+    const std::string kLoginUri{"https://accounts.spotify.com/api/token"};
+    const std::string kClientId{"good_id"};
+    const std::string kClientSecret{"good_secret"};
     const std::vector<std::string> kReqHeaders{
         "Authorization: Basic " +
         espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)
@@ -97,7 +136,7 @@ TEST_F(EspotifaiApiTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
         .Times(1)
         .WillOnce(testing::Throw(std::runtime_error("")));
     EXPECT_CALL(*listener, OnAccessGuaranteed(testing::_)).Times(0);
-    EXPECT_CALL(*listener, OnAccessDeny(testing::_))
+    EXPECT_CALL(*listener, OnAccessDenied(testing::_))
         .Times(1);
 
     api_.RequestAccess(*listener, kClientId, kClientSecret);

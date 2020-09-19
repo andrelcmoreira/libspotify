@@ -26,7 +26,7 @@ class AccessListener {
      * \brief Indicates that the login attempt has failed.
      * \param msg The suitable error message.
      */
-    virtual void OnAccessDeny(const std::string &msg) const = 0;
+    virtual void OnAccessDenied(const std::string &msg) const = 0;
 };
 
 }  // espotifai_api
