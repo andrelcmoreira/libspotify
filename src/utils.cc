@@ -4,6 +4,8 @@
  */
 #include "private/utils.h"
 
+#include <vector>
+
 #include <boost/beast/core/detail/base64.hpp>
 
 namespace espotifai_api {

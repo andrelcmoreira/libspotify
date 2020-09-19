@@ -1,0 +1,224 @@
+{
+  "tracks" : {
+    "href" : "https://api.spotify.com/v1/search?query=umbrella&type=track&offset=0&limit=3",
+    "items" : [ {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/5pKCCKE2ajJHZ9KAiaK11H"
+          },
+          "href" : "https://api.spotify.com/v1/artists/5pKCCKE2ajJHZ9KAiaK11H",
+          "id" : "5pKCCKE2ajJHZ9KAiaK11H",
+          "name" : "Rihanna",
+          "type" : "artist",
+          "uri" : "spotify:artist:5pKCCKE2ajJHZ9KAiaK11H"
+        } ],
+        "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/3JSWZWeTHF4HDGt5Eozdy7"
+        },
+        "href" : "https://api.spotify.com/v1/albums/3JSWZWeTHF4HDGt5Eozdy7",
+        "id" : "3JSWZWeTHF4HDGt5Eozdy7",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b273f9f27162ab1ed45b8d7a7e98",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e02f9f27162ab1ed45b8d7a7e98",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d00004851f9f27162ab1ed45b8d7a7e98",
+          "width" : 64
+        } ],
+        "name" : "Good Girl Gone Bad: Reloaded",
+        "release_date" : "2008-06-02",
+        "release_date_precision" : "day",
+        "total_tracks" : 15,
+        "type" : "album",
+        "uri" : "spotify:album:3JSWZWeTHF4HDGt5Eozdy7"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/5pKCCKE2ajJHZ9KAiaK11H"
+        },
+        "href" : "https://api.spotify.com/v1/artists/5pKCCKE2ajJHZ9KAiaK11H",
+        "id" : "5pKCCKE2ajJHZ9KAiaK11H",
+        "name" : "Rihanna",
+        "type" : "artist",
+        "uri" : "spotify:artist:5pKCCKE2ajJHZ9KAiaK11H"
+      }, {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/3nFkdlSjzX9mRTtwJOzDYB"
+        },
+        "href" : "https://api.spotify.com/v1/artists/3nFkdlSjzX9mRTtwJOzDYB",
+        "id" : "3nFkdlSjzX9mRTtwJOzDYB",
+        "name" : "JAY-Z",
+        "type" : "artist",
+        "uri" : "spotify:artist:3nFkdlSjzX9mRTtwJOzDYB"
+      } ],
+      "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+      "disc_number" : 1,
+      "duration_ms" : 275986,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "USUM70736771"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/49FYlytm3dAAraYgpoJZux"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/49FYlytm3dAAraYgpoJZux",
+      "id" : "49FYlytm3dAAraYgpoJZux",
+      "is_local" : false,
+      "name" : "Umbrella",
+      "popularity" : 80,
+      "preview_url" : null,
+      "track_number" : 1,
+      "type" : "track",
+      "uri" : "spotify:track:49FYlytm3dAAraYgpoJZux"
+    }, {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/7LWdcPFBFcRaamGjIJbPV7"
+          },
+          "href" : "https://api.spotify.com/v1/artists/7LWdcPFBFcRaamGjIJbPV7",
+          "id" : "7LWdcPFBFcRaamGjIJbPV7",
+          "name" : "Laffey",
+          "type" : "artist",
+          "uri" : "spotify:artist:7LWdcPFBFcRaamGjIJbPV7"
+        } ],
+        "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "ZA" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/1G3PxwMZ659bTDQvtEja2V"
+        },
+        "href" : "https://api.spotify.com/v1/albums/1G3PxwMZ659bTDQvtEja2V",
+        "id" : "1G3PxwMZ659bTDQvtEja2V",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b273669354dc4abc3d2f5059e631",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e02669354dc4abc3d2f5059e631",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d00004851669354dc4abc3d2f5059e631",
+          "width" : 64
+        } ],
+        "name" : "Summer Nights",
+        "release_date" : "2020-07-11",
+        "release_date_precision" : "day",
+        "total_tracks" : 8,
+        "type" : "album",
+        "uri" : "spotify:album:1G3PxwMZ659bTDQvtEja2V"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/7LWdcPFBFcRaamGjIJbPV7"
+        },
+        "href" : "https://api.spotify.com/v1/artists/7LWdcPFBFcRaamGjIJbPV7",
+        "id" : "7LWdcPFBFcRaamGjIJbPV7",
+        "name" : "Laffey",
+        "type" : "artist",
+        "uri" : "spotify:artist:7LWdcPFBFcRaamGjIJbPV7"
+      } ],
+      "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "ZA" ],
+      "disc_number" : 1,
+      "duration_ms" : 122718,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "TCAEZ2021474"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/0ORfekOSAhkcYgdTS4YK8f"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/0ORfekOSAhkcYgdTS4YK8f",
+      "id" : "0ORfekOSAhkcYgdTS4YK8f",
+      "is_local" : false,
+      "name" : "Umbrella",
+      "popularity" : 62,
+      "preview_url" : "https://p.scdn.co/mp3-preview/e04db64b19a7e12ab2c9d673b16d4263edfa7647?cid=7244137c663a4d929737408a369ac4e4",
+      "track_number" : 4,
+      "type" : "track",
+      "uri" : "spotify:track:0ORfekOSAhkcYgdTS4YK8f"
+    }, {
+      "album" : {
+        "album_type" : "single",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/46gyXjRIvN1NL1eCB8GBxo"
+          },
+          "href" : "https://api.spotify.com/v1/artists/46gyXjRIvN1NL1eCB8GBxo",
+          "id" : "46gyXjRIvN1NL1eCB8GBxo",
+          "name" : "All Time Low",
+          "type" : "artist",
+          "uri" : "spotify:artist:46gyXjRIvN1NL1eCB8GBxo"
+        } ],
+        "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/1CFjrFSA35xbgP134I8Xtq"
+        },
+        "href" : "https://api.spotify.com/v1/albums/1CFjrFSA35xbgP134I8Xtq",
+        "id" : "1CFjrFSA35xbgP134I8Xtq",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b2736977a02a25c88ce583525420",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e026977a02a25c88ce583525420",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d000048516977a02a25c88ce583525420",
+          "width" : 64
+        } ],
+        "name" : "Umbrella",
+        "release_date" : "2009-08-25",
+        "release_date_precision" : "day",
+        "total_tracks" : 1,
+        "type" : "album",
+        "uri" : "spotify:album:1CFjrFSA35xbgP134I8Xtq"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/46gyXjRIvN1NL1eCB8GBxo"
+        },
+        "href" : "https://api.spotify.com/v1/artists/46gyXjRIvN1NL1eCB8GBxo",
+        "id" : "46gyXjRIvN1NL1eCB8GBxo",
+        "name" : "All Time Low",
+        "type" : "artist",
+        "uri" : "spotify:artist:46gyXjRIvN1NL1eCB8GBxo"
+      } ],
+      "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+      "disc_number" : 1,
+      "duration_ms" : 229853,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "USHR20947019"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/6ZUQhRkFJqiPsOucrXZwS6"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/6ZUQhRkFJqiPsOucrXZwS6",
+      "id" : "6ZUQhRkFJqiPsOucrXZwS6",
+      "is_local" : false,
+      "name" : "Umbrella",
+      "popularity" : 54,
+      "preview_url" : "https://p.scdn.co/mp3-preview/bf4d1c623f5b584519182cb2e00d148ea2a72744?cid=7244137c663a4d929737408a369ac4e4",
+      "track_number" : 1,
+      "type" : "track",
+      "uri" : "spotify:track:6ZUQhRkFJqiPsOucrXZwS6"
+    } ],
+    "limit" : 3,
+    "next" : "https://api.spotify.com/v1/search?query=umbrella&type=track&offset=3&limit=3",
+    "offset" : 0,
+    "previous" : null,
+    "total" : 40210
+  }
+}

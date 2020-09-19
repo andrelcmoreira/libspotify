@@ -1,0 +1,79 @@
+{
+  "tracks" : {
+    "href" : "https://api.spotify.com/v1/search?query=staayyyle&type=track&offset=0&limit=1",
+    "items" : [ {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/2kDXtCACfXXLm0pJ9jPfUG"
+          },
+          "href" : "https://api.spotify.com/v1/artists/2kDXtCACfXXLm0pJ9jPfUG",
+          "id" : "2kDXtCACfXXLm0pJ9jPfUG",
+          "name" : "Spazz",
+          "type" : "artist",
+          "uri" : "spotify:artist:2kDXtCACfXXLm0pJ9jPfUG"
+        } ],
+        "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/7y28DRoed3LaipJk8Rns0x"
+        },
+        "href" : "https://api.spotify.com/v1/albums/7y28DRoed3LaipJk8Rns0x",
+        "id" : "7y28DRoed3LaipJk8Rns0x",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b27300a921fa13ac3d7e8809ecc3",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e0200a921fa13ac3d7e8809ecc3",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d0000485100a921fa13ac3d7e8809ecc3",
+          "width" : 64
+        } ],
+        "name" : "Crush Kill Destroy",
+        "release_date" : "2018-06-15",
+        "release_date_precision" : "day",
+        "total_tracks" : 25,
+        "type" : "album",
+        "uri" : "spotify:album:7y28DRoed3LaipJk8Rns0x"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/2kDXtCACfXXLm0pJ9jPfUG"
+        },
+        "href" : "https://api.spotify.com/v1/artists/2kDXtCACfXXLm0pJ9jPfUG",
+        "id" : "2kDXtCACfXXLm0pJ9jPfUG",
+        "name" : "Spazz",
+        "type" : "artist",
+        "uri" : "spotify:artist:2kDXtCACfXXLm0pJ9jPfUG"
+      } ],
+      "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+      "disc_number" : 1,
+      "duration_ms" : 26146,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "QM4TX1831867"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/6jaY08cdgxbkVYMSSLR9kK"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/6jaY08cdgxbkVYMSSLR9kK",
+      "id" : "6jaY08cdgxbkVYMSSLR9kK",
+      "is_local" : false,
+      "name" : "Staayyyle",
+      "popularity" : 0,
+      "preview_url" : null,
+      "track_number" : 24,
+      "type" : "track",
+      "uri" : "spotify:track:6jaY08cdgxbkVYMSSLR9kK"
+    } ],
+    "limit" : 1,
+    "next" : null,
+    "offset" : 0,
+    "previous" : null,
+    "total" : 1
+  }
+}

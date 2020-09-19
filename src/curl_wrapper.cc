@@ -7,8 +7,6 @@
 #include <cstring>
 #include <stdexcept>
 
-#include <boost/algorithm/string.hpp>
-
 namespace espotifai_api {
 
 struct CurlFetch {
@@ -31,12 +29,12 @@ CurlWrapper::~CurlWrapper()
     curl_easy_cleanup(curl_handle_);
 }
 
-std::map<std::string, std::string> CurlWrapper::Post(
+Json::Value CurlWrapper::Post(
     const std::string &uri,
     const std::vector<std::string> &req_headers,
     const std::vector<std::string> &req_data) const
 {
-    std::map<std::string, std::string> response;
+    Json::Value response;
     struct curl_slist *headers = nullptr;
     struct CurlFetch curl_fetch;
     struct CurlFetch *cf = &curl_fetch;
@@ -64,10 +62,73 @@ std::map<std::string, std::string> CurlWrapper::Post(
     }
 
     if (cf->payload) {
-        response = JsonStrToMap(cf->payload);
+        std::string errors; /* unused */
+        auto json_reader = builder_.newCharReader();
+
+        bool parse_ok = json_reader->parse(
+            cf->payload,
+            cf->payload + cf->size,
+            &response,
+            &errors
+        );
+
+        free(cf->payload);
+
+        if (!parse_ok) {
+            throw std::runtime_error(
+                "failed to parse the response from server!"
+            );
+        }
     }
 
-    free(cf->payload);
+    return response;
+}
+
+Json::Value CurlWrapper::Get(
+    const std::string &uri,
+    const std::vector<std::string> &req_headers) const
+{
+    Json::Value response;
+    struct curl_slist *headers = nullptr;
+    struct CurlFetch curl_fetch;
+    struct CurlFetch *cf = &curl_fetch;
+
+    for (auto &h : req_headers) {
+        headers = curl_slist_append(headers, h.c_str());
+    }
+
+    curl_easy_setopt(curl_handle_, CURLOPT_CUSTOMREQUEST, "GET");
+    curl_easy_setopt(curl_handle_, CURLOPT_HTTPHEADER, headers);
+
+    auto ret = FetchUri(uri.c_str(), cf);
+
+    curl_slist_free_all(headers);
+
+    if (ret != CURLE_OK) {
+        throw std::runtime_error(
+            "failed to establish the connection with remote server!"
+        );
+    }
+
+    if (cf->payload) {
+        std::string errors; /* unused */
+        auto json_reader = builder_.newCharReader();
+
+        bool parse_ok = json_reader->parse(
+            cf->payload,
+            cf->payload + cf->size,
+            &response,
+            &errors
+        );
+
+        free(cf->payload);
+
+        if (!parse_ok) {
+            throw std::runtime_error(
+                "failed to parse the response from server!"
+            );
+        }
+    }
 
     return response;
 }
@@ -111,30 +172,4 @@ std::size_t CurlWrapper::CurlCallback(void *contents, size_t size, size_t nmemb,
     return realsize;
 }
 
-
-std::map<std::string, std::string> CurlWrapper::JsonStrToMap(
-    char *json_str) const
-{
-    std::string str{json_str};
-
-    /* removing non interesting chars. */
-    boost::erase_all(str, "{");
-    boost::erase_all(str, "}");
-    boost::erase_all(str, "\"");
-
-    /* filling the vector with the key-value entries */
-    std::vector<std::string> key_val_pairs;
-    boost::split(key_val_pairs, str, boost::is_any_of(","));
-
-    std::map<std::string, std::string> parsed_json;
-    for (auto &entry : key_val_pairs) {
-        std::vector<std::string> map_entry;
-
-        boost::split(map_entry, entry, boost::is_any_of(":"));
-        parsed_json.insert({map_entry[0], map_entry[1]});
-    }
-
-    return parsed_json;
-}
-
-}  // espotifai_api
+}  // namespace espotifai_api

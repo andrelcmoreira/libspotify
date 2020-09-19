@@ -10,7 +10,8 @@ include_directories(${CMAKE_CURRENT_LIST_DIR}/../include)
 link_directories(${CMAKE_SOURCE_DIR}/../build)
 
 set(SOURCES
-    ${sources_dir}/unit/api_test.cc
+    ${sources_dir}/unit/spotify_auth_test.cc
+    ${sources_dir}/unit/music_searcher_test.cc
     ${test_main_source}
 )
 

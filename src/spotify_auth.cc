@@ -29,16 +29,16 @@ std::string SpotifyAuth::AuthUser(
         "grant_type=client_credentials"
     };
 
-    auto ret = curl_->Post(kUri_, req_headers, req_data);
+    auto reply = curl_->Post(kUri_, req_headers, req_data);
 
     /* check if the access token isn't present into the message. */
-    if (ret.find("access_token") == ret.end()) {
+    if (!reply["access_token"]) {
         throw std::runtime_error(
             "fail to authenticate the user with the provided credentials!"
         );
     }
 
-    return ret["access_token"];
+    return reply["access_token"].asString();
 }
 
-}  // espotifai_api
+}  // namespace espotifai_api

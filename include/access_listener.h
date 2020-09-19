@@ -29,6 +29,6 @@ class AccessListener {
     virtual void OnAccessDenied(const std::string &msg) const = 0;
 };
 
-}  // espotifai_api
+}  // namespace espotifai_api
 
 #endif  // ACCESS_LISTENER_H_
