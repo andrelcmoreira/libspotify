@@ -1,6 +1,6 @@
 /**
  * \file
- * \brief Api test class implementation.
+ * \brief Spotify authenticator test class implementation.
  */
 #include <gtest/gtest.h>
 
@@ -14,9 +14,9 @@
 #include "private/spotify_auth.h"
 #include "private/utils.h"
 
-class EspotifaiApiTest : public testing::Test {
+class SpotifyAuthTest : public testing::Test {
     public:
-     EspotifaiApiTest()
+     SpotifyAuthTest()
           : curl_{std::make_shared<espotifai_api::test::CurlWrapperMock>()},
             auth_{std::make_shared<espotifai_api::SpotifyAuth>(curl_)},
             api_{auth_}
@@ -27,6 +27,7 @@ class EspotifaiApiTest : public testing::Test {
      std::shared_ptr<espotifai_api::test::CurlWrapperMock> curl_; //!< Curl wrapper mock instance.
      std::shared_ptr<espotifai_api::SpotifyAuth> auth_; //!< Spotify auth instance.
      espotifai_api::Api api_; //!< Api instance.
+     const std::string KLoginUri_{"https://accounts.spotify.com/api/token"}; //!< URI used for authentication.
 };
 
 /**
@@ -34,10 +35,9 @@ class EspotifaiApiTest : public testing::Test {
  * with a valid client_id and client_credentials. When this occurs, the espotifai_api must
  * return the access token through the listener.
  */
-TEST_F(EspotifaiApiTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
+TEST_F(SpotifyAuthTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
 {
     /* test constants */
-    const std::string kLoginUri{"https://accounts.spotify.com/api/token"};
     const std::string kClientId{"good_id"};
     const std::string kClientSecret{"good_secret"};
     const std::vector<std::string> kReqHeaders{
@@ -47,22 +47,23 @@ TEST_F(EspotifaiApiTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
     const std::vector<std::string> kReqData{
         "grant_type=client_credentials"
     };
-    const std::map<std::string, std::string> kExpectedReturn{
-        { "access_token", "BQDGLtwpiJbNGiJejVpzV6xvFFwlaDCysDW41sPWJgVBL0XBWXj7wMm7Es0C" },
-        { "token_type", "Bearer" },
-        { "expires_in", "3600" },
-        { "scope", "" }
-    };
+    Json::Value expected_return;
+
+    /* build the expected return */
+    expected_return["access_token"] = "BQDGLtwpiJbNGiJejVpzV6xvFFwlaDCysDW41sPWJgVBL0XBWXj7wMm7";
+    expected_return["token_type"] = "Bearer";
+    expected_return["expires_in"] = "3600";
+    expected_return["scope"] = "";
 
     auto listener = std::make_shared<espotifai_api::test::AccessListenerMock>();
 
     /* set default behavior for Post method */
-    ON_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData))
-        .WillByDefault(testing::Return(kExpectedReturn));
+    ON_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData))
+        .WillByDefault(testing::Return(expected_return));
 
-    EXPECT_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData)).Times(1);
+    EXPECT_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData)).Times(1);
     EXPECT_CALL(*listener, OnAccessDenied(testing::_)).Times(0);
-    EXPECT_CALL(*listener, OnAccessGuaranteed(kExpectedReturn.at("access_token")))
+    EXPECT_CALL(*listener, OnAccessGuaranteed(expected_return["access_token"].asString()))
         .Times(1);
 
     api_.RequestAccess(*listener, kClientId, kClientSecret);
@@ -73,10 +74,9 @@ TEST_F(EspotifaiApiTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
  * with an invalid client_id and client_credentials. When this occurs, the espotifai_api must
  * return the the suitable error message through the listener.
  */
-TEST_F(EspotifaiApiTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
+TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kLoginUri{"https://accounts.spotify.com/api/token"};
     const std::string kClientId{"bad_id"};
     const std::string kClientSecret{"bad_secret"};
     const std::string kExpectedMsg{
@@ -89,18 +89,19 @@ TEST_F(EspotifaiApiTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
     const std::vector<std::string> kReqData{
         "grant_type=client_credentials"
     };
-    const std::map<std::string, std::string> kExpectedReturn{
-        { "error", "invalid_client" },
-        { "error_description", "Invalid client secret" }
-    };
+    Json::Value expected_return;
+
+    /* build the expected return */
+    expected_return["error"] = "invalid_client";
+    expected_return["error_description"] = "Invalid client secret";
 
     auto listener = std::make_shared<espotifai_api::test::AccessListenerMock>();
 
     /* set default behavior for Post method */
-    ON_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData))
-        .WillByDefault(testing::Return(kExpectedReturn));
+    ON_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData))
+        .WillByDefault(testing::Return(expected_return));
 
-    EXPECT_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData)).Times(1);
+    EXPECT_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData)).Times(1);
     EXPECT_CALL(*listener, OnAccessDenied(kExpectedMsg)).Times(1);
     EXPECT_CALL(*listener, OnAccessGuaranteed(testing::_)).Times(0);
 
@@ -112,12 +113,12 @@ TEST_F(EspotifaiApiTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
  * offline. When this occurs, the espotifai_api must return the the suitable error message
  * through the listener.
  */
-TEST_F(EspotifaiApiTest, W_UserRequestAuthOffline_S_ReturnFailure)
+TEST_F(SpotifyAuthTest, W_UserRequestAuthOffline_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kLoginUri{"https://accounts.spotify.com/api/token"};
     const std::string kClientId{"good_id"};
     const std::string kClientSecret{"good_secret"};
+    const std::string kErrorMessage{"some cool error message"};
     const std::vector<std::string> kReqHeaders{
         "Authorization: Basic " +
         espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)
@@ -127,16 +128,16 @@ TEST_F(EspotifaiApiTest, W_UserRequestAuthOffline_S_ReturnFailure)
     };
 
     /* set default behavior for Post method */
-    ON_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData))
-        .WillByDefault(testing::Throw(std::runtime_error("")));
+    ON_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData))
+        .WillByDefault(testing::Throw(std::runtime_error(kErrorMessage)));
 
     auto listener = std::make_shared<espotifai_api::test::AccessListenerMock>();
 
-    EXPECT_CALL(*curl_, Post(kLoginUri, kReqHeaders, kReqData))
+    EXPECT_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData))
         .Times(1)
-        .WillOnce(testing::Throw(std::runtime_error("")));
+        .WillOnce(testing::Throw(std::runtime_error(kErrorMessage)));
     EXPECT_CALL(*listener, OnAccessGuaranteed(testing::_)).Times(0);
-    EXPECT_CALL(*listener, OnAccessDenied(testing::_))
+    EXPECT_CALL(*listener, OnAccessDenied(kErrorMessage))
         .Times(1);
 
     api_.RequestAccess(*listener, kClientId, kClientSecret);

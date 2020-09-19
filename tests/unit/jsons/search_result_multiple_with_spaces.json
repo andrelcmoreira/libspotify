@@ -1,0 +1,147 @@
+{
+  "tracks" : {
+    "href" : "https://api.spotify.com/v1/search?query=protocols+of+anti+sound&type=track&offset=0&limit=2",
+    "items" : [ {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/1zVJfLMaN1eeiz4NVdI1Mh"
+          },
+          "href" : "https://api.spotify.com/v1/artists/1zVJfLMaN1eeiz4NVdI1Mh",
+          "id" : "1zVJfLMaN1eeiz4NVdI1Mh",
+          "name" : "Magrudergrind",
+          "type" : "artist",
+          "uri" : "spotify:artist:1zVJfLMaN1eeiz4NVdI1Mh"
+        } ],
+        "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/2JiKConlU9uXTHPtt8MSCi"
+        },
+        "href" : "https://api.spotify.com/v1/albums/2JiKConlU9uXTHPtt8MSCi",
+        "id" : "2JiKConlU9uXTHPtt8MSCi",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b273641e1fc5677aa8961176cee5",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e02641e1fc5677aa8961176cee5",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d00004851641e1fc5677aa8961176cee5",
+          "width" : 64
+        } ],
+        "name" : "Magrudergrind",
+        "release_date" : "2009-06-16",
+        "release_date_precision" : "day",
+        "total_tracks" : 17,
+        "type" : "album",
+        "uri" : "spotify:album:2JiKConlU9uXTHPtt8MSCi"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/1zVJfLMaN1eeiz4NVdI1Mh"
+        },
+        "href" : "https://api.spotify.com/v1/artists/1zVJfLMaN1eeiz4NVdI1Mh",
+        "id" : "1zVJfLMaN1eeiz4NVdI1Mh",
+        "name" : "Magrudergrind",
+        "type" : "artist",
+        "uri" : "spotify:artist:1zVJfLMaN1eeiz4NVdI1Mh"
+      } ],
+      "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+      "disc_number" : 1,
+      "duration_ms" : 107813,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "USRMX0900054"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/2UNCakVkFNo9ClIHbnSBTx"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/2UNCakVkFNo9ClIHbnSBTx",
+      "id" : "2UNCakVkFNo9ClIHbnSBTx",
+      "is_local" : false,
+      "name" : "The Protocols Of Anti-Sound",
+      "popularity" : 29,
+      "preview_url" : null,
+      "track_number" : 1,
+      "type" : "track",
+      "uri" : "spotify:track:2UNCakVkFNo9ClIHbnSBTx"
+    }, {
+      "album" : {
+        "album_type" : "album",
+        "artists" : [ {
+          "external_urls" : {
+            "spotify" : "https://open.spotify.com/artist/0fPRTshfFOE8VgmUZIEg7o"
+          },
+          "href" : "https://api.spotify.com/v1/artists/0fPRTshfFOE8VgmUZIEg7o",
+          "id" : "0fPRTshfFOE8VgmUZIEg7o",
+          "name" : "Mommy's lil Monsterz",
+          "type" : "artist",
+          "uri" : "spotify:artist:0fPRTshfFOE8VgmUZIEg7o"
+        } ],
+        "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/album/0Ag6IxC7HdF14PSzD0GFgr"
+        },
+        "href" : "https://api.spotify.com/v1/albums/0Ag6IxC7HdF14PSzD0GFgr",
+        "id" : "0Ag6IxC7HdF14PSzD0GFgr",
+        "images" : [ {
+          "height" : 640,
+          "url" : "https://i.scdn.co/image/ab67616d0000b2730ce11af37e42e542dbcb33dc",
+          "width" : 640
+        }, {
+          "height" : 300,
+          "url" : "https://i.scdn.co/image/ab67616d00001e020ce11af37e42e542dbcb33dc",
+          "width" : 300
+        }, {
+          "height" : 64,
+          "url" : "https://i.scdn.co/image/ab67616d000048510ce11af37e42e542dbcb33dc",
+          "width" : 64
+        } ],
+        "name" : "Grinding Up the Hits",
+        "release_date" : "2020-07-30",
+        "release_date_precision" : "day",
+        "total_tracks" : 8,
+        "type" : "album",
+        "uri" : "spotify:album:0Ag6IxC7HdF14PSzD0GFgr"
+      },
+      "artists" : [ {
+        "external_urls" : {
+          "spotify" : "https://open.spotify.com/artist/0fPRTshfFOE8VgmUZIEg7o"
+        },
+        "href" : "https://api.spotify.com/v1/artists/0fPRTshfFOE8VgmUZIEg7o",
+        "id" : "0fPRTshfFOE8VgmUZIEg7o",
+        "name" : "Mommy's lil Monsterz",
+        "type" : "artist",
+        "uri" : "spotify:artist:0fPRTshfFOE8VgmUZIEg7o"
+      } ],
+      "available_markets" : [ "AD", "AE", "AL", "AR", "AT", "AU", "BA", "BE", "BG", "BH", "BO", "BR", "BY", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "DZ", "EC", "EE", "EG", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HR", "HU", "ID", "IE", "IL", "IN", "IS", "IT", "JO", "JP", "KW", "KZ", "LB", "LI", "LT", "LU", "LV", "MA", "MC", "MD", "ME", "MK", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "OM", "PA", "PE", "PH", "PL", "PS", "PT", "PY", "QA", "RO", "RS", "RU", "SA", "SE", "SG", "SI", "SK", "SV", "TH", "TN", "TR", "TW", "UA", "US", "UY", "VN", "XK", "ZA" ],
+      "disc_number" : 1,
+      "duration_ms" : 77000,
+      "explicit" : false,
+      "external_ids" : {
+        "isrc" : "QZGWW2140794"
+      },
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/track/65ypeYc66Mikf6Hx061XqM"
+      },
+      "href" : "https://api.spotify.com/v1/tracks/65ypeYc66Mikf6Hx061XqM",
+      "id" : "65ypeYc66Mikf6Hx061XqM",
+      "is_local" : false,
+      "name" : "Protocols of Anti-Sound",
+      "popularity" : 0,
+      "preview_url" : "https://p.scdn.co/mp3-preview/21417a3ddbc0af7931ed48e6a63fd6d7d89e97de?cid=7244137c663a4d929737408a369ac4e4",
+      "track_number" : 1,
+      "type" : "track",
+      "uri" : "spotify:track:65ypeYc66Mikf6Hx061XqM"
+    } ],
+    "limit" : 2,
+    "next" : "https://api.spotify.com/v1/search?query=protocols+of+anti+sound&type=track&offset=2&limit=2",
+    "offset" : 0,
+    "previous" : null,
+    "total" : 4
+  }
+}

@@ -32,9 +32,7 @@ class SpotifyAuth {
      * \param client_secret Client secret.
      * \return The access token.
      */
-    virtual std::string AuthUser(
-        const std::string &cli_id,
-        const std::string &cli_secret) const;
+    std::string AuthUser(const std::string &cli_id, const std::string &cli_secret) const;
 
    private:
     const std::string kUri_; //!< Uri for authentication.

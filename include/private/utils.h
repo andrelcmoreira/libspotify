@@ -17,7 +17,7 @@ namespace utils {
  */
 std::string GetBase64Code(const std::string &str);
 
-} // utils
-} // namespace espotifai_api
+}  // utils
+}  // namespace espotifai_api
 
 #endif  // UTILS_H_
