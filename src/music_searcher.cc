@@ -20,7 +20,7 @@ std::vector<MusicInfo> MusicSearcher::Search(const std::string &token,
     const std::string &name) const
 {
     std::vector<MusicInfo> ret;
-    std::string uri{kBaseUri_ + name + "&type=track&limit=3"};
+    std::string uri{kBaseUri_ + name + "&type=track&limit=10"};
     std::vector<std::string> req_headers{
         "Authorization: Bearer " + token
     };

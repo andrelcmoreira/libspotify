@@ -40,7 +40,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForAnExistentMusic_S_ReturnTheListOfMatche
 {
     /* test constants */
     const std::string kSearchName{"umbrella"};
-    const std::string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=3"};
+    const std::string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=10"};
     const std::string kAccessToken{"ASUUHnbvBbHASddBSd87asdSA=DDDAa=UUl-=y"};
     const std::vector<std::string> kReqHeaders{
         "Authorization: Bearer " + kAccessToken
@@ -98,7 +98,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForASingleExistentMusic_S_ReturnTheListWit
 {
     /* test constants */
     const std::string kSearchName{"staayyyle"};
-    const std::string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=3"};
+    const std::string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=10"};
     const std::string kAccessToken{"ASUUHnbvBbHASddBSd87asdSA=DDDAa=UUl-=y"};
     const std::vector<std::string> kReqHeaders{
         "Authorization: Bearer " + kAccessToken
@@ -145,7 +145,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForAnExistentMusicWithSpaces_S_ReturnTheLi
     /* test constants */
     const std::string kSearchName{"protocols of anti sound"};
     const std::string kSearchNameUrl{"protocols+of+anti+sound"};
-    const std::string kUri{kMusicSearchBaseUri_ + kSearchNameUrl + "&type=track&limit=3"};
+    const std::string kUri{kMusicSearchBaseUri_ + kSearchNameUrl + "&type=track&limit=10"};
     const std::string kAccessToken{"ASUUHnbvBbHASddBSd87asdSA=DDDAa=UUl-=y"};
     const std::vector<std::string> kReqHeaders{
         "Authorization: Bearer " + kAccessToken
@@ -196,7 +196,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForAnExistentMusicWithSpaces_S_ReturnTheLi
 TEST_F(MusicSearcherTest, W_UserSearchForANonExistentMusic_S_ReturnEmptyList)
 {
     const std::string kSearchName{"asidjhisuadhfoisduhfaisoduhfaoisudfhaisoudfh"};
-    const std::string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=3"};
+    const std::string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=10"};
     const std::string kAccessToken{"ASUUHnbvBbHASddBSd87asdSA=DDDAa=UUl-=y"};
     const std::vector<std::string> kReqHeaders{
         "Authorization: Bearer " + kAccessToken
@@ -235,7 +235,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForAnExistentMusicWithError_S_ReturnErrorM
 {
     const std::string kSearchName{"umbrella"};
     const std::string kErrorMessage{"some cool error message"};
-    const std::string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=3"};
+    const std::string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=10"};
     const std::string kAccessToken{"ASUUHnbvBbHASddBSd87asdSA=DDDAa=UUl-=y"};
     const std::vector<std::string> kReqHeaders{
         "Authorization: Bearer " + kAccessToken
