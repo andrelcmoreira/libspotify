@@ -72,7 +72,7 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
 /**
  * \brief This tests validates the scenario when the user try to log into the spotify API
  * with an invalid client_id and client_credentials. When this occurs, the espotifai_api must
- * return the the suitable error message through the listener.
+ * return the suitable error message through the listener.
  */
 TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
 {
@@ -110,7 +110,7 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
 
 /**
  * \brief This tests validates the scenario when the user try to log into the spotify API
- * offline. When this occurs, the espotifai_api must return the the suitable error message
+ * offline. When this occurs, the espotifai_api must return the suitable error message
  * through the listener.
  */
 TEST_F(SpotifyAuthTest, W_UserRequestAuthOffline_S_ReturnFailure)

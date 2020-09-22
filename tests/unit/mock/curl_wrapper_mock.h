@@ -8,7 +8,7 @@
 namespace espotifai_api {
 namespace test {
 
-class CurlWrapperMock : public espotifai_api::CurlWrapper {
+class CurlWrapperMock : public CurlWrapper {
    public:
     MOCK_CONST_METHOD3(
         Post,

@@ -8,12 +8,19 @@ project(espotifai_api)
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 11)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    /usr/local/include/mongocxx/v_noabi
+    /usr/local/include/bsoncxx/v_noabi
+)
+
 add_library(${PROJECT_NAME} SHARED
     src/api.cc
-    src/music_searcher.cc
-    src/spotify_auth.cc
     src/curl_wrapper.cc
+    src/db_handler.cc
+    src/music_searcher.cc
+    src/playlist_mgr.cc
+    src/spotify_auth.cc
     src/utils.cc
 )
-target_link_libraries(${PROJECT_NAME} curl jsoncpp)
+target_link_libraries(${PROJECT_NAME} curl jsoncpp mongocxx bsoncxx)

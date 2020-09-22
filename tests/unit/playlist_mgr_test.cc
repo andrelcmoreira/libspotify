@@ -1,0 +1,112 @@
+/**
+ * \file
+ * \brief Playlist manager test class implementation.
+ */
+#include <gtest/gtest.h>
+
+#include <memory>
+
+#include "mock/create_playlist_listener_mock.h"
+#include "mock/db_handler_mock.h"
+
+#include "api.h"
+#include "private/playlist_mgr.h"
+
+class PlaylistMgrTest : public testing::Test {
+    public:
+     PlaylistMgrTest()
+          : db_mock_{std::make_shared<espotifai_api::test::DbHandlerMock>()},
+            playlist_mgr_{std::make_shared<espotifai_api::PlaylistMgr>(db_mock_)},
+            api_{nullptr, nullptr, playlist_mgr_}
+     {
+     }
+
+    protected:
+     std::shared_ptr<espotifai_api::test::DbHandlerMock> db_mock_; //!< Database mock.
+     std::shared_ptr<espotifai_api::PlaylistMgr> playlist_mgr_; //!< Playlist manager.
+     espotifai_api::Api api_; //!< Api instance.
+};
+
+/**
+ * \brief This tests validates the scenario when the user try create a new playlist. When
+ * this occurs, the espotifai_api must create it and return notify the user through the
+ * listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfANewPlaylist_S_CreatePlaylist)
+{
+    /* test constants */
+    const std::string kPlaylistName{"my cool playlist"};
+    const std::string kPlaylistOwner{"foo"};
+
+    auto listener = std::make_shared<espotifai_api::test::CreatePlaylistListenerMock>();
+
+    /* set default behavior for FindPlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(false));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, CreatePlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*listener, OnPlaylistCreated()).Times(1);
+    EXPECT_CALL(*listener, OnPlaylistCreationError(testing::_))
+        .Times(0);
+
+    api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try create a playlist which
+ * already exist on database. When this occurs, the espotifai_api must return the suitable
+ * error message through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistThatAlreadyExist_S_ReturnFailure)
+{
+    /* test constants */
+    const std::string kPlaylistName{"my cool playlist"};
+    const std::string kErrorMessage{"the playlist already exist!"};
+    const std::string kPlaylistOwner{"foo"};
+
+    auto listener = std::make_shared<espotifai_api::test::CreatePlaylistListenerMock>();
+
+    /* set default behavior for FindPlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(true));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, CreatePlaylist(kPlaylistName)).Times(0);
+    EXPECT_CALL(*listener, OnPlaylistCreated()).Times(0);
+    EXPECT_CALL(*listener, OnPlaylistCreationError(kErrorMessage))
+        .Times(1);
+
+    api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try to create a playlist, but an
+ * error occurs at database level. When this occurs, the espotifai_api must return the the
+ * suitable error message through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistWithDatabaseError_S_ReturnFailure)
+{
+    /* test constants */
+    const std::string kPlaylistName{"my cool playlist"};
+    const std::string kErrorMsg{"something went wrong!"};
+    const std::string kPlaylistOwner{"foo"};
+
+    auto listener = std::make_shared<espotifai_api::test::CreatePlaylistListenerMock>();
+
+    /* set default behavior for CreatePlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(false));
+    ON_CALL(*db_mock_, CreatePlaylist(kPlaylistName))
+        .WillByDefault(testing::Throw(std::runtime_error(kErrorMsg)));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, CreatePlaylist(kPlaylistName))
+        .Times(1)
+        .WillOnce(testing::Throw(std::runtime_error(kErrorMsg)));
+    EXPECT_CALL(*listener, OnPlaylistCreated()).Times(0);
+    EXPECT_CALL(*listener, OnPlaylistCreationError(kErrorMsg))
+        .Times(1);
+
+    api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
+}
