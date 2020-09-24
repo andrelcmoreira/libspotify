@@ -10,10 +10,6 @@ namespace test {
 
 class DbHandlerMock : public DbHandler {
    public:
-    DbHandlerMock() : DbHandler("mongodb://db:27017/espotifai-db")
-    {
-    }
-
     MOCK_CONST_METHOD1(FindPlaylist, bool(const std::string &));
     MOCK_CONST_METHOD1(CreatePlaylist, void(const std::string &));
 };

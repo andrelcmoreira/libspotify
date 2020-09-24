@@ -9,10 +9,13 @@
 
 #include "mock/search_music_listener_mock.h"
 #include "mock/curl_wrapper_mock.h"
+#include "mock/db_handler_mock.h"
+
 
 #include "api.h"
 #include "private/curl_wrapper.h"
 #include "private/music_searcher.h"
+#include "private/playlist_mgr.h"
 #include "types.h"
 
 class MusicSearcherTest : public testing::Test {
@@ -20,13 +23,19 @@ class MusicSearcherTest : public testing::Test {
      MusicSearcherTest()
           : curl_{std::make_shared<espotifai_api::test::CurlWrapperMock>()},
             searcher_{std::make_shared<espotifai_api::MusicSearcher>(curl_)},
-            api_{nullptr, searcher_}
+            db_mock_{std::make_shared<espotifai_api::test::DbHandlerMock>()},
+            playlist_mgr_{std::make_shared<espotifai_api::PlaylistMgr>(db_mock_)},
+            api_{nullptr, searcher_, playlist_mgr_}
      {
      }
 
     protected:
      std::shared_ptr<espotifai_api::test::CurlWrapperMock> curl_; //!< Curl wrapper mock instance.
      std::shared_ptr<espotifai_api::MusicSearcher> searcher_; //!< Spotify music searcher instance.
+     /* The playlist mgr must be supplied with a mocked database handler due mongodb instance. */
+     /* TODO: fix this behavior */
+     std::shared_ptr<espotifai_api::test::DbHandlerMock> db_mock_; //!< Database mock.
+     std::shared_ptr<espotifai_api::PlaylistMgr> playlist_mgr_; //!< Playlist manager.
      espotifai_api::Api api_; //!< Api instance.
      const std::string kMusicSearchBaseUri_{"https://api.spotify.com/v1/search?q="}; //!< URI used for music searching.
 };

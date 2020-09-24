@@ -8,10 +8,12 @@
 
 #include "mock/access_listener_mock.h"
 #include "mock/curl_wrapper_mock.h"
+#include "mock/db_handler_mock.h"
 
 #include "api.h"
 #include "private/curl_wrapper.h"
 #include "private/spotify_auth.h"
+#include "private/playlist_mgr.h"
 #include "private/utils.h"
 
 class SpotifyAuthTest : public testing::Test {
@@ -19,13 +21,19 @@ class SpotifyAuthTest : public testing::Test {
      SpotifyAuthTest()
           : curl_{std::make_shared<espotifai_api::test::CurlWrapperMock>()},
             auth_{std::make_shared<espotifai_api::SpotifyAuth>(curl_)},
-            api_{auth_}
+            db_mock_{std::make_shared<espotifai_api::test::DbHandlerMock>()},
+            playlist_mgr_{std::make_shared<espotifai_api::PlaylistMgr>(db_mock_)},
+            api_{auth_, nullptr, playlist_mgr_}
      {
      }
 
     protected:
      std::shared_ptr<espotifai_api::test::CurlWrapperMock> curl_; //!< Curl wrapper mock instance.
      std::shared_ptr<espotifai_api::SpotifyAuth> auth_; //!< Spotify auth instance.
+     /* The playlist mgr must be supplied with a mocked database handler due mongodb instance. */
+     /* TODO: fix this behavior */
+     std::shared_ptr<espotifai_api::test::DbHandlerMock> db_mock_; //!< Database mock.
+     std::shared_ptr<espotifai_api::PlaylistMgr> playlist_mgr_; //!< Playlist manager.
      espotifai_api::Api api_; //!< Api instance.
      const std::string KLoginUri_{"https://accounts.spotify.com/api/token"}; //!< URI used for authentication.
 };

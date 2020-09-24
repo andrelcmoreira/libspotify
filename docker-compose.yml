@@ -8,9 +8,9 @@ services:
     db:
         container_name: espotifai-db-service
         image: mongo:latest
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=admin # TODO: change it!
-            - MONGO_INITDB_ROOT_PASSWORD=admin # TODO: change it!
+        #environment:
+        #    - MONGO_INITDB_ROOT_USERNAME=admin # TODO: change it!
+        #    - MONGO_INITDB_ROOT_PASSWORD=admin # TODO: change it!
         ports:
             - '27017:27017'
         volumes:

@@ -5,7 +5,11 @@
 #ifndef DB_HANDLER_H_
 #define DB_HANDLER_H_
 
+#include <memory>
 #include <string>
+
+#include <mongocxx/client.hpp>
+#include <mongocxx/instance.hpp>
 
 namespace espotifai_api {
 
@@ -16,6 +20,11 @@ namespace espotifai_api {
  */
 class DbHandler {
    public:
+    /**
+     * \brief Constructor.
+     */
+    DbHandler() = default;
+
     /**
      * \brief Constructor.
      * \param uri Database URI.
@@ -36,7 +45,8 @@ class DbHandler {
     virtual void CreatePlaylist(const std::string &name) const;
 
    private:
-    std::string uri_; //!< Database uri.
+    std::unique_ptr<mongocxx::instance> db_inst_;
+    mongocxx::client db_conn_;
 };
 
 }  // namespace espotifai_api

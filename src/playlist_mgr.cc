@@ -9,7 +9,7 @@
 namespace espotifai_api {
 
 PlaylistMgr::PlaylistMgr(const std::shared_ptr<DbHandler> &db)
-    : db_handler_{db ? db : std::make_shared<DbHandler>("mongodb://db:27017/espotifai-db")}
+    : db_handler_{db ? db : std::make_shared<DbHandler>("mongodb://localhost:27017/espotifai-db")}
 {
 }
 
