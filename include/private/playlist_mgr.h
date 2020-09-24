@@ -9,6 +9,7 @@
 #include <string>
 
 #include "db_handler.h"
+#include "types.h"
 
 namespace espotifai_api {
 
@@ -30,6 +31,13 @@ class PlaylistMgr {
      * \param owner Owner of playlist.
      */
     void Create(const std::string &name, const std::string &owner) const;
+
+    /**
+     * \brief Add a music into an existent playlist.
+     * \param music Informations of the music.
+     * \param playlist Name of the playlist.
+     */
+    void AddMusic(const MusicInfo &music, const std::string &playlist) const;
 
    private:
     std::shared_ptr<DbHandler> db_handler_; //!< Database handler.

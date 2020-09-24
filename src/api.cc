@@ -5,6 +5,7 @@
 #include "api.h"
 
 #include "access_listener.h"
+#include "add_music_playlist_listener.h"
 #include "create_playlist_listener.h"
 #include "search_music_listener.h"
 
@@ -58,6 +59,20 @@ void Api::CreatePlaylist(CreatePlaylistListener &listener, const std::string &na
         listener.OnPlaylistCreated();
     } catch(const std::exception &e) {
         listener.OnPlaylistCreationError(e.what());
+    }
+}
+
+void Api::AddMusicToPlaylist(AddMusicPlaylistListener &listener, const MusicInfo &music,
+    const std::string &playlist)
+{
+    // TODO: make it async?
+
+    try {
+        playlist_mgr_->AddMusic(music, playlist);
+
+        listener.OnMusicAdded();
+    } catch(const std::exception &e) {
+        listener.OnMusicAdditionError(e.what());
     }
 }
 

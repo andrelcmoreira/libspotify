@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "mock/add_music_playlist_listener_mock.h"
 #include "mock/create_playlist_listener_mock.h"
 #include "mock/db_handler_mock.h"
 
@@ -109,4 +110,109 @@ TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistWithDatabaseError_S_R
         .Times(1);
 
     api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try to add a music to an
+ * existent playlist. When this occurs, the espotifai_api must add the music to the
+ * given playlist and return success through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserAddMusicToExistentPlaylist_S_MusicBeAdded)
+{
+    /* test constants */
+    const std::string kPlaylistName{"my cool playlist"};
+    const std::string kPlaylistOwner{"foo"};
+    const espotifai_api::MusicInfo kMusic{
+        .name = "cool music",
+        .artist = "cool artist",
+        .uri = "cool uri",
+        .duration = 1234
+    };
+
+    auto listener = std::make_shared<espotifai_api::test::AddMusicPlaylistListenerMock>();
+
+    /* set default behavior for FindPlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(true));
+    ON_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName))
+        .WillByDefault(testing::Return(false));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, AddMusic(kMusic, kPlaylistName)).Times(1);
+    EXPECT_CALL(*listener, OnMusicAdded()).Times(1);
+    EXPECT_CALL(*listener, OnMusicAdditionError(testing::_))
+        .Times(0);
+
+    api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try to add a music to a
+ * non existent playlist. When this occurs, the espotifai_api must return the suitable
+ * error message through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserAddMusicToNonExistentPlaylist_S_ReturnFailure)
+{
+    /* test constants */
+    const std::string kPlaylistName{"non existent playlist"};
+    const std::string kPlaylistOwner{"foo"};
+    const std::string kErrorMsg{"the playlist doesn't exist!"};
+    const espotifai_api::MusicInfo kMusic{
+        .name = "cool music",
+        .artist = "cool artist",
+        .uri = "cool uri",
+        .duration = 1234
+    };
+
+    auto listener = std::make_shared<espotifai_api::test::AddMusicPlaylistListenerMock>();
+
+    /* set default behavior for FindPlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(false));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName)).Times(0);
+    EXPECT_CALL(*db_mock_, AddMusic(kMusic, kPlaylistName)).Times(0);
+    EXPECT_CALL(*listener, OnMusicAdded()).Times(0);
+    EXPECT_CALL(*listener, OnMusicAdditionError(kErrorMsg))
+        .Times(1);
+
+    api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try to add an existent music to a
+ * playlist. When this occurs, the espotifai_api must return the suitable error message
+ * through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserAddMusicWichAlreadyExistInPlaylist_S_ReturnFailure)
+{
+    /* test constants */
+    const std::string kPlaylistName{"existent playlist"};
+    const std::string kPlaylistOwner{"foo"};
+    const std::string kErrorMsg{"the music already exist in playlist!"};
+    const espotifai_api::MusicInfo kMusic{
+        .name = "cool music",
+        .artist = "cool artist",
+        .uri = "cool uri",
+        .duration = 1234
+    };
+
+    auto listener = std::make_shared<espotifai_api::test::AddMusicPlaylistListenerMock>();
+
+    /* set default behavior for FindPlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(true));
+    ON_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName))
+        .WillByDefault(testing::Return(true));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, AddMusic(kMusic, kPlaylistName)).Times(0);
+    EXPECT_CALL(*listener, OnMusicAdded()).Times(0);
+    EXPECT_CALL(*listener, OnMusicAdditionError(kErrorMsg))
+        .Times(1);
+
+    api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
 }

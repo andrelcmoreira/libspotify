@@ -11,12 +11,14 @@
 #include "private/music_searcher.h"
 #include "private/playlist_mgr.h"
 #include "private/spotify_auth.h"
+#include "types.h"
 
 namespace espotifai_api {
 
 class AccessListener;
 class SearchMusicListener;
 class CreatePlaylistListener;
+class AddMusicPlaylistListener;
 
 /**
  * \class Api.
@@ -72,6 +74,18 @@ class Api {
         const std::string &name,
         const std::string &owner
     ) const;
+
+    /**
+     * \brief Add a music into an existent playlist.
+     * \param listener Event listener.
+     * \param music Informations of the music.
+     * \param playlist Name of the playlist.
+     */
+    void AddMusicToPlaylist(
+        AddMusicPlaylistListener &listener,
+        const MusicInfo &music,
+        const std::string &playlist
+    );
 
    private:
     std::shared_ptr<SpotifyAuth> sptf_auth_; //!< Spotify authenticator.

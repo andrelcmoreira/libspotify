@@ -11,6 +11,8 @@
 #include <mongocxx/client.hpp>
 #include <mongocxx/instance.hpp>
 
+#include "types.h"
+
 namespace espotifai_api {
 
 /**
@@ -43,6 +45,21 @@ class DbHandler {
      * \param name Playlist name.
      */
     virtual void CreatePlaylist(const std::string &name) const;
+
+    /**
+     * \brief Add a music into an existent playlist.
+     * \param music Informations of the music.
+     * \param playlist Name of the playlist.
+     */
+    virtual void AddMusic(const MusicInfo &music, const std::string &playlist) const;
+
+    /**
+     * \brief Look for a music in the playlist.
+     * \param uri URI of the music.
+     * \param playlist Name of the playlist.
+     * \return True if the music is already present on playlist; otherwise False.
+     */
+    virtual bool FindMusicInPlaylist(const std::string &uri, const std::string &playlist) const;
 
    private:
     std::unique_ptr<mongocxx::instance> db_inst_;

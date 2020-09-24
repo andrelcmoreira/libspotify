@@ -24,4 +24,21 @@ void PlaylistMgr::Create(const std::string &name, const std::string &owner) cons
     db_handler_->CreatePlaylist(name);
 }
 
+void PlaylistMgr::AddMusic(const MusicInfo &music, const std::string &playlist) const
+{
+    if (!db_handler_->FindPlaylist(playlist)) {
+        throw std::runtime_error(
+            "the playlist doesn't exist!"
+        );
+    }
+
+    if (db_handler_->FindMusicInPlaylist(music.uri, playlist)) {
+        throw std::runtime_error(
+            "the music already exist in playlist!"
+        );
+    }
+
+    db_handler_->AddMusic(music, playlist);
+}
+
 }  // namespace espotifai_api
