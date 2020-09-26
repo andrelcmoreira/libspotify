@@ -8,6 +8,7 @@
 
 #include "mock/add_music_playlist_listener_mock.h"
 #include "mock/create_playlist_listener_mock.h"
+#include "mock/list_playlist_musics_listener_mock.h"
 #include "mock/db_handler_mock.h"
 
 #include "api.h"
@@ -215,4 +216,102 @@ TEST_F(PlaylistMgrTest, W_UserAddMusicWichAlreadyExistInPlaylist_S_ReturnFailure
         .Times(1);
 
     api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try list the musics of an
+ * existent playlist. When this occurs, the API must return the list of musics related
+ * to the playlist through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfExistentPlaylist_S_ReturnTheMusicList)
+{
+    /* test constants */
+    const std::string kPlaylistName{"existent playlist"};
+    const std::string kPlaylistOwner{"foo"};
+    const std::vector<espotifai_api::MusicInfo> kMusicList{
+        {
+            .name = "music 1",
+            .artist = "artist 1",
+            .uri = "uri 1",
+            .duration = 1234
+        },
+        {
+            .name = "music 2",
+            .artist = "artist 2",
+            .uri = "uri 2",
+            .duration = 4567
+        }
+
+    };
+
+    auto listener = std::make_shared<espotifai_api::test::ListPlaylistMusicsListenerMock>();
+
+    /* set default behavior for FindPlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(true));
+    ON_CALL(*db_mock_, GetMusics(kPlaylistName))
+        .WillByDefault(testing::Return(kMusicList));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, GetMusics(kPlaylistName)).Times(1);
+    EXPECT_CALL(*listener, OnMusicList(kMusicList)).Times(1);
+    EXPECT_CALL(*listener, OnMusicListError(testing::_))
+        .Times(0);
+
+    api_.ListPlaylistMusics(*listener, kPlaylistName);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try list the musics of a non
+ * existent playlist. When this occurs, the API must return the suitable error through
+ * the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfNonExistentPlaylist_S_ReturnFailure)
+{
+    /* test constants */
+    const std::string kPlaylistName{"non existent playlist"};
+    const std::string kPlaylistOwner{"foo"};
+    const std::string kErrorMsg{"the playlist doesn't exist"};
+
+    auto listener = std::make_shared<espotifai_api::test::ListPlaylistMusicsListenerMock>();
+
+    /* set default behavior for FindPlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(false));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, GetMusics(kPlaylistName)).Times(0);
+    EXPECT_CALL(*listener, OnMusicList(testing::_)).Times(0);
+    EXPECT_CALL(*listener, OnMusicListError(testing::_))
+        .Times(1);
+
+    api_.ListPlaylistMusics(*listener, kPlaylistName);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try list the musics of an empty
+ * playlist. When this occurs, the API must return an empty list through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfEmptyPlaylist_S_ReturnEmptyList)
+{
+    /* test constants */
+    const std::string kPlaylistName{"empty playlist"};
+    const std::string kPlaylistOwner{"foo"};
+    const std::vector<espotifai_api::MusicInfo> kMusicList;
+
+    auto listener = std::make_shared<espotifai_api::test::ListPlaylistMusicsListenerMock>();
+
+    /* set default behavior for FindPlaylist method */
+    ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
+        .WillByDefault(testing::Return(true));
+    ON_CALL(*db_mock_, GetMusics(kPlaylistName))
+        .WillByDefault(testing::Return(kMusicList));
+
+    EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
+    EXPECT_CALL(*db_mock_, GetMusics(kPlaylistName)).Times(1);
+    EXPECT_CALL(*listener, OnMusicList(kMusicList)).Times(1);
+    EXPECT_CALL(*listener, OnMusicListError(testing::_))
+        .Times(0);
+
+    api_.ListPlaylistMusics(*listener, kPlaylistName);
 }

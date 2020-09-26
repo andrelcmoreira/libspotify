@@ -7,6 +7,7 @@
 #include "access_listener.h"
 #include "add_music_playlist_listener.h"
 #include "create_playlist_listener.h"
+#include "list_playlist_musics_listener.h"
 #include "search_music_listener.h"
 
 namespace espotifai_api {
@@ -63,7 +64,7 @@ void Api::CreatePlaylist(CreatePlaylistListener &listener, const std::string &na
 }
 
 void Api::AddMusicToPlaylist(AddMusicPlaylistListener &listener, const MusicInfo &music,
-    const std::string &playlist)
+    const std::string &playlist) const
 {
     // TODO: make it async?
 
@@ -73,6 +74,20 @@ void Api::AddMusicToPlaylist(AddMusicPlaylistListener &listener, const MusicInfo
         listener.OnMusicAdded();
     } catch(const std::exception &e) {
         listener.OnMusicAdditionError(e.what());
+    }
+}
+
+void Api::ListPlaylistMusics(ListPlaylistMusicsListener &listener,
+    const std::string &playlist_name) const
+{
+    // TODO: make it async?
+
+    try {
+        auto musics = playlist_mgr_->ListMusics(playlist_name);
+
+        listener.OnMusicList(musics);
+    } catch(const std::exception &e) {
+        listener.OnMusicListError(e.what());
     }
 }
 

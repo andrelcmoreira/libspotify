@@ -39,6 +39,12 @@ class PlaylistMgr {
      */
     void AddMusic(const MusicInfo &music, const std::string &playlist) const;
 
+    /**
+     * \brief List the musics of a playlist.
+     * \param playlist Name of the playlist.
+     */
+    std::vector<MusicInfo> ListMusics(const std::string &playlist) const;
+
    private:
     std::shared_ptr<DbHandler> db_handler_; //!< Database handler.
 };

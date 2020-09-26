@@ -41,4 +41,15 @@ void PlaylistMgr::AddMusic(const MusicInfo &music, const std::string &playlist) 
     db_handler_->AddMusic(music, playlist);
 }
 
+std::vector<MusicInfo> PlaylistMgr::ListMusics(const std::string &playlist) const
+{
+    if (!db_handler_->FindPlaylist(playlist)) {
+        throw std::runtime_error(
+            "the playlist doesn't exist!"
+        );
+    }
+
+    return db_handler_->GetMusics(playlist);
+}
+
 }  // namespace espotifai_api

@@ -61,6 +61,12 @@ class DbHandler {
      */
     virtual bool FindMusicInPlaylist(const std::string &uri, const std::string &playlist) const;
 
+    /**
+     * \brief Get the musics of a given playlist.
+     * \param playlist Name of the playlist.
+     */
+    virtual std::vector<MusicInfo> GetMusics(const std::string &playlist) const;
+
    private:
     std::unique_ptr<mongocxx::instance> db_inst_;
     mongocxx::client db_conn_;

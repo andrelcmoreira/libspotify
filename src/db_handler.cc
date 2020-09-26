@@ -6,6 +6,8 @@
 
 #include <bsoncxx/builder/stream/document.hpp>
 #include <bsoncxx/builder/basic/kvp.hpp>
+#include <bsoncxx/document/element.hpp>
+#include <bsoncxx/document/view.hpp>
 #include <bsoncxx/json.hpp>
 
 namespace espotifai_api {
@@ -88,6 +90,45 @@ void DbHandler::AddMusic(const MusicInfo &music, const std::string &playlist) co
             )
         )
     );
+}
+
+std::vector<MusicInfo> DbHandler::GetMusics(const std::string &playlist) const
+{
+    std::vector<MusicInfo> musics;
+
+    auto playlists = db_conn_["espotifai-db"]["playlists"];
+    auto found = playlists.find_one(
+        bsoncxx::builder::stream::document{} <<
+        "name" << playlist <<
+        bsoncxx::builder::stream::finalize
+    );
+
+    if (!found) {
+        throw std::runtime_error(
+            "the playlist doesn't exist!"
+        );
+    }
+
+    {
+        auto view = found->view();
+
+        bsoncxx::document::element musics_ele{view["musics"]};
+        bsoncxx::array::view music_list{musics_ele.get_array().value};
+
+        for (auto &music : music_list) {
+            auto music_doc = music.get_document().value;
+            MusicInfo info = {
+                .name = music_doc["name"].get_utf8().value.data(),
+                .artist = music_doc["artist"].get_utf8().value.data(),
+                .uri = music_doc["uri"].get_utf8().value.data(),
+                .duration = music_doc["name"].get_int32().value
+            };
+
+            musics.emplace_back(info);
+        }
+    }
+
+    return musics;
 }
 
 } // namespace espotifai_api

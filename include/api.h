@@ -16,9 +16,10 @@
 namespace espotifai_api {
 
 class AccessListener;
-class SearchMusicListener;
-class CreatePlaylistListener;
 class AddMusicPlaylistListener;
+class CreatePlaylistListener;
+class ListPlaylistMusicsListener;
+class SearchMusicListener;
 
 /**
  * \class Api.
@@ -85,7 +86,16 @@ class Api {
         AddMusicPlaylistListener &listener,
         const MusicInfo &music,
         const std::string &playlist
-    );
+    )const;
+
+    /**
+     * \brief List the musics for a given playlist.
+     * \param playlist_name Name of the playlist.
+     */
+    void ListPlaylistMusics(
+        ListPlaylistMusicsListener &listener,
+        const std::string &playlist_name
+    ) const;
 
    private:
     std::shared_ptr<SpotifyAuth> sptf_auth_; //!< Spotify authenticator.
