@@ -6,8 +6,7 @@
 
 #include "access_listener.h"
 #include "add_music_playlist_listener.h"
-#include "create_playlist_listener.h"
-#include "list_playlist_musics_listener.h"
+#include "playlist_listener.h"
 #include "search_music_listener.h"
 
 namespace espotifai_api {
@@ -49,7 +48,7 @@ void Api::SearchMusic(SearchMusicListener &listener, const std::string &token,
     }
 }
 
-void Api::CreatePlaylist(CreatePlaylistListener &listener, const std::string &name,
+void Api::CreatePlaylist(PlaylistListener &listener, const std::string &name,
     const std::string &owner) const
 {
     // TODO: make it async?
@@ -77,7 +76,7 @@ void Api::AddMusicToPlaylist(AddMusicPlaylistListener &listener, const MusicInfo
     }
 }
 
-void Api::ListPlaylistMusics(ListPlaylistMusicsListener &listener,
+void Api::ListPlaylistMusics(PlaylistListener &listener,
     const std::string &playlist_name) const
 {
     // TODO: make it async?

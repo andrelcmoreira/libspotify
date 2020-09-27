@@ -121,7 +121,9 @@ std::vector<MusicInfo> DbHandler::GetMusics(const std::string &playlist) const
                 .name = music_doc["name"].get_utf8().value.data(),
                 .artist = music_doc["artist"].get_utf8().value.data(),
                 .uri = music_doc["uri"].get_utf8().value.data(),
-                .duration = music_doc["name"].get_int32().value
+                .duration = std::atoi(
+                    music_doc["duration"].get_utf8().value.data()
+                )
             };
 
             musics.emplace_back(info);

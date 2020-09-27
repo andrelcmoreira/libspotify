@@ -17,8 +17,7 @@ namespace espotifai_api {
 
 class AccessListener;
 class AddMusicPlaylistListener;
-class CreatePlaylistListener;
-class ListPlaylistMusicsListener;
+class PlaylistListener;
 class SearchMusicListener;
 
 /**
@@ -71,7 +70,7 @@ class Api {
      * \param owner Owner of the playlist.
      */
     void CreatePlaylist(
-        CreatePlaylistListener &listener,
+        PlaylistListener &listener,
         const std::string &name,
         const std::string &owner
     ) const;
@@ -90,10 +89,11 @@ class Api {
 
     /**
      * \brief List the musics for a given playlist.
+     * \param listener Event listener.
      * \param playlist_name Name of the playlist.
      */
     void ListPlaylistMusics(
-        ListPlaylistMusicsListener &listener,
+        PlaylistListener &listener,
         const std::string &playlist_name
     ) const;
 

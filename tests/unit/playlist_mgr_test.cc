@@ -7,8 +7,7 @@
 #include <memory>
 
 #include "mock/add_music_playlist_listener_mock.h"
-#include "mock/create_playlist_listener_mock.h"
-#include "mock/list_playlist_musics_listener_mock.h"
+#include "mock/playlist_listener_mock.h"
 #include "mock/db_handler_mock.h"
 
 #include "api.h"
@@ -40,7 +39,7 @@ TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfANewPlaylist_S_CreatePlaylist)
     const std::string kPlaylistName{"my cool playlist"};
     const std::string kPlaylistOwner{"foo"};
 
-    auto listener = std::make_shared<espotifai_api::test::CreatePlaylistListenerMock>();
+    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
@@ -67,7 +66,7 @@ TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistThatAlreadyExist_S_Re
     const std::string kErrorMessage{"the playlist already exist!"};
     const std::string kPlaylistOwner{"foo"};
 
-    auto listener = std::make_shared<espotifai_api::test::CreatePlaylistListenerMock>();
+    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
@@ -94,7 +93,7 @@ TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistWithDatabaseError_S_R
     const std::string kErrorMsg{"something went wrong!"};
     const std::string kPlaylistOwner{"foo"};
 
-    auto listener = std::make_shared<espotifai_api::test::CreatePlaylistListenerMock>();
+    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
 
     /* set default behavior for CreatePlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
@@ -244,7 +243,7 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfExistentPlaylist_S_ReturnTheMusic
 
     };
 
-    auto listener = std::make_shared<espotifai_api::test::ListPlaylistMusicsListenerMock>();
+    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
@@ -273,7 +272,7 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfNonExistentPlaylist_S_ReturnFailu
     const std::string kPlaylistOwner{"foo"};
     const std::string kErrorMsg{"the playlist doesn't exist"};
 
-    auto listener = std::make_shared<espotifai_api::test::ListPlaylistMusicsListenerMock>();
+    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
@@ -299,7 +298,7 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfEmptyPlaylist_S_ReturnEmptyList)
     const std::string kPlaylistOwner{"foo"};
     const std::vector<espotifai_api::MusicInfo> kMusicList;
 
-    auto listener = std::make_shared<espotifai_api::test::ListPlaylistMusicsListenerMock>();
+    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
