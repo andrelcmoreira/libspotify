@@ -133,4 +133,18 @@ std::vector<MusicInfo> DbHandler::GetMusics(const std::string &playlist) const
     return musics;
 }
 
+std::vector<std::string> DbHandler::GetPlaylists() const
+{
+    std::vector<std::string> list_playlists;
+    auto playlists = db_conn_["espotifai-db"]["playlists"];
+
+    for (auto &playlist : playlists.find({})) {
+        list_playlists.emplace_back(
+            playlist["name"].get_utf8().value.data()
+        );
+    }
+
+    return list_playlists;
+}
+
 } // namespace espotifai_api

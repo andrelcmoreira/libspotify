@@ -15,6 +15,7 @@ class DbHandlerMock : public DbHandler {
     MOCK_CONST_METHOD2(FindMusicInPlaylist, bool(const std::string &, const std::string &));
     MOCK_CONST_METHOD2(AddMusic, void(const MusicInfo &, const std::string &));
     MOCK_CONST_METHOD1(GetMusics, std::vector<MusicInfo>(const std::string &));
+    MOCK_CONST_METHOD0(GetPlaylists, std::vector<std::string>());
 };
 
 }  // namespace test

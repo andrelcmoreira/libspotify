@@ -52,4 +52,9 @@ std::vector<MusicInfo> PlaylistMgr::ListMusics(const std::string &playlist) cons
     return db_handler_->GetMusics(playlist);
 }
 
+std::vector<std::string> PlaylistMgr::GetPlaylists() const
+{
+    return db_handler_->GetPlaylists();
+}
+
 }  // namespace espotifai_api

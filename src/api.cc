@@ -90,4 +90,17 @@ void Api::ListPlaylistMusics(PlaylistListener &listener,
     }
 }
 
+void Api::GetPlaylists(PlaylistListener &listener) const
+{
+    // TODO: make it async?
+
+    try {
+        auto playlists = playlist_mgr_->GetPlaylists();
+
+        listener.OnPlaylistsFound(playlists);
+    } catch(const std::exception &e) {
+        listener.OnPlaylistsFoundError(e.what());
+    }
+}
+
 }  // namespace espotifai_api

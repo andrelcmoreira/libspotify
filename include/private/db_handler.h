@@ -67,6 +67,12 @@ class DbHandler {
      */
     virtual std::vector<MusicInfo> GetMusics(const std::string &playlist) const;
 
+    /**
+     * \brief Get all the registered playlists.
+     * \return All the playlists.
+     */
+    virtual std::vector<std::string> GetPlaylists() const;
+
    private:
     std::unique_ptr<mongocxx::instance> db_inst_;
     mongocxx::client db_conn_;

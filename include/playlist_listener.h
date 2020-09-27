@@ -41,6 +41,18 @@ class PlaylistListener {
      * \param msg The suitable error message.
      */
     virtual void OnMusicListError(const std::string &msg) const = 0;
+
+    /**
+     * \brief Report the list of registered playlists.
+     * \param playlists The list of playlists.
+     */
+    virtual void OnPlaylistsFound(const std::vector<std::string> &playlists) const = 0;
+
+    /**
+     * \brief Indicates an error during the operation for retrieve the playlists.
+     * \param msg The suitable error message.
+     */
+    virtual void OnPlaylistsFoundError(const std::string &msg) const = 0;
 };
 
 }  // namespace espotifai_api

@@ -245,7 +245,7 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfExistentPlaylist_S_ReturnTheMusic
 
     auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
 
-    /* set default behavior for FindPlaylist method */
+    /* set default behavior for methods */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
         .WillByDefault(testing::Return(true));
     ON_CALL(*db_mock_, GetMusics(kPlaylistName))
@@ -300,7 +300,7 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfEmptyPlaylist_S_ReturnEmptyList)
 
     auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
 
-    /* set default behavior for FindPlaylist method */
+    /* set default behavior for methods */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
         .WillByDefault(testing::Return(true));
     ON_CALL(*db_mock_, GetMusics(kPlaylistName))
@@ -313,4 +313,57 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfEmptyPlaylist_S_ReturnEmptyList)
         .Times(0);
 
     api_.ListPlaylistMusics(*listener, kPlaylistName);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try to retrieve all registered
+ * playlists. When this occurs, the API must return a list of the registered playlists
+ * through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserTryToObtainAllPlaylists_S_ReturnPlaylists)
+{
+    /* test constants */
+    const std::vector<std::string> kPlaylists{
+        "playlist 1",
+        "playlist 2",
+        "playlist 3",
+        "playlist 4"
+    };
+
+    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+
+    /* set default behavior for GetPlaylists method */
+    ON_CALL(*db_mock_, GetPlaylists())
+        .WillByDefault(testing::Return(kPlaylists));
+
+    EXPECT_CALL(*db_mock_, GetPlaylists()).Times(1);
+    EXPECT_CALL(*listener, OnPlaylistsFound(kPlaylists)).Times(1);
+    EXPECT_CALL(*listener, OnPlaylistsFoundError(testing::_))
+        .Times(0);
+
+    api_.GetPlaylists(*listener);
+}
+
+/**
+ * \brief This tests validates the scenario when the user try to retrieve all registered
+ * playlists, but the database is empty. When this occurs, the API must return an empty list
+ * through the listener.
+ */
+TEST_F(PlaylistMgrTest, W_UserTryToObtainAllPlaylistsButDbIsEmpty_S_ReturnEmptyList)
+{
+    /* test constants */
+    const std::vector<std::string> kPlaylists;
+
+    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+
+    /* set default behavior for GetPlaylists method */
+    ON_CALL(*db_mock_, GetPlaylists())
+        .WillByDefault(testing::Return(kPlaylists));
+
+    EXPECT_CALL(*db_mock_, GetPlaylists()).Times(1);
+    EXPECT_CALL(*listener, OnPlaylistsFound(kPlaylists)).Times(1);
+    EXPECT_CALL(*listener, OnPlaylistsFoundError(testing::_))
+        .Times(0);
+
+    api_.GetPlaylists(*listener);
 }

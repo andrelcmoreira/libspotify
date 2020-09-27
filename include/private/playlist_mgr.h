@@ -42,8 +42,15 @@ class PlaylistMgr {
     /**
      * \brief List the musics of a playlist.
      * \param playlist Name of the playlist.
+     * \return The list of musics associated to the playlist.
      */
     std::vector<MusicInfo> ListMusics(const std::string &playlist) const;
+
+    /**
+     * \brief Get all registered playlists.
+     * \return All the playlists.
+     */
+    std::vector<std::string> GetPlaylists() const;
 
    private:
     std::shared_ptr<DbHandler> db_handler_; //!< Database handler.

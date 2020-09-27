@@ -97,6 +97,12 @@ class Api {
         const std::string &playlist_name
     ) const;
 
+    /**
+     * \brief Get all playlists registered on database.
+     * \param listener Event listener.
+     */
+    void GetPlaylists(PlaylistListener &listener) const;
+
    private:
     std::shared_ptr<SpotifyAuth> sptf_auth_; //!< Spotify authenticator.
     std::shared_ptr<MusicSearcher> sptf_searcher_; //!< Spotify music searcher.
