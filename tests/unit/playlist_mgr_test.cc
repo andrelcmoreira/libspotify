@@ -13,19 +13,40 @@
 #include "api.h"
 #include "private/playlist_mgr.h"
 
-class PlaylistMgrTest : public testing::Test {
+using std::make_shared;
+using std::string;
+using std::shared_ptr;
+using std::vector;
+using std::runtime_error;
+
+using espotifai_api::test::DbHandlerMock;
+using espotifai_api::test::PlaylistListenerMock;
+using espotifai_api::test::AddMusicPlaylistListenerMock;
+using espotifai_api::SpotifyAuth;
+using espotifai_api::PlaylistMgr;
+using espotifai_api::Api;
+using espotifai_api::MusicInfo;
+
+using testing::Test;
+using testing::Return;
+using testing::Throw;
+using testing::_;
+
+using Json::Value;
+
+class PlaylistMgrTest : public Test {
     public:
      PlaylistMgrTest()
-          : db_mock_{std::make_shared<espotifai_api::test::DbHandlerMock>()},
-            playlist_mgr_{std::make_shared<espotifai_api::PlaylistMgr>(db_mock_)},
+          : db_mock_{make_shared<DbHandlerMock>()},
+            playlist_mgr_{make_shared<PlaylistMgr>(db_mock_)},
             api_{nullptr, nullptr, playlist_mgr_}
      {
      }
 
     protected:
-     std::shared_ptr<espotifai_api::test::DbHandlerMock> db_mock_; //!< Database mock.
-     std::shared_ptr<espotifai_api::PlaylistMgr> playlist_mgr_; //!< Playlist manager.
-     espotifai_api::Api api_; //!< Api instance.
+     shared_ptr<DbHandlerMock> db_mock_; //!< Database mock.
+     shared_ptr<PlaylistMgr> playlist_mgr_; //!< Playlist manager.
+     Api api_; //!< Api instance.
 };
 
 /**
@@ -36,20 +57,19 @@ class PlaylistMgrTest : public testing::Test {
 TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfANewPlaylist_S_CreatePlaylist)
 {
     /* test constants */
-    const std::string kPlaylistName{"my cool playlist"};
-    const std::string kPlaylistOwner{"foo"};
+    const string kPlaylistName{"my cool playlist"};
+    const string kPlaylistOwner{"foo"};
 
-    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+    auto listener = make_shared<PlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(false));
+        .WillByDefault(Return(false));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, CreatePlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*listener, OnPlaylistCreated()).Times(1);
-    EXPECT_CALL(*listener, OnPlaylistCreationError(testing::_))
-        .Times(0);
+    EXPECT_CALL(*listener, OnPlaylistCreationError(_)).Times(0);
 
     api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
 }
@@ -62,21 +82,20 @@ TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfANewPlaylist_S_CreatePlaylist)
 TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistThatAlreadyExist_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kPlaylistName{"my cool playlist"};
-    const std::string kErrorMessage{"the playlist already exist!"};
-    const std::string kPlaylistOwner{"foo"};
+    const string kPlaylistName{"my cool playlist"};
+    const string kErrorMessage{"the playlist already exist!"};
+    const string kPlaylistOwner{"foo"};
 
-    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+    auto listener = make_shared<PlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(true));
+        .WillByDefault(Return(true));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, CreatePlaylist(kPlaylistName)).Times(0);
     EXPECT_CALL(*listener, OnPlaylistCreated()).Times(0);
-    EXPECT_CALL(*listener, OnPlaylistCreationError(kErrorMessage))
-        .Times(1);
+    EXPECT_CALL(*listener, OnPlaylistCreationError(kErrorMessage)).Times(1);
 
     api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
 }
@@ -89,22 +108,22 @@ TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistThatAlreadyExist_S_Re
 TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistWithDatabaseError_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kPlaylistName{"my cool playlist"};
-    const std::string kErrorMsg{"something went wrong!"};
-    const std::string kPlaylistOwner{"foo"};
+    const string kPlaylistName{"my cool playlist"};
+    const string kErrorMsg{"something went wrong!"};
+    const string kPlaylistOwner{"foo"};
 
-    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+    auto listener = make_shared<PlaylistListenerMock>();
 
     /* set default behavior for CreatePlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(false));
+        .WillByDefault(Return(false));
     ON_CALL(*db_mock_, CreatePlaylist(kPlaylistName))
-        .WillByDefault(testing::Throw(std::runtime_error(kErrorMsg)));
+        .WillByDefault(Throw(runtime_error(kErrorMsg)));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, CreatePlaylist(kPlaylistName))
         .Times(1)
-        .WillOnce(testing::Throw(std::runtime_error(kErrorMsg)));
+        .WillOnce(Throw(std::runtime_error(kErrorMsg)));
     EXPECT_CALL(*listener, OnPlaylistCreated()).Times(0);
     EXPECT_CALL(*listener, OnPlaylistCreationError(kErrorMsg))
         .Times(1);
@@ -120,29 +139,28 @@ TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistWithDatabaseError_S_R
 TEST_F(PlaylistMgrTest, W_UserAddMusicToExistentPlaylist_S_MusicBeAdded)
 {
     /* test constants */
-    const std::string kPlaylistName{"my cool playlist"};
-    const std::string kPlaylistOwner{"foo"};
-    const espotifai_api::MusicInfo kMusic{
+    const string kPlaylistName{"my cool playlist"};
+    const string kPlaylistOwner{"foo"};
+    const MusicInfo kMusic{
         .name = "cool music",
         .artist = "cool artist",
         .uri = "cool uri",
         .duration = 1234
     };
 
-    auto listener = std::make_shared<espotifai_api::test::AddMusicPlaylistListenerMock>();
+    auto listener = make_shared<AddMusicPlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(true));
+        .WillByDefault(Return(true));
     ON_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName))
-        .WillByDefault(testing::Return(false));
+        .WillByDefault(Return(false));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, AddMusic(kMusic, kPlaylistName)).Times(1);
     EXPECT_CALL(*listener, OnMusicAdded()).Times(1);
-    EXPECT_CALL(*listener, OnMusicAdditionError(testing::_))
-        .Times(0);
+    EXPECT_CALL(*listener, OnMusicAdditionError(_)).Times(0);
 
     api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
 }
@@ -155,28 +173,27 @@ TEST_F(PlaylistMgrTest, W_UserAddMusicToExistentPlaylist_S_MusicBeAdded)
 TEST_F(PlaylistMgrTest, W_UserAddMusicToNonExistentPlaylist_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kPlaylistName{"non existent playlist"};
-    const std::string kPlaylistOwner{"foo"};
-    const std::string kErrorMsg{"the playlist doesn't exist!"};
-    const espotifai_api::MusicInfo kMusic{
+    const string kPlaylistName{"non existent playlist"};
+    const string kPlaylistOwner{"foo"};
+    const string kErrorMsg{"the playlist doesn't exist!"};
+    const MusicInfo kMusic{
         .name = "cool music",
         .artist = "cool artist",
         .uri = "cool uri",
         .duration = 1234
     };
 
-    auto listener = std::make_shared<espotifai_api::test::AddMusicPlaylistListenerMock>();
+    auto listener = make_shared<AddMusicPlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(false));
+        .WillByDefault(Return(false));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName)).Times(0);
     EXPECT_CALL(*db_mock_, AddMusic(kMusic, kPlaylistName)).Times(0);
     EXPECT_CALL(*listener, OnMusicAdded()).Times(0);
-    EXPECT_CALL(*listener, OnMusicAdditionError(kErrorMsg))
-        .Times(1);
+    EXPECT_CALL(*listener, OnMusicAdditionError(kErrorMsg)).Times(1);
 
     api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
 }
@@ -189,30 +206,29 @@ TEST_F(PlaylistMgrTest, W_UserAddMusicToNonExistentPlaylist_S_ReturnFailure)
 TEST_F(PlaylistMgrTest, W_UserAddMusicWichAlreadyExistInPlaylist_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kPlaylistName{"existent playlist"};
-    const std::string kPlaylistOwner{"foo"};
-    const std::string kErrorMsg{"the music already exist in playlist!"};
-    const espotifai_api::MusicInfo kMusic{
+    const string kPlaylistName{"existent playlist"};
+    const string kPlaylistOwner{"foo"};
+    const string kErrorMsg{"the music already exist in playlist!"};
+    const MusicInfo kMusic{
         .name = "cool music",
         .artist = "cool artist",
         .uri = "cool uri",
         .duration = 1234
     };
 
-    auto listener = std::make_shared<espotifai_api::test::AddMusicPlaylistListenerMock>();
+    auto listener = make_shared<AddMusicPlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(true));
+        .WillByDefault(Return(true));
     ON_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName))
-        .WillByDefault(testing::Return(true));
+        .WillByDefault(Return(true));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, FindMusicInPlaylist(kMusic.uri, kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, AddMusic(kMusic, kPlaylistName)).Times(0);
     EXPECT_CALL(*listener, OnMusicAdded()).Times(0);
-    EXPECT_CALL(*listener, OnMusicAdditionError(kErrorMsg))
-        .Times(1);
+    EXPECT_CALL(*listener, OnMusicAdditionError(kErrorMsg)).Times(1);
 
     api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
 }
@@ -225,9 +241,9 @@ TEST_F(PlaylistMgrTest, W_UserAddMusicWichAlreadyExistInPlaylist_S_ReturnFailure
 TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfExistentPlaylist_S_ReturnTheMusicList)
 {
     /* test constants */
-    const std::string kPlaylistName{"existent playlist"};
-    const std::string kPlaylistOwner{"foo"};
-    const std::vector<espotifai_api::MusicInfo> kMusicList{
+    const string kPlaylistName{"existent playlist"};
+    const string kPlaylistOwner{"foo"};
+    const vector<MusicInfo> kMusicList{
         {
             .name = "music 1",
             .artist = "artist 1",
@@ -243,19 +259,18 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfExistentPlaylist_S_ReturnTheMusic
 
     };
 
-    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+    auto listener = make_shared<PlaylistListenerMock>();
 
     /* set default behavior for methods */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(true));
+        .WillByDefault(Return(true));
     ON_CALL(*db_mock_, GetMusics(kPlaylistName))
-        .WillByDefault(testing::Return(kMusicList));
+        .WillByDefault(Return(kMusicList));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, GetMusics(kPlaylistName)).Times(1);
     EXPECT_CALL(*listener, OnMusicList(kMusicList)).Times(1);
-    EXPECT_CALL(*listener, OnMusicListError(testing::_))
-        .Times(0);
+    EXPECT_CALL(*listener, OnMusicListError(_)).Times(0);
 
     api_.ListPlaylistMusics(*listener, kPlaylistName);
 }
@@ -268,21 +283,20 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfExistentPlaylist_S_ReturnTheMusic
 TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfNonExistentPlaylist_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kPlaylistName{"non existent playlist"};
-    const std::string kPlaylistOwner{"foo"};
-    const std::string kErrorMsg{"the playlist doesn't exist"};
+    const string kPlaylistName{"non existent playlist"};
+    const string kPlaylistOwner{"foo"};
+    const string kErrorMsg{"the playlist doesn't exist"};
 
-    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+    auto listener = make_shared<PlaylistListenerMock>();
 
     /* set default behavior for FindPlaylist method */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(false));
+        .WillByDefault(Return(false));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, GetMusics(kPlaylistName)).Times(0);
-    EXPECT_CALL(*listener, OnMusicList(testing::_)).Times(0);
-    EXPECT_CALL(*listener, OnMusicListError(testing::_))
-        .Times(1);
+    EXPECT_CALL(*listener, OnMusicList(_)).Times(0);
+    EXPECT_CALL(*listener, OnMusicListError(_)).Times(1);
 
     api_.ListPlaylistMusics(*listener, kPlaylistName);
 }
@@ -294,23 +308,22 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfNonExistentPlaylist_S_ReturnFailu
 TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfEmptyPlaylist_S_ReturnEmptyList)
 {
     /* test constants */
-    const std::string kPlaylistName{"empty playlist"};
-    const std::string kPlaylistOwner{"foo"};
-    const std::vector<espotifai_api::MusicInfo> kMusicList;
+    const string kPlaylistName{"empty playlist"};
+    const string kPlaylistOwner{"foo"};
+    const vector<MusicInfo> kMusicList;
 
-    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+    auto listener = make_shared<PlaylistListenerMock>();
 
     /* set default behavior for methods */
     ON_CALL(*db_mock_, FindPlaylist(kPlaylistName))
-        .WillByDefault(testing::Return(true));
+        .WillByDefault(Return(true));
     ON_CALL(*db_mock_, GetMusics(kPlaylistName))
-        .WillByDefault(testing::Return(kMusicList));
+        .WillByDefault(Return(kMusicList));
 
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, GetMusics(kPlaylistName)).Times(1);
     EXPECT_CALL(*listener, OnMusicList(kMusicList)).Times(1);
-    EXPECT_CALL(*listener, OnMusicListError(testing::_))
-        .Times(0);
+    EXPECT_CALL(*listener, OnMusicListError(_)).Times(0);
 
     api_.ListPlaylistMusics(*listener, kPlaylistName);
 }
@@ -323,23 +336,22 @@ TEST_F(PlaylistMgrTest, W_UserTryToListMusicsOfEmptyPlaylist_S_ReturnEmptyList)
 TEST_F(PlaylistMgrTest, W_UserTryToObtainAllPlaylists_S_ReturnPlaylists)
 {
     /* test constants */
-    const std::vector<std::string> kPlaylists{
+    const vector<string> kPlaylists{
         "playlist 1",
         "playlist 2",
         "playlist 3",
         "playlist 4"
     };
 
-    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+    auto listener = make_shared<PlaylistListenerMock>();
 
     /* set default behavior for GetPlaylists method */
     ON_CALL(*db_mock_, GetPlaylists())
-        .WillByDefault(testing::Return(kPlaylists));
+        .WillByDefault(Return(kPlaylists));
 
     EXPECT_CALL(*db_mock_, GetPlaylists()).Times(1);
     EXPECT_CALL(*listener, OnPlaylistsFound(kPlaylists)).Times(1);
-    EXPECT_CALL(*listener, OnPlaylistsFoundError(testing::_))
-        .Times(0);
+    EXPECT_CALL(*listener, OnPlaylistsFoundError(_)).Times(0);
 
     api_.GetPlaylists(*listener);
 }
@@ -352,18 +364,17 @@ TEST_F(PlaylistMgrTest, W_UserTryToObtainAllPlaylists_S_ReturnPlaylists)
 TEST_F(PlaylistMgrTest, W_UserTryToObtainAllPlaylistsButDbIsEmpty_S_ReturnEmptyList)
 {
     /* test constants */
-    const std::vector<std::string> kPlaylists;
+    const vector<string> kPlaylists;
 
-    auto listener = std::make_shared<espotifai_api::test::PlaylistListenerMock>();
+    auto listener = make_shared<PlaylistListenerMock>();
 
     /* set default behavior for GetPlaylists method */
     ON_CALL(*db_mock_, GetPlaylists())
-        .WillByDefault(testing::Return(kPlaylists));
+        .WillByDefault(Return(kPlaylists));
 
     EXPECT_CALL(*db_mock_, GetPlaylists()).Times(1);
     EXPECT_CALL(*listener, OnPlaylistsFound(kPlaylists)).Times(1);
-    EXPECT_CALL(*listener, OnPlaylistsFoundError(testing::_))
-        .Times(0);
+    EXPECT_CALL(*listener, OnPlaylistsFoundError(_)).Times(0);
 
     api_.GetPlaylists(*listener);
 }

@@ -11,19 +11,24 @@
 namespace espotifai_api {
 namespace utils {
 
-namespace base64 = ::boost::beast::detail::base64;
+using boost::beast::detail::base64::encode;
+using boost::beast::detail::base64::encoded_size;
+using std::memset;
+using std::size_t;
+using std::strlen;
+using std::string;
 
-std::string GetBase64Code(const std::string &str)
+std::string GetBase64Code(const string &str)
 {
     const char *auth = str.c_str();
-    std::size_t max_size = base64::encoded_size(str.size()) + 1;
+    size_t max_size = encoded_size(str.size()) + 1;
     char result[max_size];
 
-    std::memset(result, 0, max_size);
+    memset(result, 0, max_size);
 
-    base64::encode(result, auth, std::strlen(auth));
+    encode(result, auth, strlen(auth));
 
-    return std::string{result};
+    return string{result};
 }
 
 }  // namespace utils

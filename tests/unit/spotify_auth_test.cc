@@ -16,26 +16,45 @@
 #include "private/playlist_mgr.h"
 #include "private/utils.h"
 
-class SpotifyAuthTest : public testing::Test {
+using std::make_shared;
+using std::string;
+using std::shared_ptr;
+using std::vector;
+
+using espotifai_api::test::AccessListenerMock;
+using espotifai_api::test::DbHandlerMock;
+using espotifai_api::test::CurlWrapperMock;
+using espotifai_api::SpotifyAuth;
+using espotifai_api::PlaylistMgr;
+using espotifai_api::Api;
+
+using testing::Test;
+using testing::Return;
+using testing::Throw;
+using testing::_;
+
+using Json::Value;
+
+class SpotifyAuthTest : public Test {
     public:
      SpotifyAuthTest()
-          : curl_{std::make_shared<espotifai_api::test::CurlWrapperMock>()},
-            auth_{std::make_shared<espotifai_api::SpotifyAuth>(curl_)},
-            db_mock_{std::make_shared<espotifai_api::test::DbHandlerMock>()},
-            playlist_mgr_{std::make_shared<espotifai_api::PlaylistMgr>(db_mock_)},
+          : curl_{make_shared<CurlWrapperMock>()},
+            auth_{make_shared<SpotifyAuth>(curl_)},
+            db_mock_{make_shared<DbHandlerMock>()},
+            playlist_mgr_{make_shared<PlaylistMgr>(db_mock_)},
             api_{auth_, nullptr, playlist_mgr_}
      {
      }
 
     protected:
-     std::shared_ptr<espotifai_api::test::CurlWrapperMock> curl_; //!< Curl wrapper mock instance.
-     std::shared_ptr<espotifai_api::SpotifyAuth> auth_; //!< Spotify auth instance.
+     shared_ptr<CurlWrapperMock> curl_; //!< Curl wrapper mock instance.
+     shared_ptr<SpotifyAuth> auth_; //!< Spotify auth instance.
      /* The playlist mgr must be supplied with a mocked database handler due mongodb instance. */
      /* TODO: fix this behavior */
-     std::shared_ptr<espotifai_api::test::DbHandlerMock> db_mock_; //!< Database mock.
-     std::shared_ptr<espotifai_api::PlaylistMgr> playlist_mgr_; //!< Playlist manager.
-     espotifai_api::Api api_; //!< Api instance.
-     const std::string KLoginUri_{"https://accounts.spotify.com/api/token"}; //!< URI used for authentication.
+     shared_ptr<DbHandlerMock> db_mock_; //!< Database mock.
+     shared_ptr<PlaylistMgr> playlist_mgr_; //!< Playlist manager.
+     Api api_; //!< Api instance.
+     const string KLoginUri_{"https://accounts.spotify.com/api/token"}; //!< URI used for authentication.
 };
 
 /**
@@ -46,16 +65,14 @@ class SpotifyAuthTest : public testing::Test {
 TEST_F(SpotifyAuthTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
 {
     /* test constants */
-    const std::string kClientId{"good_id"};
-    const std::string kClientSecret{"good_secret"};
-    const std::vector<std::string> kReqHeaders{
+    const string kClientId{"good_id"};
+    const string kClientSecret{"good_secret"};
+    const vector<string> kReqHeaders{
         "Authorization: Basic " +
         espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)
     };
-    const std::vector<std::string> kReqData{
-        "grant_type=client_credentials"
-    };
-    Json::Value expected_return;
+    const vector<string> kReqData{"grant_type=client_credentials"};
+    Value expected_return;
 
     /* build the expected return */
     expected_return["access_token"] = "BQDGLtwpiJbNGiJejVpzV6xvFFwlaDCysDW41sPWJgVBL0XBWXj7wMm7";
@@ -63,14 +80,14 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
     expected_return["expires_in"] = "3600";
     expected_return["scope"] = "";
 
-    auto listener = std::make_shared<espotifai_api::test::AccessListenerMock>();
+    auto listener = make_shared<AccessListenerMock>();
 
     /* set default behavior for Post method */
     ON_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData))
-        .WillByDefault(testing::Return(expected_return));
+        .WillByDefault(Return(expected_return));
 
     EXPECT_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData)).Times(1);
-    EXPECT_CALL(*listener, OnAccessDenied(testing::_)).Times(0);
+    EXPECT_CALL(*listener, OnAccessDenied(_)).Times(0);
     EXPECT_CALL(*listener, OnAccessGuaranteed(expected_return["access_token"].asString()))
         .Times(1);
 
@@ -85,33 +102,31 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthWithValidCredentials_S_LogWithSuccess)
 TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kClientId{"bad_id"};
-    const std::string kClientSecret{"bad_secret"};
-    const std::string kExpectedMsg{
+    const string kClientId{"bad_id"};
+    const string kClientSecret{"bad_secret"};
+    const string kExpectedMsg{
         "fail to authenticate the user with the provided credentials!"
     };
-    const std::vector<std::string> kReqHeaders{
+    const vector<string> kReqHeaders{
         "Authorization: Basic " +
         espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)
     };
-    const std::vector<std::string> kReqData{
-        "grant_type=client_credentials"
-    };
-    Json::Value expected_return;
+    const vector<string> kReqData{"grant_type=client_credentials"};
+    Value expected_return;
 
     /* build the expected return */
     expected_return["error"] = "invalid_client";
     expected_return["error_description"] = "Invalid client secret";
 
-    auto listener = std::make_shared<espotifai_api::test::AccessListenerMock>();
+    auto listener = make_shared<AccessListenerMock>();
 
     /* set default behavior for Post method */
     ON_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData))
-        .WillByDefault(testing::Return(expected_return));
+        .WillByDefault(Return(expected_return));
 
     EXPECT_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData)).Times(1);
     EXPECT_CALL(*listener, OnAccessDenied(kExpectedMsg)).Times(1);
-    EXPECT_CALL(*listener, OnAccessGuaranteed(testing::_)).Times(0);
+    EXPECT_CALL(*listener, OnAccessGuaranteed(_)).Times(0);
 
     api_.RequestAccess(*listener, kClientId, kClientSecret);
 }
@@ -124,27 +139,25 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure)
 TEST_F(SpotifyAuthTest, W_UserRequestAuthOffline_S_ReturnFailure)
 {
     /* test constants */
-    const std::string kClientId{"good_id"};
-    const std::string kClientSecret{"good_secret"};
-    const std::string kErrorMessage{"some cool error message"};
-    const std::vector<std::string> kReqHeaders{
+    const string kClientId{"good_id"};
+    const string kClientSecret{"good_secret"};
+    const string kErrorMessage{"some cool error message"};
+    const vector<string> kReqHeaders{
         "Authorization: Basic " +
         espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)
     };
-    const std::vector<std::string> kReqData{
-        "grant_type=client_credentials"
-    };
+    const vector<string> kReqData{"grant_type=client_credentials"};
 
     /* set default behavior for Post method */
     ON_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData))
-        .WillByDefault(testing::Throw(std::runtime_error(kErrorMessage)));
+        .WillByDefault(Throw(std::runtime_error(kErrorMessage)));
 
-    auto listener = std::make_shared<espotifai_api::test::AccessListenerMock>();
+    auto listener = make_shared<AccessListenerMock>();
 
     EXPECT_CALL(*curl_, Post(KLoginUri_, kReqHeaders, kReqData))
         .Times(1)
-        .WillOnce(testing::Throw(std::runtime_error(kErrorMessage)));
-    EXPECT_CALL(*listener, OnAccessGuaranteed(testing::_)).Times(0);
+        .WillOnce(Throw(std::runtime_error(kErrorMessage)));
+    EXPECT_CALL(*listener, OnAccessGuaranteed(_)).Times(0);
     EXPECT_CALL(*listener, OnAccessDenied(kErrorMessage))
         .Times(1);
 

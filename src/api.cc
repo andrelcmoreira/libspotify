@@ -11,17 +11,22 @@
 
 namespace espotifai_api {
 
-Api::Api(const std::shared_ptr<SpotifyAuth> &auth,
-         const std::shared_ptr<MusicSearcher> &searcher,
-         const std::shared_ptr<PlaylistMgr> &mgr)
-    : sptf_auth_{auth ? auth : std::make_shared<SpotifyAuth>()},
-      sptf_searcher_{searcher ? searcher : std::make_shared<MusicSearcher>()},
-      playlist_mgr_{mgr ? mgr : std::make_shared<PlaylistMgr>()}
+using std::exception;
+using std::make_shared;
+using std::shared_ptr;
+using std::string;
+
+Api::Api(const shared_ptr<SpotifyAuth> &auth,
+         const shared_ptr<MusicSearcher> &searcher,
+         const shared_ptr<PlaylistMgr> &mgr)
+    : sptf_auth_{auth ? auth : make_shared<SpotifyAuth>()},
+      sptf_searcher_{searcher ? searcher : make_shared<MusicSearcher>()},
+      playlist_mgr_{mgr ? mgr : make_shared<PlaylistMgr>()}
 {
 }
 
-void Api::RequestAccess(AccessListener &listener, const std::string &client_id,
-    const std::string &client_secret) const
+void Api::RequestAccess(AccessListener &listener, const string &client_id,
+    const string &client_secret) const
 {
     // TODO: make it async?
 
@@ -29,13 +34,13 @@ void Api::RequestAccess(AccessListener &listener, const std::string &client_id,
         auto token = sptf_auth_->AuthUser(client_id, client_secret);
 
         listener.OnAccessGuaranteed(token);
-    } catch(const std::exception &e) {
+    } catch(const exception &e) {
         listener.OnAccessDenied(e.what());
     }
 }
 
-void Api::SearchMusic(SearchMusicListener &listener, const std::string &token,
-    const std::string &name) const
+void Api::SearchMusic(SearchMusicListener &listener, const string &token,
+    const string &name) const
 {
     // TODO: make it async?
 
@@ -43,13 +48,13 @@ void Api::SearchMusic(SearchMusicListener &listener, const std::string &token,
         auto musics = sptf_searcher_->Search(token, name);
 
         listener.OnMusicFound(musics);
-    } catch(const std::exception &e) {
+    } catch(const exception &e) {
         listener.OnMusicSearchError(e.what());
     }
 }
 
-void Api::CreatePlaylist(PlaylistListener &listener, const std::string &name,
-    const std::string &owner) const
+void Api::CreatePlaylist(PlaylistListener &listener, const string &name,
+    const string &owner) const
 {
     // TODO: make it async?
 
@@ -57,13 +62,13 @@ void Api::CreatePlaylist(PlaylistListener &listener, const std::string &name,
         playlist_mgr_->Create(name, owner);
 
         listener.OnPlaylistCreated();
-    } catch(const std::exception &e) {
+    } catch(const exception &e) {
         listener.OnPlaylistCreationError(e.what());
     }
 }
 
 void Api::AddMusicToPlaylist(AddMusicPlaylistListener &listener, const MusicInfo &music,
-    const std::string &playlist) const
+    const string &playlist) const
 {
     // TODO: make it async?
 
@@ -71,13 +76,13 @@ void Api::AddMusicToPlaylist(AddMusicPlaylistListener &listener, const MusicInfo
         playlist_mgr_->AddMusic(music, playlist);
 
         listener.OnMusicAdded();
-    } catch(const std::exception &e) {
+    } catch(const exception &e) {
         listener.OnMusicAdditionError(e.what());
     }
 }
 
 void Api::ListPlaylistMusics(PlaylistListener &listener,
-    const std::string &playlist_name) const
+    const string &playlist_name) const
 {
     // TODO: make it async?
 
@@ -85,7 +90,7 @@ void Api::ListPlaylistMusics(PlaylistListener &listener,
         auto musics = playlist_mgr_->ListMusics(playlist_name);
 
         listener.OnMusicList(musics);
-    } catch(const std::exception &e) {
+    } catch(const exception &e) {
         listener.OnMusicListError(e.what());
     }
 }
@@ -98,7 +103,7 @@ void Api::GetPlaylists(PlaylistListener &listener) const
         auto playlists = playlist_mgr_->GetPlaylists();
 
         listener.OnPlaylistsFound(playlists);
-    } catch(const std::exception &e) {
+    } catch(const exception &e) {
         listener.OnPlaylistsFoundError(e.what());
     }
 }

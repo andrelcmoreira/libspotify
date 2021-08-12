@@ -9,6 +9,13 @@
 
 namespace espotifai_api {
 
+using Json::Value;
+using std::memcpy;
+using std::runtime_error;
+using std::size_t;
+using std::string;
+using std::vector;
+
 struct CurlFetch {
     char *payload;
     size_t size;
@@ -18,9 +25,7 @@ CurlWrapper::CurlWrapper()
     : curl_handle_{static_cast<CURL *>(curl_easy_init())}
 {
     if (!curl_handle_) {
-        throw std::runtime_error(
-            "failed to start the authentication process!"
-        );
+        throw runtime_error("failed to start the authentication process!");
     }
 }
 
@@ -29,12 +34,12 @@ CurlWrapper::~CurlWrapper()
     curl_easy_cleanup(curl_handle_);
 }
 
-Json::Value CurlWrapper::Post(
-    const std::string &uri,
-    const std::vector<std::string> &req_headers,
-    const std::vector<std::string> &req_data) const
+Value CurlWrapper::Post(
+    const string &uri,
+    const vector<string> &req_headers,
+    const vector<string> &req_data) const
 {
-    Json::Value response;
+    Value response;
     struct curl_slist *headers = nullptr;
     struct CurlFetch curl_fetch;
     struct CurlFetch *cf = &curl_fetch;
@@ -56,13 +61,13 @@ Json::Value CurlWrapper::Post(
     curl_slist_free_all(headers);
 
     if (ret != CURLE_OK) {
-        throw std::runtime_error(
+        throw runtime_error(
             "failed to establish the connection with remote server!"
         );
     }
 
     if (cf->payload) {
-        std::string errors; /* unused */
+        string errors; /* unused */
         auto json_reader = builder_.newCharReader();
 
         bool parse_ok = json_reader->parse(
@@ -75,20 +80,18 @@ Json::Value CurlWrapper::Post(
         free(cf->payload);
 
         if (!parse_ok) {
-            throw std::runtime_error(
-                "failed to parse the response from server!"
-            );
+            throw runtime_error("failed to parse the response from server!");
         }
     }
 
     return response;
 }
 
-Json::Value CurlWrapper::Get(
-    const std::string &uri,
-    const std::vector<std::string> &req_headers) const
+Value CurlWrapper::Get(
+    const string &uri,
+    const vector<string> &req_headers) const
 {
-    Json::Value response;
+    Value response;
     struct curl_slist *headers = nullptr;
     struct CurlFetch curl_fetch;
     struct CurlFetch *cf = &curl_fetch;
@@ -105,13 +108,13 @@ Json::Value CurlWrapper::Get(
     curl_slist_free_all(headers);
 
     if (ret != CURLE_OK) {
-        throw std::runtime_error(
+        throw runtime_error(
             "failed to establish the connection with remote server!"
         );
     }
 
     if (cf->payload) {
-        std::string errors; /* unused */
+        string errors; /* unused */
         auto json_reader = builder_.newCharReader();
 
         bool parse_ok = json_reader->parse(
@@ -124,7 +127,7 @@ Json::Value CurlWrapper::Get(
         free(cf->payload);
 
         if (!parse_ok) {
-            throw std::runtime_error(
+            throw runtime_error(
                 "failed to parse the response from server!"
             );
         }
@@ -133,7 +136,7 @@ Json::Value CurlWrapper::Get(
     return response;
 }
 
-CURLcode CurlWrapper::FetchUri(const std::string &uri, struct CurlFetch *fetch) const
+CURLcode CurlWrapper::FetchUri(const string &uri, struct CurlFetch *fetch) const
 {
     fetch->size = 0;
     fetch->payload = (char *)calloc(1, sizeof(fetch->payload));
@@ -153,7 +156,7 @@ CURLcode CurlWrapper::FetchUri(const std::string &uri, struct CurlFetch *fetch) 
     return curl_easy_perform(curl_handle_);
 }
 
-std::size_t CurlWrapper::CurlCallback(void *contents, size_t size, size_t nmemb, void *userp)
+size_t CurlWrapper::CurlCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
     size_t realsize = size * nmemb;
     struct CurlFetch *p = (struct CurlFetch *)userp;
@@ -164,7 +167,7 @@ std::size_t CurlWrapper::CurlCallback(void *contents, size_t size, size_t nmemb,
         return 1;
     }
 
-    std::memcpy(&(p->payload[p->size]), contents, realsize);
+    memcpy(&(p->payload[p->size]), contents, realsize);
 
     p->size += realsize;
     p->payload[p->size] = 0;
