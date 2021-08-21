@@ -14,7 +14,8 @@ include_directories(
 
 link_directories(${CMAKE_SOURCE_DIR}/../build /usr/local/lib64)
 
-set(SOURCES
+set(
+    SOURCES
     ${sources_dir}/unit/spotify_auth_test.cc
     ${sources_dir}/unit/music_searcher_test.cc
     ${sources_dir}/unit/playlist_mgr_test.cc
@@ -23,4 +24,13 @@ set(SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} gtest gtest_main gmock pthread espotifai_api mongocxx bsoncxx)
+target_link_libraries(
+    ${PROJECT_NAME}
+    gtest
+    gtest_main
+    gmock
+    pthread
+    espotifai_api
+    mongocxx
+    bsoncxx
+)

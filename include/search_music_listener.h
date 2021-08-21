@@ -18,18 +18,18 @@ struct MusicInfo;
  * \brief This class defines a interface for music searching events.
  */
 class SearchMusicListener {
-   public:
-    /**
-     * \brief Report the musics found.
-     * \param musics List of found musics.
-     */
-    virtual void OnMusicFound(const std::vector<MusicInfo> &musics) const = 0;
+ public:
+  /**
+   * \brief Report the musics found.
+   * \param musics List of found musics.
+   */
+  virtual void OnMusicFound(const std::vector<MusicInfo>& musics) const = 0;
 
-    /**
-     * \brief Indicates a error during the operation.
-     * \param msg The suitable error message.
-     */
-    virtual void OnMusicSearchError(const std::string &msg) const = 0;
+  /**
+   * \brief Indicates a error during the operation.
+   * \param msg The suitable error message.
+   */
+  virtual void OnMusicSearchError(const std::string& msg) const = 0;
 };
 
 }  // namespace espotifai_api

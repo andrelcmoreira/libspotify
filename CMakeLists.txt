@@ -14,7 +14,8 @@ include_directories(
     /usr/local/include/bsoncxx/v_noabi
 )
 
-add_library(${PROJECT_NAME} SHARED
+add_library(
+    ${PROJECT_NAME} SHARED
     src/api.cc
     src/curl_wrapper.cc
     src/db_handler.cc
@@ -23,4 +24,11 @@ add_library(${PROJECT_NAME} SHARED
     src/spotify_auth.cc
     src/utils.cc
 )
-target_link_libraries(${PROJECT_NAME} curl jsoncpp mongocxx bsoncxx)
+
+target_link_libraries(
+    ${PROJECT_NAME}
+    curl
+    jsoncpp
+    mongocxx
+    bsoncxx
+)

@@ -15,18 +15,18 @@ namespace espotifai_api {
  * \brief This class defines a interface for login events.
  */
 class AccessListener {
-   public:
-    /**
-     * \brief Indicates that the login attempt was a success.
-     * \param token User's auth token.
-     */
-    virtual void OnAccessGuaranteed(const std::string &token) const = 0;
+ public:
+  /**
+   * \brief Indicates that the login attempt was a success.
+   * \param token User's auth token.
+   */
+  virtual void OnAccessGuaranteed(const std::string& token) const = 0;
 
-    /**
-     * \brief Indicates that the login attempt has failed.
-     * \param msg The suitable error message.
-     */
-    virtual void OnAccessDenied(const std::string &msg) const = 0;
+  /**
+   * \brief Indicates that the login attempt has failed.
+   * \param msg The suitable error message.
+   */
+  virtual void OnAccessDenied(const std::string& msg) const = 0;
 };
 
 }  // namespace espotifai_api

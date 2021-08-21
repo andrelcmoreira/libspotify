@@ -20,15 +20,15 @@ All the dependencies below have support for Linux/Windows/MacOS
 ```bash
 $ git clone https://github.com/carvalhudo/espotifai-api
 $ cd espotifai-api
-$ mkdir build && cd $_
-$ cmake .. && make
+$ cmake . -B build
+$ cmake --build build
 ```
 
 ### Running the tests
 
 ```bash
 $ cd tests
-$ mkdir build && cd $_
-$ cmake .. && make
+$ cmake . -B build
+$ cmake --build build
 $ ./espotifai_api_tests
 ```

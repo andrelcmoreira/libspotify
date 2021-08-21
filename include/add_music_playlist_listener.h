@@ -16,17 +16,17 @@ namespace espotifai_api {
  * a music into playlist.
  */
 class AddMusicPlaylistListener {
-   public:
-    /**
-     * \brief Report the music addition.
-     */
-    virtual void OnMusicAdded() const = 0;
+ public:
+  /**
+   * \brief Report the music addition.
+   */
+  virtual void OnMusicAdded() const = 0;
 
-    /**
-     * \brief Indicates an error during the operation.
-     * \param msg The suitable error message.
-     */
-    virtual void OnMusicAdditionError(const std::string &msg) const = 0;
+  /**
+   * \brief Indicates an error during the operation.
+   * \param msg The suitable error message.
+   */
+  virtual void OnMusicAdditionError(const std::string& msg) const = 0;
 };
 
 }  // namespace espotifai_api
