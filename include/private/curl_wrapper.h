@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Curl wrapper class definition.
+ * @file
+ *
+ * @brief Curl wrapper class definition.
  */
 #ifndef CURL_WRAPPER_H_
 #define CURL_WRAPPER_H_
@@ -13,28 +14,29 @@
 namespace espotifai_api {
 
 /**
- * \class CurlWrapper.
+ * @class CurlWrapper.
  *
- * \brief This class wraps some of functionalities of libcurl.
+ * @brief This class wraps some of functionalities of libcurl.
  */
 class CurlWrapper {
    public:
     /**
-     * \brief Constructor.
+     * @brief Constructor.
      */
     CurlWrapper();
 
     /**
-     * \brief Destructor.
+     * @brief Destructor.
      */
     ~CurlWrapper();
 
     /**
-     * \brief Performs a POST request.
-     * \param uri The requested uri.
-     * \param req_headers Headers associated to request.
-     * \param req_data Data associated to request.
-     * \return Response parsed in json format.
+     * @brief Performs a POST request.
+     *
+     * @param uri The requested uri.
+     * @param req_headers Headers associated to request.
+     * @param req_data Data associated to request.
+     * @return Response parsed in json format.
      */
     virtual Json::Value Post(
         const std::string &uri,
@@ -42,10 +44,11 @@ class CurlWrapper {
         const std::vector<std::string> &req_data) const;
 
     /**
-     * \brief Performs a GET request.
-     * \param uri The requested uri.
-     * \param req_headers Headers associated to request.
-     * \return Response parsed in json format.
+     * @brief Performs a GET request.
+     *
+     * @param uri The requested uri.
+     * @param req_headers Headers associated to request.
+     * @return Response parsed in json format.
      */
     virtual Json::Value Get(
         const std::string &uri,
@@ -53,15 +56,16 @@ class CurlWrapper {
 
    private:
     /**
-     * \brief Fetch a given uri.
-     * \param uri Requested uri.
-     * \param fetch Libcurl's fetch structure.
-     * \return CURL_OK in success; otherwise the suitable error code.
+     * @brief Fetch a given uri.
+     *
+     * @param uri Requested uri.
+     * @param fetch Libcurl's fetch structure.
+     * @return CURL_OK in success; otherwise the suitable error code.
      */
     CURLcode FetchUri(const std::string &uri, struct CurlFetch *fetch) const;
 
     /**
-     * \brief Libcurl callback.
+     * @brief Libcurl callback.
      */
     static std::size_t CurlCallback(void *contents, size_t size, size_t nmemb, void *userp);
 

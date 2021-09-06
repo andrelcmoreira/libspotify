@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Spotify music searcher class implementation.
+ * @file
+ *
+ * @brief Spotify music searcher class implementation.
  */
 #include "private/music_searcher.h"
 

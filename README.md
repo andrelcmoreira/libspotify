@@ -26,8 +26,9 @@ $ cmake --build build
 ### Running the tests
 
 ```bash
-$ cd tests
+$ cd tests/unit
 $ cmake . -B build
 $ cmake --build build
+$ cd build
 $ ./espotifai_api_tests
 ```

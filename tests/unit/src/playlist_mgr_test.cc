@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Playlist manager test class implementation.
+ * @file
+ *
+ * @brief Playlist manager test class implementation.
  */
 #include "private/playlist_mgr.h"
 
@@ -42,7 +43,7 @@ class PlaylistMgrTest : public Test {
 };
 
 /**
- * \brief This tests validates the scenario when the user try create a new
+ * @brief This tests validates the scenario when the user try create a new
  * playlist. When this occurs, the espotifai_api must create it and return
  * notify the user through the listener.
  */
@@ -67,7 +68,7 @@ TEST_F(PlaylistMgrTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try create a playlist
+ * @brief This tests validates the scenario when the user try create a playlist
  * which already exist on database. When this occurs, the espotifai_api must
  * return the suitable error message through the listener.
  */
@@ -93,7 +94,7 @@ TEST_F(PlaylistMgrTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try to create a
+ * @brief This tests validates the scenario when the user try to create a
  * playlist, but an error occurs at database level. When this occurs, the
  * espotifai_api must return the the suitable error message through the
  * listener.
@@ -125,7 +126,7 @@ TEST_F(PlaylistMgrTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try to add a music to
+ * @brief This tests validates the scenario when the user try to add a music to
  * an existent playlist. When this occurs, the espotifai_api must add the music
  * to the given playlist and return success through the listener.
  */
@@ -159,7 +160,7 @@ TEST_F(PlaylistMgrTest, W_UserAddMusicToExistentPlaylist_S_MusicBeAdded) {
 }
 
 /**
- * \brief This tests validates the scenario when the user try to add a music to
+ * @brief This tests validates the scenario when the user try to add a music to
  * a non existent playlist. When this occurs, the espotifai_api must return the
  * suitable error message through the listener.
  */
@@ -192,7 +193,7 @@ TEST_F(PlaylistMgrTest, W_UserAddMusicToNonExistentPlaylist_S_ReturnFailure) {
 }
 
 /**
- * \brief This tests validates the scenario when the user try to add an existent
+ * @brief This tests validates the scenario when the user try to add an existent
  * music to a playlist. When this occurs, the espotifai_api must return the
  * suitable error message through the listener.
  */
@@ -228,7 +229,7 @@ TEST_F(PlaylistMgrTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try list the musics of
+ * @brief This tests validates the scenario when the user try list the musics of
  * an existent playlist. When this occurs, the API must return the list of
  * musics related to the playlist through the listener.
  */
@@ -270,7 +271,7 @@ TEST_F(PlaylistMgrTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try list the musics of
+ * @brief This tests validates the scenario when the user try list the musics of
  * a non existent playlist. When this occurs, the API must return the suitable
  * error through the listener.
  */
@@ -296,7 +297,7 @@ TEST_F(PlaylistMgrTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try list the musics of
+ * @brief This tests validates the scenario when the user try list the musics of
  * an empty playlist. When this occurs, the API must return an empty list
  * through the listener.
  */
@@ -324,7 +325,7 @@ TEST_F(PlaylistMgrTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try to retrieve all
+ * @brief This tests validates the scenario when the user try to retrieve all
  * registered playlists. When this occurs, the API must return a list of the
  * registered playlists through the listener.
  */
@@ -351,7 +352,7 @@ TEST_F(PlaylistMgrTest, W_UserTryToObtainAllPlaylists_S_ReturnPlaylists) {
 }
 
 /**
- * \brief This tests validates the scenario when the user try to retrieve all
+ * @brief This tests validates the scenario when the user try to retrieve all
  * registered playlists, but the database is empty. When this occurs, the API
  * must return an empty list through the listener.
  */

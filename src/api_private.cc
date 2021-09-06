@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Api private class implementation.
+ * @file
+ *
+ * @brief Api private class implementation.
  */
 #include "private/api_private.h"
 

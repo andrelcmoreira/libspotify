@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief This file defines a set of common types used along the api and client
+ * @file
+ *
+ * @brief This file defines a set of common types used along the api and client
  * code.
  */
 #ifndef TYPES_H_
@@ -11,7 +12,7 @@
 namespace espotifai_api {
 
 /**
- * \brief This structure holds informations about a single music.
+ * @brief This structure holds informations about a single music.
  */
 struct MusicInfo {
   std::string name;

@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Spotify authenticator class implementation.
+ * @file
+ *
+ * @brief Spotify authenticator class implementation.
  */
 #include "private/spotify_auth.h"
 

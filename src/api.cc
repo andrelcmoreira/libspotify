@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Api main class implementation.
+ * @file
+ *
+ * @brief Api main class implementation.
  */
 #include "api.h"
 

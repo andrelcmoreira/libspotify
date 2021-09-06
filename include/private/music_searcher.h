@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Spotify music searcher class definition.
+ * @file
+ *
+ * @brief Spotify music searcher class definition.
  */
 #ifndef MUSIC_SEARCHER_H_
 #define MUSIC_SEARCHER_H_
@@ -15,24 +16,27 @@
 namespace espotifai_api {
 
 /**
- * \class MusicSearcher.
+ * @class MusicSearcher.
  *
- * \brief This class implements the mechanism for music searching in the
+ * @brief This class implements the mechanism for music searching in the
  * Spotify platform.
  */
 class MusicSearcher {
    public:
     /**
-     * \brief Constructor.
-     * \param curl Lib curl handler.
+     * @brief Constructor.
+     *
+     * @param curl Lib curl handler.
      */
     explicit MusicSearcher(const std::shared_ptr<CurlWrapper> &curl = nullptr);
 
     /**
-     * \brief Search a music in the Spotify platform.
-     * \param token Access token.
-     * \param name Name of the music.
-     * \return The search result.
+     * @brief Search a music in the Spotify platform.
+     *
+     * @param token Access token.
+     * @param name Name of the music.
+     *
+     * @return The search result.
      */
     std::vector<MusicInfo> Search(
         const std::string &token,

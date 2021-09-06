@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Utils class implementation.
+ * @file
+ *
+ * @brief Utils class implementation.
  */
 #include "private/utils.h"
 

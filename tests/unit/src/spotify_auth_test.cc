@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Spotify authenticator test class implementation.
+ * @file
+ *
+ * @brief Spotify authenticator test class implementation.
  */
 #include "private/spotify_auth.h"
 
@@ -48,7 +49,7 @@ class SpotifyAuthTest : public Test {
 };
 
 /**
- * \brief This tests validates the scenario when the user try to log into the
+ * @brief This tests validates the scenario when the user try to log into the
  * spotify API with a valid client_id and client_credentials. When this occurs,
  * the espotifai_api must return the access token through the listener.
  */
@@ -86,7 +87,7 @@ TEST_F(SpotifyAuthTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try to log into the
+ * @brief This tests validates the scenario when the user try to log into the
  * spotify API with an invalid client_id and client_credentials. When this
  * occurs, the espotifai_api must return the suitable error message through the
  * listener.
@@ -121,7 +122,7 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure) {
 }
 
 /**
- * \brief This tests validates the scenario when the user try to log into the
+ * @brief This tests validates the scenario when the user try to log into the
  * spotify API offline. When this occurs, the espotifai_api must return the
  * suitable error message through the listener.
  */

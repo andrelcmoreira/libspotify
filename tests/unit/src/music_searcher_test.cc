@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Music searcher test class implementation.
+ * @file
+ *
+ * @brief Music searcher test class implementation.
  */
 #include "private/music_searcher.h"
 
@@ -52,7 +53,7 @@ class MusicSearcherTest : public Test {
 };
 
 /**
- * \brief This tests validates the scenario when the user try to search a valid
+ * @brief This tests validates the scenario when the user try to search a valid
  * music in the spotify API and the result will contain several matches. When
  * this occurs, the espotifai_api must return the list of found musics through
  * the listener.
@@ -83,7 +84,7 @@ TEST_F(MusicSearcherTest,
   Value reply;
   {
     ifstream json_file{
-        "../unit/jsons/search_result_multiple.json",
+        "../mock/jsons/search_result_multiple.json",
     };
 
     json_file >> reply;
@@ -102,7 +103,7 @@ TEST_F(MusicSearcherTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try to search a valid
+ * @brief This tests validates the scenario when the user try to search a valid
  * music in the spotify API and the result contain just one music. When this
  * occurs, the espotifai_api must return the list of found musics through the
  * listener.
@@ -125,7 +126,7 @@ TEST_F(MusicSearcherTest,
   Value reply;
   {
     ifstream json_file{
-        "../unit/jsons/search_result_single_without_spaces.json",
+        "../mock/jsons/search_result_single_without_spaces.json",
     };
 
     json_file >> reply;
@@ -144,7 +145,7 @@ TEST_F(MusicSearcherTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try to search a valid
+ * @brief This tests validates the scenario when the user try to search a valid
  * music which contain several words in the spotify API and the result contain
  * the list of matches. When this occurs, the espotifai_api must return the list
  * of found musics through the listener.
@@ -172,7 +173,7 @@ TEST_F(MusicSearcherTest,
   Value reply;
   {
     ifstream json_file{
-        "../unit/jsons/search_result_multiple_with_spaces.json",
+        "../mock/jsons/search_result_multiple_with_spaces.json",
     };
 
     json_file >> reply;
@@ -191,7 +192,7 @@ TEST_F(MusicSearcherTest,
 }
 
 /**
- * \brief This tests validates the scenario when the user try to search a non
+ * @brief This tests validates the scenario when the user try to search a non
  * existent music in the spotify API. When this occurs, the espotifai_api must
  * return an empty list through the listener.
  */
@@ -207,7 +208,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForANonExistentMusic_S_ReturnEmptyList) {
   Value reply;
   {
     ifstream json_file{
-        "../unit/jsons/search_result_with_no_musics.json",
+        "../mock/jsons/search_result_with_no_musics.json",
     };
 
     json_file >> reply;
@@ -226,7 +227,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForANonExistentMusic_S_ReturnEmptyList) {
 }
 
 /**
- * \brief This tests validates the scenario when the user try to search an
+ * @brief This tests validates the scenario when the user try to search an
  * existent music in the spotify API with a network error. When this occurs, the
  * espotifai_api must return the suitable error message through the listener.
  */

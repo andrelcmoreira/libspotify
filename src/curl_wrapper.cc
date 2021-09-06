@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Curl wrapper class implementation.
+ * @file
+ *
+ * @brief Curl wrapper class implementation.
  */
 #include "private/curl_wrapper.h"
 

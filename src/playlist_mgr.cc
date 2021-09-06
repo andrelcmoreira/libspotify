@@ -1,6 +1,7 @@
 /**
- * \file
- * \brief Playlist manager class implementation.
+ * @file
+ *
+ * @brief Playlist manager class implementation.
  */
 #include "private/playlist_mgr.h"
 
