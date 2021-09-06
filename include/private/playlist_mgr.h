@@ -7,8 +7,8 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
-#include "db_handler.h"
 #include "types.h"
 
 namespace espotifai_api {
@@ -20,11 +20,6 @@ namespace espotifai_api {
  */
 class PlaylistMgr {
    public:
-    /**
-     * \brief Constructor.
-     */
-    explicit PlaylistMgr(const std::shared_ptr<DbHandler> &db_handler = nullptr);
-
     /**
      * \brief Create a new playlist.
      * \param name Name of playlist.
@@ -51,9 +46,6 @@ class PlaylistMgr {
      * \return All the playlists.
      */
     std::vector<std::string> GetPlaylists() const;
-
-   private:
-    std::shared_ptr<DbHandler> db_handler_; //!< Database handler.
 };
 
 }  // namespace espotifai_api

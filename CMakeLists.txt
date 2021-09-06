@@ -10,8 +10,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    /usr/local/include/mongocxx/v_noabi
-    /usr/local/include/bsoncxx/v_noabi
 )
 
 add_library(
@@ -19,7 +17,6 @@ add_library(
     src/api.cc
     src/api_private.cc
     src/curl_wrapper.cc
-    src/db_handler.cc
     src/music_searcher.cc
     src/playlist_mgr.cc
     src/spotify_auth.cc
@@ -30,6 +27,4 @@ target_link_libraries(
     ${PROJECT_NAME}
     curl
     jsoncpp
-    mongocxx
-    bsoncxx
 )

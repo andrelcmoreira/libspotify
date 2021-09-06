@@ -13,7 +13,6 @@ All the dependencies below have support for Linux/Windows/MacOS
 - gtest
 - jsoncpp
 - libcurl
-- mongocxx
 
 ### Build the lib
 

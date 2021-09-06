@@ -8,8 +8,6 @@ set(sources_dir "${CMAKE_CURRENT_LIST_DIR}")
 
 include_directories(
     ${CMAKE_CURRENT_LIST_DIR}/../include
-    /usr/local/include/mongocxx/v_noabi
-    /usr/local/include/bsoncxx/v_noabi
 )
 
 link_directories(${CMAKE_SOURCE_DIR}/../build /usr/local/lib64)
@@ -31,6 +29,4 @@ target_link_libraries(
     gmock
     pthread
     espotifai_api
-    mongocxx
-    bsoncxx
 )
