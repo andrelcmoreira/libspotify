@@ -1,9 +1,9 @@
 /**
  * \file
- * \brief Api main class definition.
+ * \brief Api private class definition.
  */
-#ifndef API_H_
-#define API_H_
+#ifndef API_PRIVATE_H_
+#define API_PRIVATE_H_
 
 #include <memory>
 #include <string>
@@ -16,17 +16,16 @@
 
 namespace espotifai_api {
 
-class ApiPrivate;
 class MusicSearcher;
 class PlaylistMgr;
 class SpotifyAuth;
 
 /**
- * \class Api.
+ * \class ApiPrivate.
  *
  * \brief This class implements the main functionalities of espotifai API.
  */
-class Api {
+class ApiPrivate {
  public:
   /**
    * \brief Constructor.
@@ -34,9 +33,9 @@ class Api {
    * \param searcher Spotify music searcher.
    * \param mgr Playlist manager.
    */
-  Api(const std::shared_ptr<SpotifyAuth>& auth = nullptr,
-      const std::shared_ptr<MusicSearcher>& searcher = nullptr,
-      const std::shared_ptr<PlaylistMgr>& mgr = nullptr);
+  ApiPrivate(const std::shared_ptr<SpotifyAuth>& auth = nullptr,
+             const std::shared_ptr<MusicSearcher>& searcher = nullptr,
+             const std::shared_ptr<PlaylistMgr>& mgr = nullptr);
 
   /**
    * \brief Authenticate a user using the spotify API.
@@ -90,10 +89,11 @@ class Api {
   void GetPlaylists(PlaylistListener& listener) const;
 
  private:
-  // TODO: make it a unique_ptr
-  std::shared_ptr<ApiPrivate> private_;  //!< API private.
+  std::shared_ptr<SpotifyAuth> sptf_auth_;        //!< Spotify authenticator.
+  std::shared_ptr<MusicSearcher> sptf_searcher_;  //!< Spotify music searcher.
+  std::shared_ptr<PlaylistMgr> playlist_mgr_;     //!< Playlist manager.
 };
 
 }  // namespace espotifai_api
 
-#endif  // API_H_
+#endif  // API_PRIVATE_H_

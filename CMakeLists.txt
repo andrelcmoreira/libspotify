@@ -17,6 +17,7 @@ include_directories(
 add_library(
     ${PROJECT_NAME} SHARED
     src/api.cc
+    src/api_private.cc
     src/curl_wrapper.cc
     src/db_handler.cc
     src/music_searcher.cc

@@ -4,10 +4,7 @@
  */
 #include "api.h"
 
-#include "access_listener.h"
-#include "add_music_playlist_listener.h"
-#include "playlist_listener.h"
-#include "search_music_listener.h"
+#include "private/api_private.h"
 
 namespace espotifai_api {
 
@@ -19,86 +16,36 @@ using std::string;
 Api::Api(const shared_ptr<SpotifyAuth>& auth,
          const shared_ptr<MusicSearcher>& searcher,
          const shared_ptr<PlaylistMgr>& mgr)
-    : sptf_auth_{auth ? auth : make_shared<SpotifyAuth>()},
-      sptf_searcher_{searcher ? searcher : make_shared<MusicSearcher>()},
-      playlist_mgr_{mgr ? mgr : make_shared<PlaylistMgr>()} {}
+    : private_{make_shared<ApiPrivate>(auth, searcher, mgr)} {}
 
 void Api::RequestAccess(AccessListener& listener, const string& client_id,
                         const string& client_secret) const {
-  // TODO: make it async?
-
-  try {
-    auto token = sptf_auth_->AuthUser(client_id, client_secret);
-
-    listener.OnAccessGuaranteed(token);
-  } catch (const exception& e) {
-    listener.OnAccessDenied(e.what());
-  }
+  private_->RequestAccess(listener, client_id, client_secret);
 }
 
 void Api::SearchMusic(SearchMusicListener& listener, const string& token,
                       const string& name) const {
-  // TODO: make it async?
-
-  try {
-    auto musics = sptf_searcher_->Search(token, name);
-
-    listener.OnMusicFound(musics);
-  } catch (const exception& e) {
-    listener.OnMusicSearchError(e.what());
-  }
+  private_->SearchMusic(listener, token, name);
 }
 
 void Api::CreatePlaylist(PlaylistListener& listener, const string& name,
                          const string& owner) const {
-  // TODO: make it async?
-
-  try {
-    playlist_mgr_->Create(name, owner);
-
-    listener.OnPlaylistCreated();
-  } catch (const exception& e) {
-    listener.OnPlaylistCreationError(e.what());
-  }
+  private_->CreatePlaylist(listener, name, owner);
 }
 
 void Api::AddMusicToPlaylist(AddMusicPlaylistListener& listener,
                              const MusicInfo& music,
                              const string& playlist) const {
-  // TODO: make it async?
-
-  try {
-    playlist_mgr_->AddMusic(music, playlist);
-
-    listener.OnMusicAdded();
-  } catch (const exception& e) {
-    listener.OnMusicAdditionError(e.what());
-  }
+  private_->AddMusicToPlaylist(listener, music, playlist);
 }
 
 void Api::ListPlaylistMusics(PlaylistListener& listener,
                              const string& playlist_name) const {
-  // TODO: make it async?
-
-  try {
-    auto musics = playlist_mgr_->ListMusics(playlist_name);
-
-    listener.OnMusicList(musics);
-  } catch (const exception& e) {
-    listener.OnMusicListError(e.what());
-  }
+  private_->ListPlaylistMusics(listener, playlist_name);
 }
 
 void Api::GetPlaylists(PlaylistListener& listener) const {
-  // TODO: make it async?
-
-  try {
-    auto playlists = playlist_mgr_->GetPlaylists();
-
-    listener.OnPlaylistsFound(playlists);
-  } catch (const exception& e) {
-    listener.OnPlaylistsFoundError(e.what());
-  }
+  private_->GetPlaylists(listener);
 }
 
 }  // namespace espotifai_api

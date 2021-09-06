@@ -32,8 +32,6 @@ using testing::Return;
 using testing::Throw;
 using testing::_;
 
-using Json::Value;
-
 class PlaylistMgrTest : public Test {
     public:
      PlaylistMgrTest()
@@ -123,7 +121,7 @@ TEST_F(PlaylistMgrTest, W_UserRequestTheCreationOfAPlaylistWithDatabaseError_S_R
     EXPECT_CALL(*db_mock_, FindPlaylist(kPlaylistName)).Times(1);
     EXPECT_CALL(*db_mock_, CreatePlaylist(kPlaylistName))
         .Times(1)
-        .WillOnce(Throw(std::runtime_error(kErrorMsg)));
+        .WillOnce(Throw(runtime_error(kErrorMsg)));
     EXPECT_CALL(*listener, OnPlaylistCreated()).Times(0);
     EXPECT_CALL(*listener, OnPlaylistCreationError(kErrorMsg))
         .Times(1);

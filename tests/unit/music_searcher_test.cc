@@ -128,7 +128,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForASingleExistentMusic_S_ReturnTheListWit
     const string kUri{kMusicSearchBaseUri_ + kSearchName + "&type=track&limit=10"};
     const string kAccessToken{"ASUUHnbvBbHASddBSd87asdSA=DDDAa=UUl-=y"};
     const vector<string> kReqHeaders{"Authorization: Bearer " + kAccessToken};
-    const std::vector<MusicInfo> kExpectedReturn{
+    const vector<MusicInfo> kExpectedReturn{
         {
             .name = "Staayyyle",
             .artist = "Spazz",
@@ -197,7 +197,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForAnExistentMusicWithSpaces_S_ReturnTheLi
         json_file >> reply;
     }
 
-    auto listener = std::make_shared<SearchMusicListenerMock>();
+    auto listener = make_shared<SearchMusicListenerMock>();
 
     /* set default behavior for Get method */
     ON_CALL(*curl_, Get(kUri, kReqHeaders)).WillByDefault(Return(reply));
