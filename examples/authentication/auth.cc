@@ -4,14 +4,17 @@
 #include "access_listener.h"
 #include "api.h"
 
-class EventHandler : public espotifai_api::AccessListener {
+using espotifai_api::AccessListener;
+using espotifai_api::Api;
+
+class EventHandler : public AccessListener {
  public:
   void OnAccessGuaranteed(const std::string &token) const override {
     std::cout << "access guaranteed, token: " << token << std::endl;
   }
 
   void OnAccessDenied(const std::string &msg) const override {
-    std::cout << "access denied!" << std::endl;
+    std::cerr << "access denied!" << std::endl;
   }
 };
 
@@ -25,7 +28,7 @@ int main(int argc, char *argv[]) {
   const std::string kClientId{argv[1]};
   const std::string kClientSecret{argv[2]};
 
-  espotifai_api::Api api;
+  Api api;
   EventHandler ev;
 
   api.RequestAccess(ev, kClientId, kClientSecret);
