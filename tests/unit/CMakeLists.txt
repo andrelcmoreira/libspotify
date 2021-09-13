@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
-set(PROJECT_NAME "espotifai_api_tests")
 project(espotifai_api_tests)
 
+set(PROJECT_NAME "espotifai_api_tests")
 set(test_main_source ${CMAKE_CURRENT_LIST_DIR}/src/main.cc)
 set(sources_dir "${CMAKE_CURRENT_LIST_DIR}")
 
