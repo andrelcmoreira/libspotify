@@ -22,7 +22,7 @@ using std::vector;
 using espotifai_api::Api;
 using espotifai_api::MusicInfo;
 using espotifai_api::PlaylistMgr;
-using espotifai_api::SpotifyAuth;
+using espotifai_api::Authenticator;
 using espotifai_api::test::AddMusicPlaylistListenerMock;
 using espotifai_api::test::PlaylistListenerMock;
 

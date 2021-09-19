@@ -3,7 +3,7 @@
  *
  * @brief Music searcher test class implementation.
  */
-#include "private/music_searcher.h"
+#include "private/searcher.h"
 
 #include <gtest/gtest.h>
 
@@ -12,7 +12,7 @@
 
 #include "api.h"
 #include "mock/curl_wrapper_mock.h"
-#include "mock/search_music_listener_mock.h"
+#include "mock/search_listener_mock.h"
 #include "private/curl_wrapper.h"
 #include "types.h"
 
@@ -25,9 +25,9 @@ using std::vector;
 
 using espotifai_api::Api;
 using espotifai_api::MusicInfo;
-using espotifai_api::MusicSearcher;
+using espotifai_api::Searcher;
 using espotifai_api::test::CurlWrapperMock;
-using espotifai_api::test::SearchMusicListenerMock;
+using espotifai_api::test::SearchListenerMock;
 
 using Json::Value;
 
@@ -40,12 +40,12 @@ class MusicSearcherTest : public Test {
  public:
   MusicSearcherTest()
       : curl_{make_shared<CurlWrapperMock>()},
-        searcher_{make_shared<MusicSearcher>(curl_)},
+        searcher_{make_shared<Searcher>(curl_)},
         api_{nullptr, searcher_, nullptr} {}
 
  protected:
   shared_ptr<CurlWrapperMock> curl_;    //!< Curl wrapper mock instance.
-  shared_ptr<MusicSearcher> searcher_;  //!< Spotify music searcher instance.
+  shared_ptr<Searcher> searcher_;  //!< Spotify music searcher instance.
   Api api_;                             //!< Api instance.
   const string kMusicSearchBaseUri_{
       "https://api.spotify.com/v1/search?q="};  //!< URI used for music
@@ -90,16 +90,16 @@ TEST_F(MusicSearcherTest,
     json_file >> reply;
   }
 
-  auto listener = make_shared<SearchMusicListenerMock>();
+  auto listener = make_shared<SearchListenerMock>();
 
   /* set default behavior for Get method */
   ON_CALL(*curl_, Get(kUri, kReqHeaders)).WillByDefault(Return(reply));
 
   EXPECT_CALL(*curl_, Get(kUri, kReqHeaders)).Times(1);
-  EXPECT_CALL(*listener, OnMusicSearchError(_)).Times(0);
-  EXPECT_CALL(*listener, OnMusicFound(kExpectedReturn)).Times(1);
+  EXPECT_CALL(*listener, OnSearchError(_)).Times(0);
+  EXPECT_CALL(*listener, OnPatternFound(kExpectedReturn)).Times(1);
 
-  api_.SearchMusic(*listener, kAccessToken, kSearchName);
+  api_.Search(*listener, kAccessToken, kSearchName);
 }
 
 /**
@@ -132,16 +132,16 @@ TEST_F(MusicSearcherTest,
     json_file >> reply;
   }
 
-  auto listener = make_shared<SearchMusicListenerMock>();
+  auto listener = make_shared<SearchListenerMock>();
 
   /* set default behavior for Get method */
   ON_CALL(*curl_, Get(kUri, kReqHeaders)).WillByDefault(Return(reply));
 
   EXPECT_CALL(*curl_, Get(kUri, kReqHeaders)).Times(1);
-  EXPECT_CALL(*listener, OnMusicSearchError(_)).Times(0);
-  EXPECT_CALL(*listener, OnMusicFound(kExpectedReturn)).Times(1);
+  EXPECT_CALL(*listener, OnSearchError(_)).Times(0);
+  EXPECT_CALL(*listener, OnPatternFound(kExpectedReturn)).Times(1);
 
-  api_.SearchMusic(*listener, kAccessToken, kSearchName);
+  api_.Search(*listener, kAccessToken, kSearchName);
 }
 
 /**
@@ -179,16 +179,16 @@ TEST_F(MusicSearcherTest,
     json_file >> reply;
   }
 
-  auto listener = make_shared<SearchMusicListenerMock>();
+  auto listener = make_shared<SearchListenerMock>();
 
   /* set default behavior for Get method */
   ON_CALL(*curl_, Get(kUri, kReqHeaders)).WillByDefault(Return(reply));
 
   EXPECT_CALL(*curl_, Get(kUri, kReqHeaders)).Times(1);
-  EXPECT_CALL(*listener, OnMusicSearchError(_)).Times(0);
-  EXPECT_CALL(*listener, OnMusicFound(kExpectedReturn)).Times(1);
+  EXPECT_CALL(*listener, OnSearchError(_)).Times(0);
+  EXPECT_CALL(*listener, OnPatternFound(kExpectedReturn)).Times(1);
 
-  api_.SearchMusic(*listener, kAccessToken, kSearchName);
+  api_.Search(*listener, kAccessToken, kSearchName);
 }
 
 /**
@@ -214,16 +214,16 @@ TEST_F(MusicSearcherTest, W_UserSearchForANonExistentMusic_S_ReturnEmptyList) {
     json_file >> reply;
   }
 
-  auto listener = make_shared<SearchMusicListenerMock>();
+  auto listener = make_shared<SearchListenerMock>();
 
   /* set default behavior for Get method */
   ON_CALL(*curl_, Get(kUri, kReqHeaders)).WillByDefault(Return(reply));
 
   EXPECT_CALL(*curl_, Get(kUri, kReqHeaders)).Times(1);
-  EXPECT_CALL(*listener, OnMusicSearchError(_)).Times(0);
-  EXPECT_CALL(*listener, OnMusicFound(kExpectedReturn)).Times(1);
+  EXPECT_CALL(*listener, OnSearchError(_)).Times(0);
+  EXPECT_CALL(*listener, OnPatternFound(kExpectedReturn)).Times(1);
 
-  api_.SearchMusic(*listener, kAccessToken, kSearchName);
+  api_.Search(*listener, kAccessToken, kSearchName);
 }
 
 /**
@@ -240,7 +240,7 @@ TEST_F(MusicSearcherTest,
   const string kAccessToken{"ASUUHnbvBbHASddBSd87asdSA=DDDAa=UUl-=y"};
   const vector<string> kReqHeaders{"Authorization: Bearer " + kAccessToken};
 
-  auto listener = make_shared<SearchMusicListenerMock>();
+  auto listener = make_shared<SearchListenerMock>();
 
   /* set default behavior for Get method */
   ON_CALL(*curl_, Get(kUri, kReqHeaders))
@@ -249,8 +249,8 @@ TEST_F(MusicSearcherTest,
   EXPECT_CALL(*curl_, Get(kUri, kReqHeaders))
       .Times(1)
       .WillOnce(Throw(runtime_error(kErrorMessage)));
-  EXPECT_CALL(*listener, OnMusicSearchError(kErrorMessage)).Times(1);
-  EXPECT_CALL(*listener, OnMusicFound(testing::_)).Times(0);
+  EXPECT_CALL(*listener, OnSearchError(kErrorMessage)).Times(1);
+  EXPECT_CALL(*listener, OnPatternFound(testing::_)).Times(0);
 
-  api_.SearchMusic(*listener, kAccessToken, kSearchName);
+  api_.Search(*listener, kAccessToken, kSearchName);
 }

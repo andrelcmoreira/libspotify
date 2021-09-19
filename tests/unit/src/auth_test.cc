@@ -3,7 +3,7 @@
  *
  * @brief Spotify authenticator test class implementation.
  */
-#include "private/spotify_auth.h"
+#include "private/authenticator.h"
 
 #include <gtest/gtest.h>
 
@@ -21,7 +21,7 @@ using std::string;
 using std::vector;
 
 using espotifai_api::Api;
-using espotifai_api::SpotifyAuth;
+using espotifai_api::Authenticator;
 using espotifai_api::test::AccessListenerMock;
 using espotifai_api::test::CurlWrapperMock;
 
@@ -32,16 +32,16 @@ using testing::Throw;
 
 using Json::Value;
 
-class SpotifyAuthTest : public Test {
+class AuthTest : public Test {
  public:
-  SpotifyAuthTest()
+  AuthTest()
       : curl_{make_shared<CurlWrapperMock>()},
-        auth_{make_shared<SpotifyAuth>(curl_)},
+        auth_{make_shared<Authenticator>(curl_)},
         api_{auth_, nullptr, nullptr} {}
 
  protected:
   shared_ptr<CurlWrapperMock> curl_;  //!< Curl wrapper mock instance.
-  shared_ptr<SpotifyAuth> auth_;      //!< Spotify auth instance.
+  shared_ptr<Authenticator> auth_;      //!< Spotify auth instance.
   Api api_;                           //!< Api instance.
   const string KLoginUri_{
       "https://accounts.spotify.com/api/token"};  //!< URI used for
@@ -53,7 +53,7 @@ class SpotifyAuthTest : public Test {
  * spotify API with a valid client_id and client_credentials. When this occurs,
  * the espotifai_api must return the access token through the listener.
  */
-TEST_F(SpotifyAuthTest,
+TEST_F(AuthTest,
        W_UserRequestAuthWithValidCredentials_S_LogWithSuccess) {
   /* test constants */
   const string kClientId{"good_id"};
@@ -83,7 +83,7 @@ TEST_F(SpotifyAuthTest,
               OnAccessGuaranteed(expected_return["access_token"].asString()))
       .Times(1);
 
-  api_.RequestAccess(*listener, kClientId, kClientSecret);
+  api_.Auth(*listener, kClientId, kClientSecret);
 }
 
 /**
@@ -92,7 +92,7 @@ TEST_F(SpotifyAuthTest,
  * occurs, the espotifai_api must return the suitable error message through the
  * listener.
  */
-TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure) {
+TEST_F(AuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure) {
   /* test constants */
   const string kClientId{"bad_id"};
   const string kClientSecret{"bad_secret"};
@@ -118,7 +118,7 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure) {
   EXPECT_CALL(*listener, OnAccessDenied(kExpectedMsg)).Times(1);
   EXPECT_CALL(*listener, OnAccessGuaranteed(_)).Times(0);
 
-  api_.RequestAccess(*listener, kClientId, kClientSecret);
+  api_.Auth(*listener, kClientId, kClientSecret);
 }
 
 /**
@@ -126,7 +126,7 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure) {
  * spotify API offline. When this occurs, the espotifai_api must return the
  * suitable error message through the listener.
  */
-TEST_F(SpotifyAuthTest, W_UserRequestAuthOffline_S_ReturnFailure) {
+TEST_F(AuthTest, W_UserRequestAuthOffline_S_ReturnFailure) {
   /* test constants */
   const string kClientId{"good_id"};
   const string kClientSecret{"good_secret"};
@@ -148,5 +148,5 @@ TEST_F(SpotifyAuthTest, W_UserRequestAuthOffline_S_ReturnFailure) {
   EXPECT_CALL(*listener, OnAccessGuaranteed(_)).Times(0);
   EXPECT_CALL(*listener, OnAccessDenied(kErrorMessage)).Times(1);
 
-  api_.RequestAccess(*listener, kClientId, kClientSecret);
+  api_.Auth(*listener, kClientId, kClientSecret);
 }

@@ -16,19 +16,19 @@
 namespace espotifai_api {
 
 /**
- * @class MusicSearcher.
+ * @class Searcher.
  *
  * @brief This class implements the mechanism for music searching in the
  * Spotify platform.
  */
-class MusicSearcher {
+class Searcher {
    public:
     /**
      * @brief Constructor.
      *
      * @param curl Lib curl handler.
      */
-    explicit MusicSearcher(const std::shared_ptr<CurlWrapper> &curl = nullptr);
+    explicit Searcher(const std::shared_ptr<CurlWrapper> &curl = nullptr);
 
     /**
      * @brief Search a music in the Spotify platform.

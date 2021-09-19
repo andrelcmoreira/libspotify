@@ -3,7 +3,7 @@
  *
  * @brief Spotify music searcher class implementation.
  */
-#include "private/music_searcher.h"
+#include "private/searcher.h"
 
 #include <algorithm>
 #include <stdexcept>
@@ -17,12 +17,12 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
-MusicSearcher::MusicSearcher(const shared_ptr<CurlWrapper>& curl)
+Searcher::Searcher(const shared_ptr<CurlWrapper>& curl)
     : kBaseUri_{"https://api.spotify.com/v1/search?q="},
       curl_{curl ? curl : make_shared<CurlWrapper>()} {}
 
-vector<MusicInfo> MusicSearcher::Search(const string& token,
-                                        const string& name) const {
+vector<MusicInfo> Searcher::Search(const string& token,
+                                   const string& name) const {
   vector<MusicInfo> ret;
   string uri{kBaseUri_ + name + "&type=track&limit=10"};
   vector<string> req_headers{"Authorization: Bearer " + token};

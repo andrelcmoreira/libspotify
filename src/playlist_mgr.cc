@@ -15,7 +15,7 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
-void PlaylistMgr::Create(const string& name, const string& owner) const {
+void PlaylistMgr::Create(const string& name) const {
   // if (db_handler_->FindPlaylist(name)) {
   //  throw runtime_error("the playlist already exist!");
   //}

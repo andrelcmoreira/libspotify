@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   Api api;
   EventHandler ev;
 
-  api.RequestAccess(ev, kClientId, kClientSecret);
+  api.Auth(ev, kClientId, kClientSecret);
 
   std::exit(0);
 }

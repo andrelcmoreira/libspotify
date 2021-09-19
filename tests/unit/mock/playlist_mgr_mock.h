@@ -8,10 +8,9 @@
 namespace espotifai_api {
 namespace test {
 
-class PlaylistMgrMock : public PlaylistMgr {
-};
+class PlaylistMgrMock : public PlaylistMgr {};
 
 }  // namespace test
 }  // namespace espotifai_api
 
-#endif // PLAYLIST_MGR_MOCK_H_
+#endif  // PLAYLIST_MGR_MOCK_H_

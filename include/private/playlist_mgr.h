@@ -25,9 +25,8 @@ class PlaylistMgr {
      * @brief Create a new playlist.
      *
      * @param name Name of playlist.
-     * @param owner Owner of playlist.
      */
-    void Create(const std::string &name, const std::string &owner) const;
+    void Create(const std::string &name) const;
 
     /**
      * @brief Add a music into an existent playlist.

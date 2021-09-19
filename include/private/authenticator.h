@@ -14,18 +14,18 @@
 namespace espotifai_api {
 
 /**
- * @class SpotifyAuth.
+ * @class Authenticator.
  *
  * @brief This class implements the authentication mechanism to Spotify API.
  */
-class SpotifyAuth {
+class Authenticator {
    public:
     /**
      * @brief Constructor.
      *
      * @param curl Lib curl handler.
      */
-    explicit SpotifyAuth(const std::shared_ptr<CurlWrapper> &curl = nullptr);
+    explicit Authenticator(const std::shared_ptr<CurlWrapper> &curl = nullptr);
 
     /**
      * @brief Authenticate an user into the Spotify API using the client credentials flow

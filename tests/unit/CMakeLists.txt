@@ -15,8 +15,8 @@ link_directories(${CMAKE_SOURCE_DIR}/../../build /usr/local/lib64)
 
 set(
     SOURCES
-    ${sources_dir}/src/spotify_auth_test.cc
-    ${sources_dir}/src/music_searcher_test.cc
+    ${sources_dir}/src/auth_test.cc
+    ${sources_dir}/src/searcher_test.cc
     ${sources_dir}/src/playlist_mgr_test.cc
     ${test_main_source}
 )
@@ -31,3 +31,4 @@ target_link_libraries(
     pthread
     espotifai_api
 )
+

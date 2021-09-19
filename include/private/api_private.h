@@ -12,14 +12,14 @@
 #include "access_listener.h"
 #include "add_music_playlist_listener.h"
 #include "playlist_listener.h"
-#include "search_music_listener.h"
+#include "search_listener.h"
 #include "types.h"
 
 namespace espotifai_api {
 
-class MusicSearcher;
+class Authenticator;
 class PlaylistMgr;
-class SpotifyAuth;
+class Searcher;
 
 /**
  * @class ApiPrivate.
@@ -35,39 +35,37 @@ class ApiPrivate {
    * @param searcher Spotify music searcher.
    * @param mgr Playlist manager.
    */
-  ApiPrivate(const std::shared_ptr<SpotifyAuth>& auth = nullptr,
-             const std::shared_ptr<MusicSearcher>& searcher = nullptr,
+  ApiPrivate(const std::shared_ptr<Authenticator>& auth = nullptr,
+             const std::shared_ptr<Searcher>& searcher = nullptr,
              const std::shared_ptr<PlaylistMgr>& mgr = nullptr);
 
   /**
-   * @brief Authenticate a user using the spotify API.
+   * @brief Authenticate a user within the spotify API.
    *
    * @param listener Event listener.
    * @param client_id Client's ID.
    * @param client_secret Client's secret.
    */
-  void RequestAccess(AccessListener& listener, const std::string& client_id,
-                     const std::string& client_secret) const;
+  void Auth(AccessListener& listener, const std::string& client_id,
+            const std::string& client_secret) const;
 
   /**
-   * @brief Search for a music in the spotify platform.
+   * @brief Search for a string in the spotify platform.
    *
    * @param listener Event listener.
    * @param token Access token.
-   * @param name Name of the music.
+   * @param name String to be queried.
    */
-  void SearchMusic(SearchMusicListener& listener, const std::string& token,
-                   const std::string& name) const;
+  void Search(SearchListener& listener, const std::string& token,
+              const std::string& name) const;
 
   /**
-   * @brief Create an offline spotify playlist.
+   * @brief Create a spotify playlist.
    *
    * @param listener Event listener.
    * @param name Name of the playlist.
-   * @param owner Owner of the playlist.
    */
-  void CreatePlaylist(PlaylistListener& listener, const std::string& name,
-                      const std::string& owner) const;
+  void CreatePlaylist(PlaylistListener& listener, const std::string& name) const;
 
   /**
    * @brief Add a music into an existent playlist.
@@ -90,15 +88,15 @@ class ApiPrivate {
                           const std::string& playlist_name) const;
 
   /**
-   * @brief Get all playlists registered on database.
+   * @brief Get all playlists of the authenticated user.
    *
    * @param listener Event listener.
    */
   void GetPlaylists(PlaylistListener& listener) const;
 
  private:
-  std::shared_ptr<SpotifyAuth> sptf_auth_;        //!< Spotify authenticator.
-  std::shared_ptr<MusicSearcher> sptf_searcher_;  //!< Spotify music searcher.
+  std::shared_ptr<Authenticator> auth_;        //!< Spotify authenticator.
+  std::shared_ptr<Searcher> searcher_;  //!< Spotify music searcher.
   std::shared_ptr<PlaylistMgr> playlist_mgr_;     //!< Playlist manager.
 };
 

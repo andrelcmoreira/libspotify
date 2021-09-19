@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(music_searcher)
+project(searcher)
 
 set(CMAKE_CXX_STANDARD 14)
-set(PROJECT_NAME "music_searcher")
+set(PROJECT_NAME "searcher")
 set(sources_dir "${CMAKE_CURRENT_LIST_DIR}")
 
 include_directories(
@@ -14,7 +14,7 @@ link_directories(${CMAKE_CURRENT_LIST_DIR}/../../build)
 
 set(
     SOURCES
-    ${sources_dir}/music_searcher.cc
+    ${sources_dir}/searcher.cc
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

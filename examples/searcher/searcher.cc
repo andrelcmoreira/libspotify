@@ -3,16 +3,16 @@
 #include <vector>
 
 #include "api.h"
-#include "search_music_listener.h"
+#include "search_listener.h"
 #include "types.h"
 
 using espotifai_api::Api;
 using espotifai_api::MusicInfo;
-using espotifai_api::SearchMusicListener;
+using espotifai_api::SearchListener;
 
-class EventHandler : public SearchMusicListener {
+class EventHandler : public SearchListener {
  public:
-  void OnMusicFound(const std::vector<MusicInfo>& musics) const override {
+  void OnPatternFound(const std::vector<MusicInfo>& musics) const override {
     std::cout << musics.size() << " results found" << std::endl;
 
     for (auto& music : musics) {
@@ -22,7 +22,7 @@ class EventHandler : public SearchMusicListener {
     }
   }
 
-  void OnMusicSearchError(const std::string& msg) const override {
+  void OnSearchError(const std::string& msg) const override {
     std::cerr << msg << std::endl;
   }
 };
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
   Api api;
   EventHandler ev;
 
-  api.SearchMusic(ev, kToken, kSearchString);
+  api.Search(ev, kToken, kSearchString);
 
   std::exit(0);
 }

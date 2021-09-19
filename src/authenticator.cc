@@ -3,7 +3,7 @@
  *
  * @brief Spotify authenticator class implementation.
  */
-#include "private/spotify_auth.h"
+#include "private/authenticator.h"
 
 #include <stdexcept>
 #include <vector>
@@ -18,12 +18,12 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
-SpotifyAuth::SpotifyAuth(const shared_ptr<CurlWrapper>& curl)
+Authenticator::Authenticator(const shared_ptr<CurlWrapper>& curl)
     : kUri_{"https://accounts.spotify.com/api/token"},
       curl_{curl ? curl : make_shared<CurlWrapper>()} {}
 
-std::string SpotifyAuth::AuthUser(const string& cli_id,
-                                  const string& cli_secret) const {
+string Authenticator::AuthUser(const string& cli_id,
+                               const string& cli_secret) const {
   vector<string> req_data{"grant_type=client_credentials"};
   vector<string> req_headers{"Authorization: Basic " +
                              utils::GetBase64Code(cli_id + ":" + cli_secret)};

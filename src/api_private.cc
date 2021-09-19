@@ -5,9 +5,9 @@
  */
 #include "private/api_private.h"
 
-#include "private/music_searcher.h"
+#include "private/authenticator.h"
 #include "private/playlist_mgr.h"
-#include "private/spotify_auth.h"
+#include "private/searcher.h"
 
 namespace espotifai_api {
 
@@ -16,18 +16,17 @@ using std::make_shared;
 using std::shared_ptr;
 using std::string;
 
-ApiPrivate::ApiPrivate(const shared_ptr<SpotifyAuth>& auth,
-                       const shared_ptr<MusicSearcher>& searcher,
+ApiPrivate::ApiPrivate(const shared_ptr<Authenticator>& auth,
+                       const shared_ptr<Searcher>& searcher,
                        const shared_ptr<PlaylistMgr>& mgr)
-    : sptf_auth_{auth ? auth : make_shared<SpotifyAuth>()},
-      sptf_searcher_{searcher ? searcher : make_shared<MusicSearcher>()},
+    : auth_{auth ? auth : make_shared<Authenticator>()},
+      searcher_{searcher ? searcher : make_shared<Searcher>()},
       playlist_mgr_{mgr ? mgr : make_shared<PlaylistMgr>()} {}
 
-void ApiPrivate::RequestAccess(AccessListener& listener,
-                               const string& client_id,
-                               const string& client_secret) const {
+void ApiPrivate::Auth(AccessListener& listener, const string& client_id,
+                      const string& client_secret) const {
   try {
-    auto token = sptf_auth_->AuthUser(client_id, client_secret);
+    auto token = auth_->AuthUser(client_id, client_secret);
 
     listener.OnAccessGuaranteed(token);
   } catch (const exception& e) {
@@ -35,21 +34,21 @@ void ApiPrivate::RequestAccess(AccessListener& listener,
   }
 }
 
-void ApiPrivate::SearchMusic(SearchMusicListener& listener, const string& token,
-                             const string& name) const {
+void ApiPrivate::Search(SearchListener& listener, const string& token,
+                        const string& name) const {
   try {
-    auto musics = sptf_searcher_->Search(token, name);
+    auto musics = searcher_->Search(token, name);
 
-    listener.OnMusicFound(musics);
+    listener.OnPatternFound(musics);
   } catch (const exception& e) {
-    listener.OnMusicSearchError(e.what());
+    listener.OnSearchError(e.what());
   }
 }
 
-void ApiPrivate::CreatePlaylist(PlaylistListener& listener, const string& name,
-                                const string& owner) const {
+void ApiPrivate::CreatePlaylist(PlaylistListener& listener,
+                                const string& name) const {
   try {
-    playlist_mgr_->Create(name, owner);
+    playlist_mgr_->Create(name);
 
     listener.OnPlaylistCreated();
   } catch (const exception& e) {
