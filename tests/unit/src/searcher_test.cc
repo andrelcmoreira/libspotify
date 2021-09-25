@@ -84,7 +84,7 @@ TEST_F(MusicSearcherTest,
   Value reply;
   {
     ifstream json_file{
-        "../mock/jsons/search_result_multiple.json",
+        "tests/unit/mock/jsons/search_result_multiple.json",
     };
 
     json_file >> reply;
@@ -126,7 +126,7 @@ TEST_F(MusicSearcherTest,
   Value reply;
   {
     ifstream json_file{
-        "../mock/jsons/search_result_single_without_spaces.json",
+        "tests/unit/mock/jsons/search_result_single_without_spaces.json",
     };
 
     json_file >> reply;
@@ -173,7 +173,7 @@ TEST_F(MusicSearcherTest,
   Value reply;
   {
     ifstream json_file{
-        "../mock/jsons/search_result_multiple_with_spaces.json",
+        "tests/unit/mock/jsons/search_result_multiple_with_spaces.json",
     };
 
     json_file >> reply;
@@ -208,7 +208,7 @@ TEST_F(MusicSearcherTest, W_UserSearchForANonExistentMusic_S_ReturnEmptyList) {
   Value reply;
   {
     ifstream json_file{
-        "../mock/jsons/search_result_with_no_musics.json",
+        "tests/unit/mock/jsons/search_result_with_no_musics.json",
     };
 
     json_file >> reply;

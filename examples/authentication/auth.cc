@@ -14,7 +14,7 @@ class EventHandler : public AccessListener {
   }
 
   void OnAccessDenied(const std::string &msg) const override {
-    std::cerr << "access denied!" << std::endl;
+    std::cerr << "access denied!" << msg << std::endl;
   }
 };
 
