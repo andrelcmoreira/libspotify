@@ -20,7 +20,7 @@ class EventHandler : public AccessListener {
 
 int main(int argc, char *argv[]) {
   if (argc != 3) {
-    std::cout << "usage: " << argv[0] << " client_id client_secret"
+    std::cout << "usage: " << argv[0] << " <client_id> <client_secret>"
               << std::endl;
     std::exit(1);
   }

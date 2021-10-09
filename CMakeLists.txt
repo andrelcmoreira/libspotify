@@ -6,7 +6,7 @@ option(UNIT_TESTS "Compile the library unit tests" OFF)
 option(EXAMPLES "Compile the library examples" OFF)
 option(INSTALL_DEPENDENCIES "Install the library dependencies" ON)
 
-add_subdirectory(src)
+add_subdirectory(lib)
 
 if(UNIT_TESTS)
     add_subdirectory(tests/unit)

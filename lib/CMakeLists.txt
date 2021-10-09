@@ -6,8 +6,8 @@ set(espotifai_api_dir "${CMAKE_CURRENT_LIST_DIR}")
 set(PROJECT_NAME "espotifai_api")
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_COMPILET g++)
-set(CMAKE_CXX_FLAGS "-Wall -Werror -O0")
+set(CMAKE_CXX_COMPILER g++)
+set(CMAKE_CXX_CFLAGS "-Wall -Werror -Wextra -O0")
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../include
@@ -16,13 +16,13 @@ include_directories(
 add_library(
     ${PROJECT_NAME}
     SHARED
-    api.cc
-    api_private.cc
-    authenticator.cc
-    curl_wrapper.cc
-    searcher.cc
-    playlist_mgr.cc
-    utils.cc
+    src/api.cc
+    src/api_private.cc
+    src/authenticator.cc
+    src/curl_wrapper.cc
+    src/searcher.cc
+    src/playlist_mgr.cc
+    src/utils.cc
 )
 
 target_link_libraries(

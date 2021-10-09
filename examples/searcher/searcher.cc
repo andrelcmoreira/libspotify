@@ -29,7 +29,8 @@ class EventHandler : public SearchListener {
 
 int main(int argc, char* argv[]) {
   if (argc != 3) {
-    std::cout << "usage: " << argv[0] << " token search_string" << std::endl;
+    std::cout << "usage: " << argv[0] << " <token> <search_string>"
+              << std::endl;
     std::exit(1);
   }
 
