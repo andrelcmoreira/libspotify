@@ -31,4 +31,3 @@ target_link_libraries(
     pthread
     espotifai_api
 )
-

@@ -7,7 +7,7 @@ set(PROJECT_NAME "espotifai_api")
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_COMPILER g++)
-set(CMAKE_CXX_CFLAGS "-Wall -Werror -Wextra -O0")
+set(CMAKE_CXX_CFLAGS "-Wall -Werror -Wextra -O3")
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../include
