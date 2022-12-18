@@ -8,7 +8,7 @@
 
 #include <string>
 
-namespace espotifai_api {
+namespace spotify_lib {
 namespace utils {
 
 /**
@@ -21,6 +21,6 @@ namespace utils {
 std::string GetBase64Code(const std::string &str);
 
 }  // namespace utils
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // UTILS_H_

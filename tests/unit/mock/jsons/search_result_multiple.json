@@ -1,6 +1,6 @@
 {
   "tracks" : {
-    "href" : "https://api.spotify.com/v1/search?query=umbrella&type=track&offset=0&limit=3",
+    "href" : "https://lib.spotify.com/v1/search?query=umbrella&type=track&offset=0&limit=3",
     "items" : [ {
       "album" : {
         "album_type" : "album",
@@ -8,7 +8,7 @@
           "external_urls" : {
             "spotify" : "https://open.spotify.com/artist/5pKCCKE2ajJHZ9KAiaK11H"
           },
-          "href" : "https://api.spotify.com/v1/artists/5pKCCKE2ajJHZ9KAiaK11H",
+          "href" : "https://lib.spotify.com/v1/artists/5pKCCKE2ajJHZ9KAiaK11H",
           "id" : "5pKCCKE2ajJHZ9KAiaK11H",
           "name" : "Rihanna",
           "type" : "artist",
@@ -18,7 +18,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/album/3JSWZWeTHF4HDGt5Eozdy7"
         },
-        "href" : "https://api.spotify.com/v1/albums/3JSWZWeTHF4HDGt5Eozdy7",
+        "href" : "https://lib.spotify.com/v1/albums/3JSWZWeTHF4HDGt5Eozdy7",
         "id" : "3JSWZWeTHF4HDGt5Eozdy7",
         "images" : [ {
           "height" : 640,
@@ -44,7 +44,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/artist/5pKCCKE2ajJHZ9KAiaK11H"
         },
-        "href" : "https://api.spotify.com/v1/artists/5pKCCKE2ajJHZ9KAiaK11H",
+        "href" : "https://lib.spotify.com/v1/artists/5pKCCKE2ajJHZ9KAiaK11H",
         "id" : "5pKCCKE2ajJHZ9KAiaK11H",
         "name" : "Rihanna",
         "type" : "artist",
@@ -53,7 +53,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/artist/3nFkdlSjzX9mRTtwJOzDYB"
         },
-        "href" : "https://api.spotify.com/v1/artists/3nFkdlSjzX9mRTtwJOzDYB",
+        "href" : "https://lib.spotify.com/v1/artists/3nFkdlSjzX9mRTtwJOzDYB",
         "id" : "3nFkdlSjzX9mRTtwJOzDYB",
         "name" : "JAY-Z",
         "type" : "artist",
@@ -69,7 +69,7 @@
       "external_urls" : {
         "spotify" : "https://open.spotify.com/track/49FYlytm3dAAraYgpoJZux"
       },
-      "href" : "https://api.spotify.com/v1/tracks/49FYlytm3dAAraYgpoJZux",
+      "href" : "https://lib.spotify.com/v1/tracks/49FYlytm3dAAraYgpoJZux",
       "id" : "49FYlytm3dAAraYgpoJZux",
       "is_local" : false,
       "name" : "Umbrella",
@@ -85,7 +85,7 @@
           "external_urls" : {
             "spotify" : "https://open.spotify.com/artist/7LWdcPFBFcRaamGjIJbPV7"
           },
-          "href" : "https://api.spotify.com/v1/artists/7LWdcPFBFcRaamGjIJbPV7",
+          "href" : "https://lib.spotify.com/v1/artists/7LWdcPFBFcRaamGjIJbPV7",
           "id" : "7LWdcPFBFcRaamGjIJbPV7",
           "name" : "Laffey",
           "type" : "artist",
@@ -95,7 +95,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/album/1G3PxwMZ659bTDQvtEja2V"
         },
-        "href" : "https://api.spotify.com/v1/albums/1G3PxwMZ659bTDQvtEja2V",
+        "href" : "https://lib.spotify.com/v1/albums/1G3PxwMZ659bTDQvtEja2V",
         "id" : "1G3PxwMZ659bTDQvtEja2V",
         "images" : [ {
           "height" : 640,
@@ -121,7 +121,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/artist/7LWdcPFBFcRaamGjIJbPV7"
         },
-        "href" : "https://api.spotify.com/v1/artists/7LWdcPFBFcRaamGjIJbPV7",
+        "href" : "https://lib.spotify.com/v1/artists/7LWdcPFBFcRaamGjIJbPV7",
         "id" : "7LWdcPFBFcRaamGjIJbPV7",
         "name" : "Laffey",
         "type" : "artist",
@@ -137,7 +137,7 @@
       "external_urls" : {
         "spotify" : "https://open.spotify.com/track/0ORfekOSAhkcYgdTS4YK8f"
       },
-      "href" : "https://api.spotify.com/v1/tracks/0ORfekOSAhkcYgdTS4YK8f",
+      "href" : "https://lib.spotify.com/v1/tracks/0ORfekOSAhkcYgdTS4YK8f",
       "id" : "0ORfekOSAhkcYgdTS4YK8f",
       "is_local" : false,
       "name" : "Umbrella",
@@ -153,7 +153,7 @@
           "external_urls" : {
             "spotify" : "https://open.spotify.com/artist/46gyXjRIvN1NL1eCB8GBxo"
           },
-          "href" : "https://api.spotify.com/v1/artists/46gyXjRIvN1NL1eCB8GBxo",
+          "href" : "https://lib.spotify.com/v1/artists/46gyXjRIvN1NL1eCB8GBxo",
           "id" : "46gyXjRIvN1NL1eCB8GBxo",
           "name" : "All Time Low",
           "type" : "artist",
@@ -163,7 +163,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/album/1CFjrFSA35xbgP134I8Xtq"
         },
-        "href" : "https://api.spotify.com/v1/albums/1CFjrFSA35xbgP134I8Xtq",
+        "href" : "https://lib.spotify.com/v1/albums/1CFjrFSA35xbgP134I8Xtq",
         "id" : "1CFjrFSA35xbgP134I8Xtq",
         "images" : [ {
           "height" : 640,
@@ -189,7 +189,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/artist/46gyXjRIvN1NL1eCB8GBxo"
         },
-        "href" : "https://api.spotify.com/v1/artists/46gyXjRIvN1NL1eCB8GBxo",
+        "href" : "https://lib.spotify.com/v1/artists/46gyXjRIvN1NL1eCB8GBxo",
         "id" : "46gyXjRIvN1NL1eCB8GBxo",
         "name" : "All Time Low",
         "type" : "artist",
@@ -205,7 +205,7 @@
       "external_urls" : {
         "spotify" : "https://open.spotify.com/track/6ZUQhRkFJqiPsOucrXZwS6"
       },
-      "href" : "https://api.spotify.com/v1/tracks/6ZUQhRkFJqiPsOucrXZwS6",
+      "href" : "https://lib.spotify.com/v1/tracks/6ZUQhRkFJqiPsOucrXZwS6",
       "id" : "6ZUQhRkFJqiPsOucrXZwS6",
       "is_local" : false,
       "name" : "Umbrella",
@@ -216,7 +216,7 @@
       "uri" : "spotify:track:6ZUQhRkFJqiPsOucrXZwS6"
     } ],
     "limit" : 3,
-    "next" : "https://api.spotify.com/v1/search?query=umbrella&type=track&offset=3&limit=3",
+    "next" : "https://lib.spotify.com/v1/search?query=umbrella&type=track&offset=3&limit=3",
     "offset" : 0,
     "previous" : null,
     "total" : 40210

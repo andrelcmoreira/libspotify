@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 struct MusicInfo;
 
@@ -35,6 +35,6 @@ class SearchListener {
   virtual void OnSearchError(const std::string& msg) const = 0;
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // SEARCH_LISTENER_H_

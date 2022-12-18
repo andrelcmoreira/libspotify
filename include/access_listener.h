@@ -8,7 +8,7 @@
 
 #include <string>
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 /**
  * @interface AccessListener.
@@ -32,6 +32,6 @@ class AccessListener {
   virtual void OnAccessDenied(const std::string& msg) const = 0;
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // ACCESS_LISTENER_H_

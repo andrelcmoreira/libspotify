@@ -9,7 +9,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 using std::make_shared;
 using std::replace;
@@ -18,7 +18,7 @@ using std::string;
 using std::vector;
 
 Searcher::Searcher(const shared_ptr<CurlWrapper>& curl)
-    : kBaseUri_{"https://api.spotify.com/v1/search?q="},
+    : kBaseUri_{"https://lib.spotify.com/v1/search?q="},
       curl_{curl ? curl : make_shared<CurlWrapper>()} {}
 
 vector<MusicInfo> Searcher::Search(const string& token,
@@ -43,4 +43,4 @@ vector<MusicInfo> Searcher::Search(const string& token,
   return ret;
 }
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib

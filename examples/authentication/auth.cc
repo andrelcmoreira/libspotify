@@ -2,10 +2,10 @@
 #include <string>
 
 #include "access_listener.h"
-#include "api.h"
+#include "spotify.h"
 
-using espotifai_api::AccessListener;
-using espotifai_api::Api;
+using spotify_lib::AccessListener;
+using spotify_lib::Spotify;
 
 class EventHandler : public AccessListener {
  public:
@@ -28,10 +28,10 @@ int main(int argc, char *argv[]) {
   const std::string kClientId{argv[1]};
   const std::string kClientSecret{argv[2]};
 
-  Api api;
+  Spotify lib;
   EventHandler ev;
 
-  api.Auth(ev, kClientId, kClientSecret);
+  lib.Auth(ev, kClientId, kClientSecret);
 
   std::exit(0);
 }

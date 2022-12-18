@@ -1,10 +1,10 @@
 /**
  * @file
  *
- * @brief Api private class definition.
+ * @brief Spotify main class definition.
  */
-#ifndef API_PRIVATE_H_
-#define API_PRIVATE_H_
+#ifndef SPOTIFY_H_
+#define SPOTIFY_H_
 
 #include <memory>
 #include <string>
@@ -15,18 +15,19 @@
 #include "search_listener.h"
 #include "types.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 
+class SpotifyPrivate;
 class Authenticator;
-class PlaylistMgr;
 class Searcher;
+class PlaylistMgr;
 
 /**
- * @class ApiPrivate.
+ * @class Spotify.
  *
- * @brief This class implements the main functionalities of espotifai API.
+ * @brief This class implements the main functionalities of spotify API.
  */
-class ApiPrivate {
+class Spotify {
  public:
   /**
    * @brief Constructor.
@@ -35,9 +36,9 @@ class ApiPrivate {
    * @param searcher Spotify music searcher.
    * @param mgr Playlist manager.
    */
-  ApiPrivate(const std::shared_ptr<Authenticator>& auth = nullptr,
-             const std::shared_ptr<Searcher>& searcher = nullptr,
-             const std::shared_ptr<PlaylistMgr>& mgr = nullptr);
+  Spotify(const std::shared_ptr<Authenticator>& auth = nullptr,
+      const std::shared_ptr<Searcher>& searcher = nullptr,
+      const std::shared_ptr<PlaylistMgr>& mgr = nullptr);
 
   /**
    * @brief Authenticate a user within the spotify API.
@@ -65,7 +66,8 @@ class ApiPrivate {
    * @param listener Event listener.
    * @param name Name of the playlist.
    */
-  void CreatePlaylist(PlaylistListener& listener, const std::string& name) const;
+  void CreatePlaylist(PlaylistListener& listener,
+                      const std::string& name) const;
 
   /**
    * @brief Add a music into an existent playlist.
@@ -79,7 +81,7 @@ class ApiPrivate {
                           const std::string& playlist) const;
 
   /**
-   * @brief List the musics for a given playlist.
+   * @brief List the musics of a given playlist.
    *
    * @param listener Event listener.
    * @param playlist_name Name of the playlist.
@@ -95,11 +97,10 @@ class ApiPrivate {
   void GetPlaylists(PlaylistListener& listener) const;
 
  private:
-  std::shared_ptr<Authenticator> auth_;        //!< Spotify authenticator.
-  std::shared_ptr<Searcher> searcher_;  //!< Spotify music searcher.
-  std::shared_ptr<PlaylistMgr> playlist_mgr_;     //!< Playlist manager.
+  // TODO: make it a unique_ptr
+  std::shared_ptr<SpotifyPrivate> private_;  //!< API private.
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
-#endif  // API_PRIVATE_H_
+#endif  // SPOTIFY_H_

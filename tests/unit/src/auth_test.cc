@@ -9,7 +9,7 @@
 
 #include <memory>
 
-#include "api.h"
+#include "spotify.h"
 #include "mock/access_listener_mock.h"
 #include "mock/curl_wrapper_mock.h"
 #include "private/curl_wrapper.h"
@@ -20,10 +20,10 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
-using espotifai_api::Api;
-using espotifai_api::Authenticator;
-using espotifai_api::test::AccessListenerMock;
-using espotifai_api::test::CurlWrapperMock;
+using spotify_lib::Spotify;
+using spotify_lib::Authenticator;
+using spotify_lib::test::AccessListenerMock;
+using spotify_lib::test::CurlWrapperMock;
 
 using testing::_;
 using testing::Return;
@@ -37,21 +37,21 @@ class AuthTest : public Test {
   AuthTest()
       : curl_{make_shared<CurlWrapperMock>()},
         auth_{make_shared<Authenticator>(curl_)},
-        api_{auth_, nullptr, nullptr} {}
+        lib_{auth_, nullptr, nullptr} {}
 
  protected:
   shared_ptr<CurlWrapperMock> curl_;  //!< Curl wrapper mock instance.
   shared_ptr<Authenticator> auth_;      //!< Spotify auth instance.
-  Api api_;                           //!< Api instance.
+  Spotify lib_;                           //!< Spotify instance.
   const string KLoginUri_{
-      "https://accounts.spotify.com/api/token"};  //!< URI used for
+      "https://accounts.spotify.com/lib/token"};  //!< URI used for
                                                   //!< authentication.
 };
 
 /**
  * @brief This tests validates the scenario when the user try to log into the
  * spotify API with a valid client_id and client_credentials. When this occurs,
- * the espotifai_api must return the access token through the listener.
+ * the spotify_lib must return the access token through the listener.
  */
 TEST_F(AuthTest,
        W_UserRequestAuthWithValidCredentials_S_LogWithSuccess) {
@@ -60,7 +60,7 @@ TEST_F(AuthTest,
   const string kClientSecret{"good_secret"};
   const vector<string> kReqHeaders{
       "Authorization: Basic " +
-      espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)};
+      spotify_lib::utils::GetBase64Code(kClientId + ":" + kClientSecret)};
   const vector<string> kReqData{"grant_type=client_credentials"};
   Value expected_return;
 
@@ -83,13 +83,13 @@ TEST_F(AuthTest,
               OnAccessGuaranteed(expected_return["access_token"].asString()))
       .Times(1);
 
-  api_.Auth(*listener, kClientId, kClientSecret);
+  lib_.Auth(*listener, kClientId, kClientSecret);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to log into the
  * spotify API with an invalid client_id and client_credentials. When this
- * occurs, the espotifai_api must return the suitable error message through the
+ * occurs, the spotify_lib must return the suitable error message through the
  * listener.
  */
 TEST_F(AuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure) {
@@ -100,7 +100,7 @@ TEST_F(AuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure) {
       "fail to authenticate the user with the provided credentials!"};
   const vector<string> kReqHeaders{
       "Authorization: Basic " +
-      espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)};
+      spotify_lib::utils::GetBase64Code(kClientId + ":" + kClientSecret)};
   const vector<string> kReqData{"grant_type=client_credentials"};
   Value expected_return;
 
@@ -118,12 +118,12 @@ TEST_F(AuthTest, W_UserRequestAuthWithBadCredentials_S_ReturnFailure) {
   EXPECT_CALL(*listener, OnAccessDenied(kExpectedMsg)).Times(1);
   EXPECT_CALL(*listener, OnAccessGuaranteed(_)).Times(0);
 
-  api_.Auth(*listener, kClientId, kClientSecret);
+  lib_.Auth(*listener, kClientId, kClientSecret);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to log into the
- * spotify API offline. When this occurs, the espotifai_api must return the
+ * spotify API offline. When this occurs, the spotify_lib must return the
  * suitable error message through the listener.
  */
 TEST_F(AuthTest, W_UserRequestAuthOffline_S_ReturnFailure) {
@@ -133,7 +133,7 @@ TEST_F(AuthTest, W_UserRequestAuthOffline_S_ReturnFailure) {
   const string kErrorMessage{"some cool error message"};
   const vector<string> kReqHeaders{
       "Authorization: Basic " +
-      espotifai_api::utils::GetBase64Code(kClientId + ":" + kClientSecret)};
+      spotify_lib::utils::GetBase64Code(kClientId + ":" + kClientSecret)};
   const vector<string> kReqData{"grant_type=client_credentials"};
 
   /* set default behavior for Post method */
@@ -148,5 +148,5 @@ TEST_F(AuthTest, W_UserRequestAuthOffline_S_ReturnFailure) {
   EXPECT_CALL(*listener, OnAccessGuaranteed(_)).Times(0);
   EXPECT_CALL(*listener, OnAccessDenied(kErrorMessage)).Times(1);
 
-  api_.Auth(*listener, kClientId, kClientSecret);
+  lib_.Auth(*listener, kClientId, kClientSecret);
 }

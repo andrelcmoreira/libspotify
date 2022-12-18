@@ -5,12 +5,12 @@
 
 #include "private/playlist_mgr.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 namespace test {
 
 class PlaylistMgrMock : public PlaylistMgr {};
 
 }  // namespace test
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // PLAYLIST_MGR_MOCK_H_

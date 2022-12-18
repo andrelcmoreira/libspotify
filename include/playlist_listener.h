@@ -11,7 +11,7 @@
 
 #include "types.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 /**
  * @interface PlaylistListener.
@@ -62,6 +62,6 @@ class PlaylistListener {
   virtual void OnPlaylistsFoundError(const std::string& msg) const = 0;
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // PLAYLIST_LISTENER_H_

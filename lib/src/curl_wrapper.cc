@@ -8,7 +8,7 @@
 #include <cstring>
 #include <stdexcept>
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 using Json::Value;
 using std::memcpy;
@@ -155,4 +155,4 @@ size_t CurlWrapper::CurlCallback(void* contents, size_t size, size_t nmemb,
   return realsize;
 }
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib

@@ -13,7 +13,7 @@
 #include "types.h"
 #include "private/curl_wrapper.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 /**
  * @class Searcher.
@@ -47,6 +47,6 @@ class Searcher {
     std::shared_ptr<CurlWrapper> curl_; //!< Lib curl handler.
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // MUSIC_SEARCHER_H_

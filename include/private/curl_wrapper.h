@@ -11,7 +11,7 @@
 #include <curl/curl.h>
 #include <json/json.h>
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 /**
  * @class CurlWrapper.
@@ -73,6 +73,6 @@ class CurlWrapper {
     Json::CharReaderBuilder builder_; //!< Json parser builder.
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // CURL_WRAPPER_H_

@@ -10,7 +10,7 @@
 
 #include "private/utils.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 using std::make_shared;
 using std::runtime_error;
@@ -19,7 +19,7 @@ using std::string;
 using std::vector;
 
 Authenticator::Authenticator(const shared_ptr<CurlWrapper>& curl)
-    : kUri_{"https://accounts.spotify.com/api/token"},
+    : kUri_{"https://accounts.spotify.com/lib/token"},
       curl_{curl ? curl : make_shared<CurlWrapper>()} {}
 
 string Authenticator::AuthUser(const string& cli_id,
@@ -39,4 +39,4 @@ string Authenticator::AuthUser(const string& cli_id,
   return reply["access_token"].asString();
 }
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib

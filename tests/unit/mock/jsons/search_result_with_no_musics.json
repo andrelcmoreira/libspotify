@@ -1,6 +1,6 @@
 {
   "tracks" : {
-    "href" : "https://api.spotify.com/v1/search?query=asidjhisuadhfoisduhfaisoduhfaoisudfhaisoudfh&type=track&offset=0&limit=2",
+    "href" : "https://lib.spotify.com/v1/search?query=asidjhisuadhfoisduhfaisoduhfaoisudfhaisoudfh&type=track&offset=0&limit=2",
     "items" : [ ],
     "limit" : 2,
     "next" : null,

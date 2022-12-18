@@ -1,6 +1,6 @@
 {
   "tracks" : {
-    "href" : "https://api.spotify.com/v1/search?query=staayyyle&type=track&offset=0&limit=1",
+    "href" : "https://lib.spotify.com/v1/search?query=staayyyle&type=track&offset=0&limit=1",
     "items" : [ {
       "album" : {
         "album_type" : "album",
@@ -8,7 +8,7 @@
           "external_urls" : {
             "spotify" : "https://open.spotify.com/artist/2kDXtCACfXXLm0pJ9jPfUG"
           },
-          "href" : "https://api.spotify.com/v1/artists/2kDXtCACfXXLm0pJ9jPfUG",
+          "href" : "https://lib.spotify.com/v1/artists/2kDXtCACfXXLm0pJ9jPfUG",
           "id" : "2kDXtCACfXXLm0pJ9jPfUG",
           "name" : "Spazz",
           "type" : "artist",
@@ -18,7 +18,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/album/7y28DRoed3LaipJk8Rns0x"
         },
-        "href" : "https://api.spotify.com/v1/albums/7y28DRoed3LaipJk8Rns0x",
+        "href" : "https://lib.spotify.com/v1/albums/7y28DRoed3LaipJk8Rns0x",
         "id" : "7y28DRoed3LaipJk8Rns0x",
         "images" : [ {
           "height" : 640,
@@ -44,7 +44,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/artist/2kDXtCACfXXLm0pJ9jPfUG"
         },
-        "href" : "https://api.spotify.com/v1/artists/2kDXtCACfXXLm0pJ9jPfUG",
+        "href" : "https://lib.spotify.com/v1/artists/2kDXtCACfXXLm0pJ9jPfUG",
         "id" : "2kDXtCACfXXLm0pJ9jPfUG",
         "name" : "Spazz",
         "type" : "artist",
@@ -60,7 +60,7 @@
       "external_urls" : {
         "spotify" : "https://open.spotify.com/track/6jaY08cdgxbkVYMSSLR9kK"
       },
-      "href" : "https://api.spotify.com/v1/tracks/6jaY08cdgxbkVYMSSLR9kK",
+      "href" : "https://lib.spotify.com/v1/tracks/6jaY08cdgxbkVYMSSLR9kK",
       "id" : "6jaY08cdgxbkVYMSSLR9kK",
       "is_local" : false,
       "name" : "Staayyyle",

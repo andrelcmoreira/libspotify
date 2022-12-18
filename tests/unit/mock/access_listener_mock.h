@@ -5,7 +5,7 @@
 
 #include "access_listener.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 namespace test {
 
 class AccessListenerMock : public AccessListener {
@@ -15,6 +15,6 @@ class AccessListenerMock : public AccessListener {
 };
 
 }  // namespace test
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // ACCESS_LISTENER_MOCK_H_

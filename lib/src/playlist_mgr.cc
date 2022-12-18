@@ -7,7 +7,7 @@
 
 #include <stdexcept>
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 using std::make_shared;
 using std::runtime_error;
@@ -50,4 +50,4 @@ vector<string> PlaylistMgr::GetPlaylists() const {
   return vector<string>();  // TODO
 }
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib

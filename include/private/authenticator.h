@@ -11,7 +11,7 @@
 
 #include "private/curl_wrapper.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 /**
  * @class Authenticator.
@@ -43,6 +43,6 @@ class Authenticator {
     std::shared_ptr<CurlWrapper> curl_; //!< Lib curl handler.
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // SPOTIFY_AUTH_H_

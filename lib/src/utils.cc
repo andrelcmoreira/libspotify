@@ -8,7 +8,7 @@
 #include <boost/beast/core/detail/base64.hpp>
 #include <vector>
 
-namespace espotifai_api {
+namespace spotify_lib {
 namespace utils {
 
 using boost::beast::detail::base64::encode;
@@ -31,4 +31,4 @@ std::string GetBase64Code(const string& str) {
 }
 
 }  // namespace utils
-}  // namespace espotifai_api
+}  // namespace spotify_lib

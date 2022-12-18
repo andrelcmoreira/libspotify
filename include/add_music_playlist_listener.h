@@ -8,7 +8,7 @@
 
 #include <string>
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 /**
  * @interface AddMusicPlaylistListener.
@@ -31,6 +31,6 @@ class AddMusicPlaylistListener {
   virtual void OnMusicAdditionError(const std::string& msg) const = 0;
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // ADD_MUSIC_PLAYLIST_LISTENER_H_

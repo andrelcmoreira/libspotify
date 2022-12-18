@@ -1,6 +1,6 @@
 {
   "tracks" : {
-    "href" : "https://api.spotify.com/v1/search?query=protocols+of+anti+sound&type=track&offset=0&limit=2",
+    "href" : "https://lib.spotify.com/v1/search?query=protocols+of+anti+sound&type=track&offset=0&limit=2",
     "items" : [ {
       "album" : {
         "album_type" : "album",
@@ -8,7 +8,7 @@
           "external_urls" : {
             "spotify" : "https://open.spotify.com/artist/1zVJfLMaN1eeiz4NVdI1Mh"
           },
-          "href" : "https://api.spotify.com/v1/artists/1zVJfLMaN1eeiz4NVdI1Mh",
+          "href" : "https://lib.spotify.com/v1/artists/1zVJfLMaN1eeiz4NVdI1Mh",
           "id" : "1zVJfLMaN1eeiz4NVdI1Mh",
           "name" : "Magrudergrind",
           "type" : "artist",
@@ -18,7 +18,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/album/2JiKConlU9uXTHPtt8MSCi"
         },
-        "href" : "https://api.spotify.com/v1/albums/2JiKConlU9uXTHPtt8MSCi",
+        "href" : "https://lib.spotify.com/v1/albums/2JiKConlU9uXTHPtt8MSCi",
         "id" : "2JiKConlU9uXTHPtt8MSCi",
         "images" : [ {
           "height" : 640,
@@ -44,7 +44,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/artist/1zVJfLMaN1eeiz4NVdI1Mh"
         },
-        "href" : "https://api.spotify.com/v1/artists/1zVJfLMaN1eeiz4NVdI1Mh",
+        "href" : "https://lib.spotify.com/v1/artists/1zVJfLMaN1eeiz4NVdI1Mh",
         "id" : "1zVJfLMaN1eeiz4NVdI1Mh",
         "name" : "Magrudergrind",
         "type" : "artist",
@@ -60,7 +60,7 @@
       "external_urls" : {
         "spotify" : "https://open.spotify.com/track/2UNCakVkFNo9ClIHbnSBTx"
       },
-      "href" : "https://api.spotify.com/v1/tracks/2UNCakVkFNo9ClIHbnSBTx",
+      "href" : "https://lib.spotify.com/v1/tracks/2UNCakVkFNo9ClIHbnSBTx",
       "id" : "2UNCakVkFNo9ClIHbnSBTx",
       "is_local" : false,
       "name" : "The Protocols Of Anti-Sound",
@@ -76,7 +76,7 @@
           "external_urls" : {
             "spotify" : "https://open.spotify.com/artist/0fPRTshfFOE8VgmUZIEg7o"
           },
-          "href" : "https://api.spotify.com/v1/artists/0fPRTshfFOE8VgmUZIEg7o",
+          "href" : "https://lib.spotify.com/v1/artists/0fPRTshfFOE8VgmUZIEg7o",
           "id" : "0fPRTshfFOE8VgmUZIEg7o",
           "name" : "Mommy's lil Monsterz",
           "type" : "artist",
@@ -86,7 +86,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/album/0Ag6IxC7HdF14PSzD0GFgr"
         },
-        "href" : "https://api.spotify.com/v1/albums/0Ag6IxC7HdF14PSzD0GFgr",
+        "href" : "https://lib.spotify.com/v1/albums/0Ag6IxC7HdF14PSzD0GFgr",
         "id" : "0Ag6IxC7HdF14PSzD0GFgr",
         "images" : [ {
           "height" : 640,
@@ -112,7 +112,7 @@
         "external_urls" : {
           "spotify" : "https://open.spotify.com/artist/0fPRTshfFOE8VgmUZIEg7o"
         },
-        "href" : "https://api.spotify.com/v1/artists/0fPRTshfFOE8VgmUZIEg7o",
+        "href" : "https://lib.spotify.com/v1/artists/0fPRTshfFOE8VgmUZIEg7o",
         "id" : "0fPRTshfFOE8VgmUZIEg7o",
         "name" : "Mommy's lil Monsterz",
         "type" : "artist",
@@ -128,7 +128,7 @@
       "external_urls" : {
         "spotify" : "https://open.spotify.com/track/65ypeYc66Mikf6Hx061XqM"
       },
-      "href" : "https://api.spotify.com/v1/tracks/65ypeYc66Mikf6Hx061XqM",
+      "href" : "https://lib.spotify.com/v1/tracks/65ypeYc66Mikf6Hx061XqM",
       "id" : "65ypeYc66Mikf6Hx061XqM",
       "is_local" : false,
       "name" : "Protocols of Anti-Sound",
@@ -139,7 +139,7 @@
       "uri" : "spotify:track:65ypeYc66Mikf6Hx061XqM"
     } ],
     "limit" : 2,
-    "next" : "https://api.spotify.com/v1/search?query=protocols+of+anti+sound&type=track&offset=2&limit=2",
+    "next" : "https://lib.spotify.com/v1/search?query=protocols+of+anti+sound&type=track&offset=2&limit=2",
     "offset" : 0,
     "previous" : null,
     "total" : 4

@@ -9,7 +9,7 @@
 
 #include <memory>
 
-#include "api.h"
+#include "spotify.h"
 #include "mock/add_music_playlist_listener_mock.h"
 #include "mock/playlist_listener_mock.h"
 
@@ -19,12 +19,12 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
-using espotifai_api::Api;
-using espotifai_api::MusicInfo;
-using espotifai_api::PlaylistMgr;
-using espotifai_api::Authenticator;
-using espotifai_api::test::AddMusicPlaylistListenerMock;
-using espotifai_api::test::PlaylistListenerMock;
+using spotify_lib::Spotify;
+using spotify_lib::MusicInfo;
+using spotify_lib::PlaylistMgr;
+using spotify_lib::Authenticator;
+using spotify_lib::test::AddMusicPlaylistListenerMock;
+using spotify_lib::test::PlaylistListenerMock;
 
 using testing::_;
 using testing::Return;
@@ -35,16 +35,16 @@ class PlaylistMgrTest : public Test {
  public:
   PlaylistMgrTest()
       : playlist_mgr_{make_shared<PlaylistMgr>()},
-        api_{nullptr, nullptr, playlist_mgr_} {}
+        lib_{nullptr, nullptr, playlist_mgr_} {}
 
  protected:
   shared_ptr<PlaylistMgr> playlist_mgr_;  //!< Playlist manager.
-  Api api_;                               //!< Api instance.
+  Spotify lib_;                               //!< Spotify instance.
 };
 
 /**
  * @brief This tests validates the scenario when the user try create a new
- * playlist. When this occurs, the espotifai_api must create it and return
+ * playlist. When this occurs, the spotify_lib must create it and return
  * notify the user through the listener.
  */
 TEST_F(PlaylistMgrTest,
@@ -64,12 +64,12 @@ TEST_F(PlaylistMgrTest,
   //    EXPECT_CALL(*listener, OnPlaylistCreated()).Times(1);
   //    EXPECT_CALL(*listener, OnPlaylistCreationError(_)).Times(0);
   //
-  //    api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
+  //    lib_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
 }
 
 /**
  * @brief This tests validates the scenario when the user try create a playlist
- * which already exist on database. When this occurs, the espotifai_api must
+ * which already exist on database. When this occurs, the spotify_lib must
  * return the suitable error message through the listener.
  */
 TEST_F(PlaylistMgrTest,
@@ -90,13 +90,13 @@ TEST_F(PlaylistMgrTest,
   //    EXPECT_CALL(*listener, OnPlaylistCreated()).Times(0);
   //    EXPECT_CALL(*listener, OnPlaylistCreationError(kErrorMessage)).Times(1);
   //
-  //    api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
+  //    lib_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to create a
  * playlist, but an error occurs at database level. When this occurs, the
- * espotifai_api must return the the suitable error message through the
+ * spotify_lib must return the the suitable error message through the
  * listener.
  */
 TEST_F(PlaylistMgrTest,
@@ -122,12 +122,12 @@ TEST_F(PlaylistMgrTest,
   //    EXPECT_CALL(*listener, OnPlaylistCreationError(kErrorMsg))
   //        .Times(1);
   //
-  //    api_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
+  //    lib_.CreatePlaylist(*listener, kPlaylistName, kPlaylistOwner);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to add a music to
- * an existent playlist. When this occurs, the espotifai_api must add the music
+ * an existent playlist. When this occurs, the spotify_lib must add the music
  * to the given playlist and return success through the listener.
  */
 TEST_F(PlaylistMgrTest, W_UserAddMusicToExistentPlaylist_S_MusicBeAdded) {
@@ -156,12 +156,12 @@ TEST_F(PlaylistMgrTest, W_UserAddMusicToExistentPlaylist_S_MusicBeAdded) {
   //    OnMusicAdded()).Times(1); EXPECT_CALL(*listener,
   //    OnMusicAdditionError(_)).Times(0);
   //
-  //    api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
+  //    lib_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to add a music to
- * a non existent playlist. When this occurs, the espotifai_api must return the
+ * a non existent playlist. When this occurs, the spotify_lib must return the
  * suitable error message through the listener.
  */
 TEST_F(PlaylistMgrTest, W_UserAddMusicToNonExistentPlaylist_S_ReturnFailure) {
@@ -189,12 +189,12 @@ TEST_F(PlaylistMgrTest, W_UserAddMusicToNonExistentPlaylist_S_ReturnFailure) {
   //    OnMusicAdded()).Times(0); EXPECT_CALL(*listener,
   //    OnMusicAdditionError(kErrorMsg)).Times(1);
   //
-  //    api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
+  //    lib_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to add an existent
- * music to a playlist. When this occurs, the espotifai_api must return the
+ * music to a playlist. When this occurs, the spotify_lib must return the
  * suitable error message through the listener.
  */
 TEST_F(PlaylistMgrTest,
@@ -225,7 +225,7 @@ TEST_F(PlaylistMgrTest,
   //    OnMusicAdded()).Times(0); EXPECT_CALL(*listener,
   //    OnMusicAdditionError(kErrorMsg)).Times(1);
   //
-  //    api_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
+  //    lib_.AddMusicToPlaylist(*listener, kMusic, kPlaylistName);
 }
 
 /**
@@ -267,7 +267,7 @@ TEST_F(PlaylistMgrTest,
   //    EXPECT_CALL(*listener, OnMusicList(kMusicList)).Times(1);
   //    EXPECT_CALL(*listener, OnMusicListError(_)).Times(0);
   //
-  //    api_.ListPlaylistMusics(*listener, kPlaylistName);
+  //    lib_.ListPlaylistMusics(*listener, kPlaylistName);
 }
 
 /**
@@ -293,7 +293,7 @@ TEST_F(PlaylistMgrTest,
   //    EXPECT_CALL(*listener, OnMusicList(_)).Times(0);
   //    EXPECT_CALL(*listener, OnMusicListError(_)).Times(1);
   //
-  //    api_.ListPlaylistMusics(*listener, kPlaylistName);
+  //    lib_.ListPlaylistMusics(*listener, kPlaylistName);
 }
 
 /**
@@ -321,7 +321,7 @@ TEST_F(PlaylistMgrTest,
   //    EXPECT_CALL(*listener, OnMusicList(kMusicList)).Times(1);
   //    EXPECT_CALL(*listener, OnMusicListError(_)).Times(0);
   //
-  //    api_.ListPlaylistMusics(*listener, kPlaylistName);
+  //    lib_.ListPlaylistMusics(*listener, kPlaylistName);
 }
 
 /**
@@ -348,7 +348,7 @@ TEST_F(PlaylistMgrTest, W_UserTryToObtainAllPlaylists_S_ReturnPlaylists) {
   //    EXPECT_CALL(*listener, OnPlaylistsFound(kPlaylists)).Times(1);
   //    EXPECT_CALL(*listener, OnPlaylistsFoundError(_)).Times(0);
   //
-  //    api_.GetPlaylists(*listener);
+  //    lib_.GetPlaylists(*listener);
 }
 
 /**
@@ -371,5 +371,5 @@ TEST_F(PlaylistMgrTest,
   //    EXPECT_CALL(*listener, OnPlaylistsFound(kPlaylists)).Times(1);
   //    EXPECT_CALL(*listener, OnPlaylistsFoundError(_)).Times(0);
   //
-  //    api_.GetPlaylists(*listener);
+  //    lib_.GetPlaylists(*listener);
 }

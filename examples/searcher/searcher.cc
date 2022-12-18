@@ -2,13 +2,13 @@
 #include <string>
 #include <vector>
 
-#include "api.h"
+#include "spotify.h"
 #include "search_listener.h"
 #include "types.h"
 
-using espotifai_api::Api;
-using espotifai_api::MusicInfo;
-using espotifai_api::SearchListener;
+using spotify_lib::Spotify;
+using spotify_lib::MusicInfo;
+using spotify_lib::SearchListener;
 
 class EventHandler : public SearchListener {
  public:
@@ -37,10 +37,10 @@ int main(int argc, char* argv[]) {
   const std::string kToken{argv[1]};
   const std::string kSearchString{argv[2]};
 
-  Api api;
+  Spotify lib;
   EventHandler ev;
 
-  api.Search(ev, kToken, kSearchString);
+  lib.Search(ev, kToken, kSearchString);
 
   std::exit(0);
 }

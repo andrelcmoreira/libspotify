@@ -5,7 +5,7 @@
 
 #include "playlist_listener.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 namespace test {
 
 class PlaylistListenerMock : public PlaylistListener {
@@ -20,6 +20,6 @@ class PlaylistListenerMock : public PlaylistListener {
 };
 
 }  // namespace test
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // PLAYLIST_LISTENER_MOCK_H_

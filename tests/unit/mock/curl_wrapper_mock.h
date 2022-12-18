@@ -5,7 +5,7 @@
 
 #include "private/curl_wrapper.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 namespace test {
 
 class CurlWrapperMock : public CurlWrapper {
@@ -19,6 +19,6 @@ class CurlWrapperMock : public CurlWrapper {
 };
 
 }  // namespace test
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // CURL_WRAPPER_MOCK_H_

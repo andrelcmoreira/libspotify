@@ -5,7 +5,7 @@
 
 #include "search_listener.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 namespace test {
 
 class SearchListenerMock : public SearchListener {
@@ -15,6 +15,6 @@ class SearchListenerMock : public SearchListener {
 };
 
 }  // namespace test
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // SEARCH_LISTENER_MOCK_H_

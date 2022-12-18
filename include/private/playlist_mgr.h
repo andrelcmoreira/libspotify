@@ -12,7 +12,7 @@
 
 #include "types.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 /**
  * @class PlaylistMgr.
@@ -53,6 +53,6 @@ class PlaylistMgr {
     std::vector<std::string> GetPlaylists() const;
 };
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib
 
 #endif  // PLAYLIST_MGR_H_

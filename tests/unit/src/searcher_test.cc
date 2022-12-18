@@ -10,7 +10,7 @@
 #include <fstream>
 #include <memory>
 
-#include "api.h"
+#include "spotify.h"
 #include "mock/curl_wrapper_mock.h"
 #include "mock/search_listener_mock.h"
 #include "private/curl_wrapper.h"
@@ -23,11 +23,11 @@ using std::shared_ptr;
 using std::string;
 using std::vector;
 
-using espotifai_api::Api;
-using espotifai_api::MusicInfo;
-using espotifai_api::Searcher;
-using espotifai_api::test::CurlWrapperMock;
-using espotifai_api::test::SearchListenerMock;
+using spotify_lib::Spotify;
+using spotify_lib::MusicInfo;
+using spotify_lib::Searcher;
+using spotify_lib::test::CurlWrapperMock;
+using spotify_lib::test::SearchListenerMock;
 
 using Json::Value;
 
@@ -41,21 +41,21 @@ class MusicSearcherTest : public Test {
   MusicSearcherTest()
       : curl_{make_shared<CurlWrapperMock>()},
         searcher_{make_shared<Searcher>(curl_)},
-        api_{nullptr, searcher_, nullptr} {}
+        lib_{nullptr, searcher_, nullptr} {}
 
  protected:
   shared_ptr<CurlWrapperMock> curl_;    //!< Curl wrapper mock instance.
   shared_ptr<Searcher> searcher_;  //!< Spotify music searcher instance.
-  Api api_;                             //!< Api instance.
+  Spotify lib_;                             //!< Spotify instance.
   const string kMusicSearchBaseUri_{
-      "https://api.spotify.com/v1/search?q="};  //!< URI used for music
+      "https://lib.spotify.com/v1/search?q="};  //!< URI used for music
                                                 //!< searching.
 };
 
 /**
  * @brief This tests validates the scenario when the user try to search a valid
  * music in the spotify API and the result will contain several matches. When
- * this occurs, the espotifai_api must return the list of found musics through
+ * this occurs, the spotify_lib must return the list of found musics through
  * the listener.
  */
 TEST_F(MusicSearcherTest,
@@ -99,13 +99,13 @@ TEST_F(MusicSearcherTest,
   EXPECT_CALL(*listener, OnSearchError(_)).Times(0);
   EXPECT_CALL(*listener, OnPatternFound(kExpectedReturn)).Times(1);
 
-  api_.Search(*listener, kAccessToken, kSearchName);
+  lib_.Search(*listener, kAccessToken, kSearchName);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to search a valid
  * music in the spotify API and the result contain just one music. When this
- * occurs, the espotifai_api must return the list of found musics through the
+ * occurs, the spotify_lib must return the list of found musics through the
  * listener.
  */
 TEST_F(MusicSearcherTest,
@@ -141,13 +141,13 @@ TEST_F(MusicSearcherTest,
   EXPECT_CALL(*listener, OnSearchError(_)).Times(0);
   EXPECT_CALL(*listener, OnPatternFound(kExpectedReturn)).Times(1);
 
-  api_.Search(*listener, kAccessToken, kSearchName);
+  lib_.Search(*listener, kAccessToken, kSearchName);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to search a valid
  * music which contain several words in the spotify API and the result contain
- * the list of matches. When this occurs, the espotifai_api must return the list
+ * the list of matches. When this occurs, the spotify_lib must return the list
  * of found musics through the listener.
  */
 TEST_F(MusicSearcherTest,
@@ -188,12 +188,12 @@ TEST_F(MusicSearcherTest,
   EXPECT_CALL(*listener, OnSearchError(_)).Times(0);
   EXPECT_CALL(*listener, OnPatternFound(kExpectedReturn)).Times(1);
 
-  api_.Search(*listener, kAccessToken, kSearchName);
+  lib_.Search(*listener, kAccessToken, kSearchName);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to search a non
- * existent music in the spotify API. When this occurs, the espotifai_api must
+ * existent music in the spotify API. When this occurs, the spotify_lib must
  * return an empty list through the listener.
  */
 TEST_F(MusicSearcherTest, W_UserSearchForANonExistentMusic_S_ReturnEmptyList) {
@@ -223,13 +223,13 @@ TEST_F(MusicSearcherTest, W_UserSearchForANonExistentMusic_S_ReturnEmptyList) {
   EXPECT_CALL(*listener, OnSearchError(_)).Times(0);
   EXPECT_CALL(*listener, OnPatternFound(kExpectedReturn)).Times(1);
 
-  api_.Search(*listener, kAccessToken, kSearchName);
+  lib_.Search(*listener, kAccessToken, kSearchName);
 }
 
 /**
  * @brief This tests validates the scenario when the user try to search an
  * existent music in the spotify API with a network error. When this occurs, the
- * espotifai_api must return the suitable error message through the listener.
+ * spotify_lib must return the suitable error message through the listener.
  */
 TEST_F(MusicSearcherTest,
        W_UserSearchForAnExistentMusicWithError_S_ReturnErrorMessage) {
@@ -252,5 +252,5 @@ TEST_F(MusicSearcherTest,
   EXPECT_CALL(*listener, OnSearchError(kErrorMessage)).Times(1);
   EXPECT_CALL(*listener, OnPatternFound(testing::_)).Times(0);
 
-  api_.Search(*listener, kAccessToken, kSearchName);
+  lib_.Search(*listener, kAccessToken, kSearchName);
 }

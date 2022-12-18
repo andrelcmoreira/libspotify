@@ -1,29 +1,29 @@
 /**
  * @file
  *
- * @brief Api private class implementation.
+ * @brief Spotify private class implementation.
  */
-#include "private/api_private.h"
+#include "private/spotify_private.h"
 
 #include "private/authenticator.h"
 #include "private/playlist_mgr.h"
 #include "private/searcher.h"
 
-namespace espotifai_api {
+namespace spotify_lib {
 
 using std::exception;
 using std::make_shared;
 using std::shared_ptr;
 using std::string;
 
-ApiPrivate::ApiPrivate(const shared_ptr<Authenticator>& auth,
+SpotifyPrivate::SpotifyPrivate(const shared_ptr<Authenticator>& auth,
                        const shared_ptr<Searcher>& searcher,
                        const shared_ptr<PlaylistMgr>& mgr)
     : auth_{auth ? auth : make_shared<Authenticator>()},
       searcher_{searcher ? searcher : make_shared<Searcher>()},
       playlist_mgr_{mgr ? mgr : make_shared<PlaylistMgr>()} {}
 
-void ApiPrivate::Auth(AccessListener& listener, const string& client_id,
+void SpotifyPrivate::Auth(AccessListener& listener, const string& client_id,
                       const string& client_secret) const {
   try {
     auto token = auth_->AuthUser(client_id, client_secret);
@@ -34,7 +34,7 @@ void ApiPrivate::Auth(AccessListener& listener, const string& client_id,
   }
 }
 
-void ApiPrivate::Search(SearchListener& listener, const string& token,
+void SpotifyPrivate::Search(SearchListener& listener, const string& token,
                         const string& name) const {
   try {
     auto musics = searcher_->Search(token, name);
@@ -45,7 +45,7 @@ void ApiPrivate::Search(SearchListener& listener, const string& token,
   }
 }
 
-void ApiPrivate::CreatePlaylist(PlaylistListener& listener,
+void SpotifyPrivate::CreatePlaylist(PlaylistListener& listener,
                                 const string& name) const {
   try {
     playlist_mgr_->Create(name);
@@ -56,7 +56,7 @@ void ApiPrivate::CreatePlaylist(PlaylistListener& listener,
   }
 }
 
-void ApiPrivate::AddMusicToPlaylist(AddMusicPlaylistListener& listener,
+void SpotifyPrivate::AddMusicToPlaylist(AddMusicPlaylistListener& listener,
                                     const MusicInfo& music,
                                     const string& playlist) const {
   try {
@@ -68,7 +68,7 @@ void ApiPrivate::AddMusicToPlaylist(AddMusicPlaylistListener& listener,
   }
 }
 
-void ApiPrivate::ListPlaylistMusics(PlaylistListener& listener,
+void SpotifyPrivate::ListPlaylistMusics(PlaylistListener& listener,
                                     const string& playlist_name) const {
   try {
     auto musics = playlist_mgr_->ListMusics(playlist_name);
@@ -79,7 +79,7 @@ void ApiPrivate::ListPlaylistMusics(PlaylistListener& listener,
   }
 }
 
-void ApiPrivate::GetPlaylists(PlaylistListener& listener) const {
+void SpotifyPrivate::GetPlaylists(PlaylistListener& listener) const {
   try {
     auto playlists = playlist_mgr_->GetPlaylists();
 
@@ -89,4 +89,4 @@ void ApiPrivate::GetPlaylists(PlaylistListener& listener) const {
   }
 }
 
-}  // namespace espotifai_api
+}  // namespace spotify_lib

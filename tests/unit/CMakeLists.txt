@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16.1)
 
-project(espotifai_api_tests)
+project(spotify_lib_tests)
 
-set(PROJECT_NAME "espotifai_api_tests")
+set(PROJECT_NAME "spotify_lib_tests")
 set(test_main_source ${CMAKE_CURRENT_LIST_DIR}/src/main.cc)
 set(sources_dir "${CMAKE_CURRENT_LIST_DIR}")
 
@@ -29,5 +29,5 @@ target_link_libraries(
     gtest_main
     gmock
     pthread
-    espotifai_api
+    spotify_lib
 )
